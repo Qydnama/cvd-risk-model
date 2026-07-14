@@ -20,7 +20,7 @@ from cvd_risk.data.load_nhis import (
 
 
 def _raw_nhis() -> pd.DataFrame:
-    return pd.DataFrame(
+    frame = pd.DataFrame(
         {
             "YEAR": [2009, 2010],
             "NHISPID": ["person-1", "person-2"],
@@ -35,18 +35,27 @@ def _raw_nhis() -> pd.DataFrame:
             "HYPERTENEV": [1, 7],
             "DIABETICEV": [2, 3],
             "HEALTH": [3, 9],
+            "RACEA": [100, 200],
+            "HISPETH": [10, 20],
             "CHEARTDIEV": [1, 1],
             "ANGIPECEV": [1, 1],
             "HEARTATTEV": [1, 1],
             "STROKEV": [1, 1],
             "CONHFAILEV": [1, 1],
             "MORTELIG": [1, 1],
-            "MORTSTAT": [1, 0],
-            "MORTUCODLD": [1, 0],
-            "MORTDODY": [2012, 0],
-            "MORTDODQ": [4, 0],
+            "MORTSTAT": [1, 2],
+            "MORTUCODLD": [1, 96],
+            "MORTDODY": [2012, 9999],
+            "MORTDODQ": [4, 9],
         }
     )
+    frame.attrs["extract_sha256"] = (
+        "f6fbee8a4a033e2661f74dc7fc6d2fee0deda0648ca433d54d9a1348505ff36c"
+    )
+    frame.attrs["codebook_sha256"] = (
+        "03201d7b52ef0fc32166789d0a21223ddfd46089f582d4a3024223400298ae72"
+    )
+    return frame
 
 
 @pytest.mark.parametrize("suffix", [".csv", ".csv.gz", ".dta"])
@@ -91,10 +100,24 @@ def test_schema_validation_is_strict_about_required_columns_and_ids() -> None:
     with pytest.raises(NHISInputError, match="MORTUCODLD"):
         validate_nhis_schema(missing)
 
+    missing_audit_fields = _raw_nhis().drop(columns=["RACEA", "HISPETH"])
+    with pytest.raises(NHISInputError, match="HISPETH.*RACEA"):
+        validate_nhis_schema(missing_audit_fields)
+
     duplicate = _raw_nhis()
     duplicate.loc[1, "NHISPID"] = duplicate.loc[0, "NHISPID"]
     with pytest.raises(NHISInputError, match="not unique"):
         validate_nhis_schema(duplicate)
+
+
+def test_extract_contract_accepts_2018_and_rejects_years_after_protocol() -> None:
+    recent = _raw_nhis().iloc[[0]].copy()
+    recent["YEAR"] = 2018
+    validate_nhis_schema(recent)
+
+    recent["YEAR"] = 2019
+    with pytest.raises(NHISInputError, match="outside 1997-2018"):
+        validate_nhis_schema(recent)
 
 
 def test_harmonization_keeps_raw_canonical_and_missing_reason() -> None:
@@ -130,12 +153,21 @@ def test_unknown_nonmissing_code_fails_instead_of_becoming_reference_category() 
         harmonize_nhis(raw)
 
 
-def test_race_ethnicity_is_optional_and_explicitly_audit_only() -> None:
-    without_race = harmonize_nhis(_raw_nhis())
-    assert without_race["race_ethnicity"].isna().all()
-    assert without_race["race_ethnicity_missing_reason"].eq("source_unavailable").all()
-
-    raw = _raw_nhis().assign(RACE_ETHNICITY=["group-a", "group-b"])
-    with_race = harmonize_nhis(raw)
-    assert with_race["race_ethnicity"].tolist() == ["group-a", "group-b"]
+def test_racea_and_hispeth_derive_audit_only_bridge_categories() -> None:
+    harmonized = harmonize_nhis(_raw_nhis())
+    assert harmonized["race_ethnicity"].tolist() == [
+        "non_hispanic_white",
+        "mexican_american",
+    ]
+    assert harmonized["race_ethnicity_source"].eq("RACEA+HISPETH").all()
     assert mapping_roles()["race_ethnicity"] == "audit_only"
+
+
+def test_hispanic_ethnicity_precedes_racea_in_audit_derivation() -> None:
+    raw = _raw_nhis().iloc[[0]].copy()
+    raw["RACEA"] = 200
+    raw["HISPETH"] = 30
+
+    harmonized = harmonize_nhis(raw)
+
+    assert harmonized.loc[0, "race_ethnicity"] == "other_hispanic"

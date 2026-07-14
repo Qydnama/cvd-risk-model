@@ -1,5 +1,5 @@
 schema_version: 1
-generated_at: '2026-07-14T11:59:41.748197Z'
+generated_at: '2026-07-14T15:20:07.408380Z'
 files:
 - source: CDC/NCHS
   dataset: nhanes
@@ -931,3 +931,23 @@ files:
   size_bytes: 494268
   sha256: 588acea1d4cdf47a14cc9a35bd56e372739b8788d63ca0af98bf954c70c29905
   status: downloaded
+- source: IPUMS NHIS
+  dataset: nhis
+  period: 1997-2018
+  component: ipums_extract
+  url: https://nhis.ipums.org/nhis/
+  local_path: data/raw/nhis/nhis_00001.csv.gz
+  registered_at: '2026-07-14T15:20:07.274902Z'
+  size_bytes: 57899745
+  sha256: f6fbee8a4a033e2661f74dc7fc6d2fee0deda0648ca433d54d9a1348505ff36c
+  status: manual_input
+- source: IPUMS NHIS
+  dataset: nhis
+  period: 1997-2018
+  component: ipums_codebook
+  url: https://nhis.ipums.org/nhis/
+  local_path: data/raw/nhis/nhis_00001.xml
+  registered_at: '2026-07-14T15:20:07.408380Z'
+  size_bytes: 99202
+  sha256: 03201d7b52ef0fc32166789d0a21223ddfd46089f582d4a3024223400298ae72
+  status: manual_input

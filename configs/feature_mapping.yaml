@@ -1,20 +1,23 @@
 schema_version: 1
-source: IPUMS NHIS 1997-2014
+source: IPUMS NHIS 1997-2018
 
 # The implementation is fail-fast on unmapped codes. These mappings must still
 # be compared with the codebook delivered with the user's exact IPUMS extract.
 codebook_verification:
-  status: pending_user_extract
+  status: verified_against_user_extract
   required_before_cohort_audit: true
-  extract_sha256: null
-  codebook_sha256: null
+  reviewed_on: "2026-07-14"
+  extract_sha256: f6fbee8a4a033e2661f74dc7fc6d2fee0deda0648ca433d54d9a1348505ff36c
+  codebook_sha256: 03201d7b52ef0fc32166789d0a21223ddfd46089f582d4a3024223400298ae72
+  ddi_variable_count: 38
+  sample_years: [1997, 2018]
 
 variables:
   survey_year:
     source: YEAR
     role: design
     kind: integer
-    valid_range: [1997, 2014]
+    valid_range: [1997, 2018]
 
   participant_id:
     source: NHISPID
@@ -71,10 +74,12 @@ variables:
     # already contain the decimal, so scaling is conditional on abs(value)>=100.
     scale: 0.01
     apply_scale_when_abs_gte: 100
-    valid_range: [10, 99.8]
+    # Preserve released extreme values for the explicit plausibility audit.
+    # The live API keeps the narrower 10-99.8 input support.
+    valid_range: [1, 99.8]
     missing_codes:
       not_in_universe: [0]
-      unknown: [9999]
+      unknown: [99.99, 9999]
 
   smoking_status:
     source: SMOKESTATUS2
@@ -179,14 +184,16 @@ variables:
       1: true
       2: false
       3: false
+    missing_codes:
+      not_in_universe: [9]
 
   deceased:
     source: MORTSTAT
     role: outcome_component
     kind: boolean
     mapping:
-      0: false
       1: true
+      2: false
     missing_codes:
       not_in_universe: [9]
 
@@ -196,8 +203,7 @@ variables:
     kind: code
     width: 3
     missing_codes:
-      not_in_universe: [0, "000"]
-      unknown: [99, 999, "099", "999"]
+      not_in_universe: [96, "96", "096"]
 
   death_year:
     source: MORTDODY
@@ -205,8 +211,7 @@ variables:
     kind: integer
     valid_range: [1986, 2019]
     missing_codes:
-      not_in_universe: [0]
-      unknown: [9999]
+      not_in_universe: [9999]
 
   death_quarter:
     source: MORTDODQ
@@ -214,20 +219,20 @@ variables:
     kind: integer
     valid_range: [1, 4]
     missing_codes:
-      not_in_universe: [0]
-      unknown: [9]
+      not_in_universe: [9]
 
   race_ethnicity:
-    # Audit-only and optional. Never coalesce RACENEW/RACEA with HISPETH: the
-    # final cross-year field must be explicitly derived from both race and
-    # Hispanic-ethnicity codes after reviewing the exact extract codebook.
-    source_candidates: [RACE_ETHNICITY]
-    derivation_sources_pending_codebook_review: [RACEA, HISPETH]
+    # Audit-only five-category bridge to NHANES RIDRETH1. Hispanic ethnicity
+    # takes precedence; non-Hispanic race is then derived from RACEA.
+    derivation_sources: [RACEA, HISPETH]
     supplemental_sensitivity_sources: [RACENEW, RACEBR]
-    required: false
+    required: true
     role: audit_only
     kind: identity
-    comparability: not_harmonized_until_extract_codebook_review
+    categories:
+      [mexican_american, other_hispanic, non_hispanic_white,
+       non_hispanic_black, other_or_multiracial]
+    comparability: collapsed_bridge_for_nhanes_ridreth1_audit_only
 
 # Cross-source contract used to review stage-2 comparability. The executable
 # NHIS recodes remain under ``variables`` above; NHANES recodes are cycle-aware
@@ -242,7 +247,7 @@ cross_source_features:
       raw_names: [AGE]
       raw_codes: continuous_integer
       missing_rules: [dont_know_99_or_999]
-      years_available: [1997, 2014]
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_DEMO
       raw_names: [RIDAGEYR]
@@ -259,7 +264,7 @@ cross_source_features:
       raw_names: [SEX]
       raw_codes: {1: male, 2: female}
       missing_rules: [refused_7, not_ascertained_8, dont_know_9]
-      years_available: [1997, 2014]
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_DEMO
       raw_names: [RIAGENDR]
@@ -276,7 +281,7 @@ cross_source_features:
       raw_names: [BMI]
       raw_codes: numeric_with_possible_two_implied_decimals
       missing_rules: [not_in_universe_0, unknown_9999]
-      years_available: [1997, 2014]
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_BMX
       raw_names: [BMXBMI]
@@ -293,7 +298,7 @@ cross_source_features:
       raw_names: [SMOKESTATUS2]
       raw_codes: {10: current, 11: current, 12: current, 13: current, 20: former, 30: never}
       missing_rules: [not_in_universe_0, current_status_unknown_40, ever_smoked_unknown_90]
-      years_available: [1997, 2014]
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_SMQ
       raw_names: [SMQ020, SMQ040]
@@ -310,7 +315,7 @@ cross_source_features:
       raw_names: [HYPERTENEV]
       raw_codes: {1: false, 2: true}
       missing_rules: [not_in_universe_0, refused_7, not_ascertained_8, dont_know_9]
-      years_available: [1997, 2014]
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_BPQ
       raw_names: [BPQ020]
@@ -327,7 +332,7 @@ cross_source_features:
       raw_names: [DIABETICEV]
       raw_codes: {1: false, 2: true}
       missing_rules: [not_in_universe_0, borderline_3, refused_7, not_ascertained_8, dont_know_9]
-      years_available: [1997, 2014]
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_DIQ
       raw_names: [DIQ010]
@@ -344,7 +349,7 @@ cross_source_features:
       raw_names: [HEALTH]
       raw_codes: {1: excellent, 2: very_good, 3: good, 4: fair, 5: poor}
       missing_rules: [not_in_universe_0, refused_7, not_ascertained_8, dont_know_9]
-      years_available: [1997, 2014]
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_HUQ_or_HSQ
       raw_names: [HUQ010_1999_2000, HSD010_2001_2014]
@@ -358,17 +363,17 @@ cross_source_features:
     final_categories: pending_cross_source_codebook_review
     nhis:
       source: IPUMS_NHIS
-      raw_names: [RACE_ETHNICITY_or_RACEA_plus_HISPETH]
-      raw_codes: pending_exact_extract_codebook
+      raw_names: [RACEA, HISPETH]
+      raw_codes: exact_DDI_review_2026_07_14
       missing_rules: [preserve_all_codebook_missing_categories]
-      years_available: pending_exact_extract_codebook
+      years_available: [1997, 2018]
     nhanes:
       source: NHANES_DEMO
       raw_names: [RIDRETH1]
       raw_codes: {1: mexican_american, 2: other_hispanic, 3: non_hispanic_white, 4: non_hispanic_black, 5: other_or_multiracial}
       missing_rules: [refused_7, dont_know_9, sas_dot_is_missing]
       years_available: [1999-2000, 2013-2014]
-    comparability: Audit only; NHIS categories cannot be declared comparable before codebook review.
+    comparability: Audit only; collapsed five-category bridge aligned to NHANES RIDRETH1.
 
   systolic_bp:
     final_type: numeric_mmHg

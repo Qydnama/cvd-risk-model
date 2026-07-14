@@ -72,10 +72,10 @@ def validate_fast_feature_schema(
         boolean_observed: set[Any] = set(frame[column].dropna().unique().tolist())
         if not boolean_observed.issubset({False, True}):
             raise CanonicalSchemaError(f"{column} must contain only boolean values")
-    # NHANES contains measured BMI values above the NHIS/future-inference
-    # support (including 130.21 in 2005–2006). Preserve them for an explicit
-    # implausible-value audit rather than silently dropping or clipping them.
-    for column, minimum, maximum in (("age", 0, 120), ("bmi", 7, 150)):
+    # Survey sources contain released BMI values outside future-inference
+    # support (NHIS down to 6.6; NHANES up to 130.21). Preserve them for an
+    # explicit implausible-value audit rather than silently dropping/clipping.
+    for column, minimum, maximum in (("age", 0, 120), ("bmi", 1, 150)):
         numeric = pd.to_numeric(frame[column], errors="coerce")
         malformed = frame[column].notna() & numeric.isna()
         if malformed.any():

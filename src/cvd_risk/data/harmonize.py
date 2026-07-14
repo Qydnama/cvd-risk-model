@@ -72,7 +72,10 @@ def load_feature_mapping(path: str | Path = DEFAULT_MAPPING_PATH) -> dict[str, A
     for canonical, specification in variables.items():
         if not isinstance(specification, dict):
             raise HarmonizationError(f"Mapping for {canonical!r} must be a dictionary")
-        if "source" not in specification and "source_candidates" not in specification:
+        if not any(
+            key in specification
+            for key in ("source", "source_candidates", "derivation_sources")
+        ):
             raise HarmonizationError(f"Mapping for {canonical!r} has no source")
         if "kind" not in specification or "role" not in specification:
             raise HarmonizationError(f"Mapping for {canonical!r} must declare kind and role")
@@ -316,6 +319,116 @@ def _cast_canonical(series: pd.Series, kind: str, canonical: str) -> pd.Series:
     return series
 
 
+_MEXICAN_HISPETH_CODES = frozenset({20, 21, 22, 23, 24})
+_OTHER_HISPETH_CODES = frozenset({30, 40, 50, 60, 61, 62, 63, 64, 65, 66, 67, 70})
+_MISSING_HISPETH_CODES = frozenset({90, 91, 92, 93, 99})
+_WHITE_RACEA_CODES = frozenset({100})
+_BLACK_RACEA_CODES = frozenset({200})
+_OTHER_RACEA_CODES = frozenset(
+    {
+        300,
+        310,
+        320,
+        330,
+        340,
+        350,
+        400,
+        410,
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        420,
+        421,
+        422,
+        423,
+        430,
+        431,
+        432,
+        433,
+        434,
+        500,
+        510,
+        520,
+        530,
+        540,
+        550,
+        560,
+        570,
+        580,
+        600,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615,
+        616,
+        617,
+    }
+)
+_MISSING_RACEA_CODES = frozenset({900, 970, 980, 990})
+
+
+def _integral_code(value: Any, *, source: str) -> int:
+    if pd.isna(value):
+        raise HarmonizationError(f"{source}: missing value")
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError) as exc:
+        raise HarmonizationError(f"{source}: expected numeric code, got {value!r}") from exc
+    if not numeric.is_integer():
+        raise HarmonizationError(f"{source}: expected integer code, got {value!r}")
+    return int(numeric)
+
+
+def _derive_race_ethnicity(raw: pd.DataFrame) -> tuple[pd.Series, pd.Series, pd.Series]:
+    missing_sources = sorted({"RACEA", "HISPETH"}.difference(raw.columns))
+    if missing_sources:
+        raise HarmonizationError(
+            f"race_ethnicity: required derivation sources are absent: {missing_sources}"
+        )
+    raw_pairs = pd.Series(pd.NA, index=raw.index, dtype="string")
+    values = pd.Series(pd.NA, index=raw.index, dtype="string")
+    reasons = pd.Series(pd.NA, index=raw.index, dtype="string")
+    for index in raw.index:
+        race_value = raw.at[index, "RACEA"]
+        hisp_value = raw.at[index, "HISPETH"]
+        raw_pairs.at[index] = f"RACEA={race_value};HISPETH={hisp_value}"
+        if pd.isna(hisp_value):
+            reasons.at[index] = "hispeth_true_missing"
+            continue
+        hispeth = _integral_code(hisp_value, source="HISPETH")
+        if hispeth in _MEXICAN_HISPETH_CODES:
+            values.at[index] = "mexican_american"
+            continue
+        if hispeth in _OTHER_HISPETH_CODES:
+            values.at[index] = "other_hispanic"
+            continue
+        if hispeth in _MISSING_HISPETH_CODES:
+            reasons.at[index] = "hispeth_unknown_or_not_in_universe"
+            continue
+        if hispeth != 10:
+            raise HarmonizationError(f"HISPETH: unmapped source code {hispeth!r}")
+        if pd.isna(race_value):
+            reasons.at[index] = "racea_true_missing"
+            continue
+        racea = _integral_code(race_value, source="RACEA")
+        if racea in _WHITE_RACEA_CODES:
+            values.at[index] = "non_hispanic_white"
+        elif racea in _BLACK_RACEA_CODES:
+            values.at[index] = "non_hispanic_black"
+        elif racea in _OTHER_RACEA_CODES:
+            values.at[index] = "other_or_multiracial"
+        elif racea in _MISSING_RACEA_CODES:
+            reasons.at[index] = "racea_unknown"
+        else:
+            raise HarmonizationError(f"RACEA: unmapped source code {racea!r}")
+    return raw_pairs, values, reasons
+
+
 def harmonize_nhis(
     raw: pd.DataFrame,
     *,
@@ -350,6 +463,13 @@ def harmonize_nhis(
     output = pd.DataFrame(index=raw.index)
 
     for canonical, specification in document["variables"].items():
+        if canonical == "race_ethnicity":
+            raw_pairs, values, reasons = _derive_race_ethnicity(raw)
+            output["race_ethnicity_raw"] = raw_pairs
+            output["race_ethnicity_source"] = "RACEA+HISPETH"
+            output["race_ethnicity"] = values
+            output["race_ethnicity_missing_reason"] = reasons
+            continue
         source_values, provenance = _resolve_source(raw, canonical, specification)
         output[f"{canonical}_raw"] = source_values
         output[f"{canonical}_source"] = provenance

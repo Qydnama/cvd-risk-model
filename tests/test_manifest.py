@@ -16,7 +16,7 @@ def test_register_local_input_is_idempotent(tmp_path: Path) -> None:
         source,
         dataset="nhis",
         component="ipums_extract",
-        period="1997-2014",
+        period="1997-2018",
         source_url="https://nhis.ipums.org/nhis/",
     )
     second = register_local_input(
@@ -24,7 +24,7 @@ def test_register_local_input_is_idempotent(tmp_path: Path) -> None:
         source,
         dataset="nhis",
         component="ipums_extract",
-        period="1997-2014",
+        period="1997-2018",
         source_url="https://nhis.ipums.org/nhis/",
     )
     document = yaml.safe_load(manifest.read_text(encoding="utf-8"))

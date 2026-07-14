@@ -56,7 +56,7 @@ def main() -> int:
         inputs.data_path,
         dataset="nhis",
         component="ipums_extract",
-        period="1997-2014",
+        period="1997-2018",
         source_url="https://nhis.ipums.org/nhis/",
     )
     codebook_entry = register_local_input(
@@ -64,7 +64,7 @@ def main() -> int:
         inputs.codebook_path,
         dataset="nhis",
         component="ipums_codebook",
-        period="1997-2014",
+        period="1997-2018",
         source_url="https://nhis.ipums.org/nhis/",
     )
 
@@ -80,26 +80,46 @@ def main() -> int:
         f"- Years: {int(raw['YEAR'].min())}–{int(raw['YEAR'].max())}",
         f"- Mapping status: `{status}`",
         f"- Available race/ethnicity inputs: {available_race or 'none'}",
-        "",
-        "## Required manual review",
-        "",
-        "Compare every source code, label, missing category, question universe, "
-        "and year availability against this exact codebook. In particular review "
-        "yes/no direction, BMI scaling, smoking categories, mortality codes, "
-        "baseline-CVD fields, and race/ethnicity comparability.",
-        "",
-        "Only after that review may `configs/feature_mapping.yaml` be changed to:",
-        "",
-        "```yaml",
-        "codebook_verification:",
-        f"  status: {VERIFIED_CODEBOOK_STATUS}",
-        "  required_before_cohort_audit: true",
-        f"  extract_sha256: {extract_entry['sha256']}",
-        f"  codebook_sha256: {codebook_entry['sha256']}",
-        "```",
-        "",
-        "This inspection command intentionally does not approve the mapping.",
     ]
+    if status == VERIFIED_CODEBOOK_STATUS:
+        verify_codebook_binding(
+            inputs.data_path,
+            inputs.codebook_path,
+            mapping_path=args.mapping,
+        )
+        lines.extend(
+            [
+                "",
+                "## Verification result",
+                "",
+                "PASS: mapping was manually reviewed and is bound to these exact "
+                "extract/DDI SHA-256 digests.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "",
+                "## Required manual review",
+                "",
+                "Compare every source code, label, missing category, question universe, "
+                "and year availability against this exact codebook. In particular review "
+                "yes/no direction, BMI scaling, smoking categories, mortality codes, "
+                "baseline-CVD fields, and race/ethnicity comparability.",
+                "",
+                "Only after that review may `configs/feature_mapping.yaml` be changed to:",
+                "",
+                "```yaml",
+                "codebook_verification:",
+                f"  status: {VERIFIED_CODEBOOK_STATUS}",
+                "  required_before_cohort_audit: true",
+                f"  extract_sha256: {extract_entry['sha256']}",
+                f"  codebook_sha256: {codebook_entry['sha256']}",
+                "```",
+                "",
+                "This inspection command intentionally does not approve the mapping.",
+            ]
+        )
     args.report.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Wrote {args.report}")
 
@@ -109,11 +129,6 @@ def main() -> int:
             "NHIS cohort construction remains blocked."
         )
         return 2
-    verify_codebook_binding(
-        inputs.data_path,
-        inputs.codebook_path,
-        mapping_path=args.mapping,
-    )
     print("PASS: mapping is bound to this exact extract and codebook.")
     return 0
 

@@ -80,7 +80,7 @@ def main() -> int:
         inputs.data_path,
         dataset="nhis",
         component="ipums_extract",
-        period="1997-2014",
+        period="1997-2018",
         source_url="https://nhis.ipums.org/nhis/",
     )
     register_local_input(
@@ -88,7 +88,7 @@ def main() -> int:
         inputs.codebook_path,
         dataset="nhis",
         component="ipums_codebook",
-        period="1997-2014",
+        period="1997-2018",
         source_url="https://nhis.ipums.org/nhis/",
     )
     print(f"NHIS cohort: {len(cohort):,} participants -> {output}")

@@ -23,6 +23,8 @@ REQUIRED_NHIS_COLUMNS: tuple[str, ...] = (
     "HYPERTENEV",
     "DIABETICEV",
     "HEALTH",
+    "RACEA",
+    "HISPETH",
     "CHEARTDIEV",
     "ANGIPECEV",
     "HEARTATTEV",
@@ -161,7 +163,7 @@ def _numeric_series(frame: pd.DataFrame, column: str) -> pd.Series:
 def validate_nhis_schema(
     frame: pd.DataFrame,
     *,
-    allowed_years: Iterable[int] = range(1997, 2015),
+    allowed_years: Iterable[int] = range(1997, 2019),
     require_all_years: bool = False,
 ) -> None:
     """Validate names and structural invariants without recoding any values."""
@@ -187,7 +189,7 @@ def validate_nhis_schema(
     observed = {int(value) for value in year.unique()}
     unexpected = sorted(observed.difference(allowed))
     if unexpected:
-        raise NHISInputError(f"NHIS extract contains years outside 1997-2014: {unexpected}")
+        raise NHISInputError(f"NHIS extract contains years outside 1997-2018: {unexpected}")
     if require_all_years:
         absent = sorted(allowed.difference(observed))
         if absent:
