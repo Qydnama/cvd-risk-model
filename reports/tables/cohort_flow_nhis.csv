@@ -1,0 +1,9 @@
+step_order,step,n_participants,removed_from_previous
+0,raw harmonized records,2061980,0
+1,survey year in locked split,1710059,351921
+2,known age,1710059,0
+3,age 40-79,682811,1027248
+4,mortality linkage eligible,630161,52650
+5,exclude prevalent CVD,595389,34772
+6,baseline CVD status known absent,261170,334219
+7,known unambiguous five-year outcome,260980,190

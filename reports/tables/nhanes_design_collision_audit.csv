@@ -1,0 +1,3 @@
+check,observed,minimum,status,detail
+published_strata_psu_pairs_repeated_across_cycles,0,0,pass,"Published (SDMVSTRA, SDMVPSU) pairs are used as released; cycle was not appended."
+automatic_cycle_interaction_forbidden,False,False,pass,No cycle interaction was added to strata or PSU identifiers.

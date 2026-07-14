@@ -19,6 +19,7 @@ def test_register_local_input_is_idempotent(tmp_path: Path) -> None:
         period="1997-2018",
         source_url="https://nhis.ipums.org/nhis/",
     )
+    first_bytes = manifest.read_bytes()
     second = register_local_input(
         manifest,
         source,
@@ -29,4 +30,5 @@ def test_register_local_input_is_idempotent(tmp_path: Path) -> None:
     )
     document = yaml.safe_load(manifest.read_text(encoding="utf-8"))
     assert len(document["files"]) == 1
-    assert first["sha256"] == second["sha256"]
+    assert first == second
+    assert manifest.read_bytes() == first_bytes

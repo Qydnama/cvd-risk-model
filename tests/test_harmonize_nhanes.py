@@ -29,7 +29,7 @@ def _raw_nhanes() -> pd.DataFrame:
             "SMQ040": [pd.NA, 3, 1],
             "BPQ020": [2, 1, 7],
             "DIQ010": [2, 3, 1],
-            "HUQ010": [1, pd.NA, pd.NA],
+            "HUQ010": [1, 4, 5],
             "HSD010": [pd.NA, 4, 5],
             "MCQ160B": [2, 2, 2],
             "MCQ160C": [2, 2, 9],
@@ -65,7 +65,14 @@ def test_harmonizes_fast_features_design_and_audit_race_with_provenance() -> Non
     assert result["sex"].tolist() == ["male", "female", "male"]
     assert result["smoking_status"].tolist() == ["never", "former", "current"]
     assert result["general_health"].tolist() == ["excellent", "fair", "poor"]
-    assert result["general_health_source"].tolist() == ["HUQ010", "HSD010", "HSD010"]
+    assert result["general_health_source"].tolist() == ["HUQ010", "HUQ010", "HUQ010"]
+    assert pd.isna(result.loc[0, "general_health_hsd_sensitivity"])
+    assert result["general_health_hsd_sensitivity"].tolist()[1:] == ["fair", "poor"]
+    assert result.loc[0, "general_health_hsd_sensitivity_source"] == "EXPECTED_NOT_AVAILABLE"
+    assert (
+        result.loc[0, "general_health_hsd_sensitivity_missing_reason"]
+        == "expected_not_available"
+    )
     assert result["race_ethnicity"].tolist() == [
         "mexican_american",
         "non_hispanic_white",
@@ -164,6 +171,14 @@ def test_1999_requires_huq010_not_later_hsd010() -> None:
     raw = _raw_nhanes().drop(columns="HUQ010")
 
     with pytest.raises(NHANESHarmonizationError, match="1999-2000.*HUQ010"):
+        harmonize_nhanes(raw)
+
+
+def test_later_cycles_also_require_huq010_as_primary_general_health() -> None:
+    raw = _raw_nhanes().drop(columns="HUQ010")
+    raw = raw.loc[raw["CYCLE"].eq("2003-2004")]
+
+    with pytest.raises(NHANESHarmonizationError, match="2003-2004.*HUQ010"):
         harmonize_nhanes(raw)
 
 

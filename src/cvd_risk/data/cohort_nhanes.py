@@ -12,7 +12,9 @@ from cvd_risk.data.cohort import (
     derive_baseline_cvd_status,
     derive_nhanes_cvd_outcome,
 )
-from cvd_risk.data.harmonize import BASELINE_CVD_COLUMNS
+from cvd_risk.data.harmonize import (
+    SENSITIVITY_BASELINE_CVD_COLUMNS,
+)
 from cvd_risk.data.harmonize_nhanes import NHANES_CYCLE_START_YEAR
 
 
@@ -64,7 +66,7 @@ def annotate_nhanes_cohort(frame: pd.DataFrame) -> pd.DataFrame:
         "MORTSTAT",
         "UCOD_LEADING",
         "PERMTH_INT",
-        *BASELINE_CVD_COLUMNS,
+        *SENSITIVITY_BASELINE_CVD_COLUMNS,
     }
     _require_columns(frame, required, "NHANES cohort input")
     if frame["participant_id"].isna().any():
@@ -74,6 +76,10 @@ def annotate_nhanes_cohort(frame: pd.DataFrame) -> pd.DataFrame:
 
     annotated = derive_nhanes_cvd_outcome_with_complete_followup(frame)
     annotated["baseline_cvd_status"] = derive_baseline_cvd_status(annotated)
+    annotated["baseline_cvd_status_with_chf"] = derive_baseline_cvd_status(
+        annotated,
+        condition_columns=SENSITIVITY_BASELINE_CVD_COLUMNS,
+    )
     cycle = annotated["survey_cycle"].astype("string")
     valid_cycle = cycle.isin(NHANES_CYCLE_START_YEAR)
     expected_year = cycle.map(NHANES_CYCLE_START_YEAR)
@@ -103,6 +109,10 @@ def annotate_nhanes_cohort(frame: pd.DataFrame) -> pd.DataFrame:
     for values in flags.values():
         eligible &= values.astype(bool)
     annotated["cohort_eligible"] = eligible.astype(bool)
+    annotated["chf_sensitivity_available"] = True
+    annotated["cohort_chf_sensitivity_eligible"] = (
+        eligible & annotated["baseline_cvd_status_with_chf"].eq("absent")
+    ).astype(bool)
 
     exclusion_reason = pd.Series(pd.NA, index=annotated.index, dtype="string")
     ordered_reasons = (

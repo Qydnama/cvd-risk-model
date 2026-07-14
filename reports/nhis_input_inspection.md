@@ -17,12 +17,7 @@
 | `angina_pectoris` | 1997–2018 |
 | `myocardial_infarction` | 1997–2018 |
 | `stroke` | 1997–2018 |
-| `congestive_heart_failure` | 1999, 2002 |
 
 ## Verification result
 
 PASS: mapping was manually reviewed and is bound to these exact extract/DDI SHA-256 digests.
-
-## Cohort-contract result
-
-BLOCKED: at least one required baseline-CVD exclusion is not available in every 1997–2014 primary year. See `configs/protocol_discrepancies.yaml` before cohort construction.

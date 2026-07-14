@@ -17,6 +17,10 @@ BASELINE_CVD_COLUMNS: tuple[str, ...] = (
     "angina_pectoris",
     "myocardial_infarction",
     "stroke",
+)
+
+SENSITIVITY_BASELINE_CVD_COLUMNS: tuple[str, ...] = (
+    *BASELINE_CVD_COLUMNS,
     "congestive_heart_failure",
 )
 
@@ -64,7 +68,12 @@ def load_feature_mapping(path: str | Path = DEFAULT_MAPPING_PATH) -> dict[str, A
         raise HarmonizationError("feature_mapping.yaml must contain a non-empty variables map")
 
     required_canonical = set(
-        (*DESIGN_COLUMNS, *FAST_FEATURES, *BASELINE_CVD_COLUMNS, *OUTCOME_COMPONENT_COLUMNS)
+        (
+            *DESIGN_COLUMNS,
+            *FAST_FEATURES,
+            *SENSITIVITY_BASELINE_CVD_COLUMNS,
+            *OUTCOME_COMPONENT_COLUMNS,
+        )
     )
     missing = sorted(required_canonical.difference(variables))
     if missing:
@@ -521,7 +530,12 @@ def validate_harmonized_nhis(frame: pd.DataFrame) -> None:
     """Validate the canonical contract required by the cohort builder."""
 
     required = set(
-        (*DESIGN_COLUMNS, *FAST_FEATURES, *BASELINE_CVD_COLUMNS, *OUTCOME_COMPONENT_COLUMNS)
+        (
+            *DESIGN_COLUMNS,
+            *FAST_FEATURES,
+            *SENSITIVITY_BASELINE_CVD_COLUMNS,
+            *OUTCOME_COMPONENT_COLUMNS,
+        )
     )
     missing = sorted(required.difference(frame.columns))
     if missing:

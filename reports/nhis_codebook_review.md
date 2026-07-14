@@ -28,6 +28,11 @@ Review date: 2026-07-14
   categories: Mexican American, other Hispanic, non-Hispanic White,
   non-Hispanic Black, and other/multiracial. Hispanic ethnicity takes
   precedence over race.
+- The primary prevalent-CVD exclusion uses coronary heart disease, angina,
+  myocardial infarction, and stroke. Congestive heart failure is retained only
+  for the pre-specified sensitivity cohort because `CONHFAILEV` is available in
+  this extract only for 1999 and 2002; NIU in other years is never interpreted
+  as a negative response.
 
 ## Observed-code coverage
 

@@ -24,6 +24,10 @@
 - lonely PSU, design degrees of freedom, boundary prevalence и invalid variance получают точные blocker/status rules;
 - event floors фиксируются по route: `500/500/200/200`, temporal `200`, external `100`;
 - complete-case и imputation policy разделяются для `minimal`, `clinical_core` и paired `clinical_hba1c` analysis.
+- primary prevalent-CVD exclusion использует одинаковые четыре стабильно доступные
+  категории в NHIS и NHANES: coronary heart disease, angina, myocardial infarction
+  и stroke. `CONHFAILEV` доступна в NHIS только в 1999/2002 и поэтому сохраняется
+  только для CHF sensitivity/audit; NIU никогда не трактуется как отсутствие CHF.
 
 ## 1. Как использовать этот файл
 
@@ -259,7 +263,10 @@ data/raw/nhis/
 - `ANGIPECEV`
 - `HEARTATTEV`
 - `STROKEV`
-- `CONHFAILEV`
+
+CHF sensitivity/audit-only:
+
+- `CONHFAILEV` (доступна только в 1999 и 2002; NIU в остальных годах не означает No)
 
 #### Исход
 
@@ -339,12 +346,18 @@ Primary и recent cohorts должны формироваться разными
 - coronary heart disease;
 - angina pectoris;
 - myocardial infarction / heart attack;
-- stroke;
-- congestive heart failure.
+- stroke.
 
-NHIS-переменные: `CHEARTDIEV`, `ANGIPECEV`, `HEARTATTEV`, `STROKEV`, `CONHFAILEV`.
+Primary NHIS-переменные: `CHEARTDIEV`, `ANGIPECEV`, `HEARTATTEV`, `STROKEV`.
 
-NHANES-переменные: `MCQ160C`, `MCQ160D`, `MCQ160E`, `MCQ160F`, `MCQ160B`. Codex должен проверить одинаковость кодов и доступность во всех циклах.
+Primary NHANES-переменные: `MCQ160C`, `MCQ160D`, `MCQ160E`, `MCQ160F`.
+
+Congestive heart failure не входит в primary exclusion, чтобы primary population
+определялась одинаково во всех годах и источниках. `CONHFAILEV` используется только
+в NHIS sensitivity subset 1999/2002; NIU в других годах остается unknown. `MCQ160B`
+сохраняется в NHANES и используется для параллельной CHF-strict sensitivity cohort.
+Primary и CHF-strict results нельзя смешивать, а ограничение доступности должно быть
+явно указано в cohort flow, limitations и model card.
 
 ### Не менять возрастной диапазон автоматически
 
@@ -1035,6 +1048,8 @@ PERMTH_EXM   46–48
 - для 1999–2000 подтвердить `HSD010 = EXPECTED_NOT_AVAILABLE`; отсутствие не является download/schema error;
 - отдельно сохранить raw value, canonical value и missing reason;
 - создать таблицу доступности признаков по годам/циклам;
+- сохранить CHF как sensitivity-only поле и построить отдельные CHF-strict flags:
+  NHIS только для 1999/2002, NHANES для всех primary cycles;
 - проверить диапазоны и единицы измерения;
 - реализовать и протестировать преобразования единиц для общего холестерина, HDL и HbA1c;
 - реализовать точные formulas и tolerances из раздела 10 и отдельный тест `sbp_mean` для 1, 2, 3 и 4 доступных readings;
@@ -1058,6 +1073,7 @@ PERMTH_EXM   46–48
 - `reports/tables/nhanes_weight_audit.csv`;
 - `reports/tables/huq_hsd_disagreement.csv`;
 - `reports/tables/clinical_availability_by_cycle.csv`;
+- `reports/tables/baseline_cvd_sensitivity.csv`;
 - `reports/tables/sample_size_gate.csv`;
 - `reports/tables/survey_design_precision.csv`;
 - `reports/tables/effective_sample_size.csv`;
@@ -1329,6 +1345,8 @@ seed = 20260714
 - `HUQ010` является primary general-health source, а `HSD010` проверен отдельно;
 - `HSD010` 1999–2000 корректно маркирован `EXPECTED_NOT_AVAILABLE`;
 - target и exclusions покрыты unit tests;
+- primary exclusion одинаково использует четыре состояния в NHIS/NHANES, а CHF
+  sensitivity не трактует NIU как отсутствие заболевания;
 - hard sample-size stop-gate пройден или выпущен честный feasibility report без обучения;
 - pre-amendment NHANES labelled artifact зарегистрирован, quarantined и заблокирован по path/SHA; v2.4 cohorts построены заново из raw sources;
 - access manifest честно фиксирует прежнюю техническую доступность labels и известные aggregate `N/events`;

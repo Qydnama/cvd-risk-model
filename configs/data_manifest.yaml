@@ -1,5 +1,5 @@
 schema_version: 1
-generated_at: '2026-07-14T15:20:07.408380Z'
+generated_at: '2026-07-14T16:09:29.718095Z'
 files:
 - source: CDC/NCHS
   dataset: nhanes
@@ -951,3 +951,73 @@ files:
   size_bytes: 99202
   sha256: 03201d7b52ef0fc32166789d0a21223ddfd46089f582d4a3024223400298ae72
   status: manual_input
+- source: CDC/NCHS
+  dataset: nhanes
+  cycle: 2001-2002
+  component: HUQ
+  url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/HUQ_B.xpt
+  local_path: data/raw/nhanes/2001-2002/HUQ_B.xpt
+  downloaded_at: '2026-07-14T16:09:22.444654Z'
+  size_bytes: 1416000
+  sha256: 7aa9a5704fe50abcec2f4fa5c379b512478a0adce12a36b15da9f81b1ec7a78f
+  status: downloaded
+- source: CDC/NCHS
+  dataset: nhanes
+  cycle: 2003-2004
+  component: HUQ
+  url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/HUQ_C.xpt
+  local_path: data/raw/nhanes/2003-2004/HUQ_C.xpt
+  downloaded_at: '2026-07-14T16:09:24.048865Z'
+  size_bytes: 1298640
+  sha256: 2d65b7ee533b2b09c5bdfaab29db3f188dd77cf77a7fcc800c74d4d538702dd3
+  status: downloaded
+- source: CDC/NCHS
+  dataset: nhanes
+  cycle: 2005-2006
+  component: HUQ
+  url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/HUQ_D.xpt
+  local_path: data/raw/nhanes/2005-2006/HUQ_D.xpt
+  downloaded_at: '2026-07-14T16:09:25.312822Z'
+  size_bytes: 830000
+  sha256: 2713343d7f182a01f72d25da7d3efec34936fa0bc3e3c62f15a107a3b8b37b40
+  status: downloaded
+- source: CDC/NCHS
+  dataset: nhanes
+  cycle: 2007-2008
+  component: HUQ
+  url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HUQ_E.xpt
+  local_path: data/raw/nhanes/2007-2008/HUQ_E.xpt
+  downloaded_at: '2026-07-14T16:09:26.381445Z'
+  size_bytes: 814080
+  sha256: 6280e8f2062b2e8aa717848e4cc5a635dec01b871ef0efff5287fdb126abcc49
+  status: downloaded
+- source: CDC/NCHS
+  dataset: nhanes
+  cycle: 2009-2010
+  component: HUQ
+  url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HUQ_F.xpt
+  local_path: data/raw/nhanes/2009-2010/HUQ_F.xpt
+  downloaded_at: '2026-07-14T16:09:27.543785Z'
+  size_bytes: 845120
+  sha256: cd710fb631d5918b3557428811b7f2cb1332c305163ea5563143ac45ff7bd4b2
+  status: downloaded
+- source: CDC/NCHS
+  dataset: nhanes
+  cycle: 2011-2012
+  component: HUQ
+  url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HUQ_G.xpt
+  local_path: data/raw/nhanes/2011-2012/HUQ_G.xpt
+  downloaded_at: '2026-07-14T16:09:28.596858Z'
+  size_bytes: 782640
+  sha256: b9ef438747fdc746185a2eb0bec9e63e36212efdc774f2c8bec7f680a60ee924
+  status: downloaded
+- source: CDC/NCHS
+  dataset: nhanes
+  cycle: 2013-2014
+  component: HUQ
+  url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HUQ_H.xpt
+  local_path: data/raw/nhanes/2013-2014/HUQ_H.xpt
+  downloaded_at: '2026-07-14T16:09:29.718095Z'
+  size_bytes: 816160
+  sha256: a35e8ca0c5b7ca6a86a8d787cbd0c3132a10ef5f66b8b432c57885f7bbaa04dd
+  status: downloaded

@@ -52,16 +52,16 @@ HARMONIZATION_DIFFERENCES: tuple[dict[str, str], ...] = (
     {
         "feature": "general_health",
         "nhis_measurement": "HEALTH",
-        "nhanes_measurement": "1999–2000 HUQ010; 2001–2014 HSD010",
+        "nhanes_measurement": "HUQ010 in every 1999–2014 cycle; HSD010 sensitivity-only",
         "comparability": "common ordered excellent→poor labels after cycle check",
-        "required_action": "download HUQ.xpt for 1999 rather than HSQ.xpt",
+        "required_action": "report label-free HUQ/HSD disagreement; never backfill HUQ from HSD",
     },
     {
         "feature": "race_ethnicity",
-        "nhis_measurement": "requires explicit derivation from race + ethnicity",
+        "nhis_measurement": "verified five-category bridge from RACEA + HISPETH",
         "nhanes_measurement": "RIDRETH1 audit categories",
-        "comparability": "audit-only; categories are not automatically equivalent",
-        "required_action": "defer NHIS derivation until exact IPUMS codebook review",
+        "comparability": "audit-only collapsed bridge; historical classifications differ",
+        "required_action": "exclude from predictors and retain subgroup limitations",
     },
     {
         "feature": "outcome_timing",

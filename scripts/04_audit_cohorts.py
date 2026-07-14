@@ -83,6 +83,7 @@ def main() -> int:
     )
     reports_dir = args.reports_dir or configured_table_dir.parent
     race_config = config.get("audit", {}).get("race_ethnicity", {})
+    pmsampsize_config = stop_gate_config.get("pmsampsize", {})
     try:
         result = run_stage3_audit(
             nhis_cohort_path=nhis_cohort,
@@ -100,6 +101,15 @@ def main() -> int:
             race_ethnicity_audit_enabled=bool(race_config.get("enabled", True)),
             race_minimum_events=int(race_config.get("minimum_events_per_group", 20)),
             race_minimum_non_events=int(race_config.get("minimum_non_events_per_group", 20)),
+            r2_fraction=float(
+                pmsampsize_config.get("expected_r2_fraction_of_max", 0.15)
+            ),
+            pmsampsize_parameters=int(pmsampsize_config.get("parameters", 15)),
+            pmsampsize_shrinkage=float(pmsampsize_config.get("shrinkage", 0.90)),
+            risk_ci_max_half_width=float(
+                stop_gate_config.get("risk_ci_max_half_width", 0.0025)
+            ),
+            minimum_design_df=int(stop_gate_config.get("minimum_design_df", 8)),
             overwrite=args.force,
         )
     except FileNotFoundError as exc:

@@ -28,6 +28,7 @@ def test_r_reference_scaffold_is_present() -> None:
         Path("scripts/r/pmsampsize_reference.R"),
         Path("scripts/r/pmvalsampsize_reference.R"),
         Path("scripts/r/run_reference_tests.R"),
+        Path("scripts/r/survey_design_gate.R"),
         Path("tests/fixtures/r/survey_binary.csv"),
         Path("tests/fixtures/r/survey_binary_expected.csv"),
         Path("tests/fixtures/r/sample_size_expected.csv"),

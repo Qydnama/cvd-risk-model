@@ -26,7 +26,7 @@ discrepancies:
 
   - id: nhis_congestive_heart_failure_availability
     title: NHIS congestive-heart-failure exclusion is unavailable in most primary years
-    status: awaiting_user_decision
+    status: resolved
     blocking: true
     locked_protocol_rule: >-
       Amendment 2.4 requires exclusion of baseline congestive heart failure together
@@ -43,6 +43,11 @@ discrepancies:
       Retain CONHFAILEV only for a documented 1999/2002 sensitivity audit. An
       alternative is the broader HEARTCONEV surrogate, but it is not equivalent to
       congestive heart failure and would require a new IPUMS extract and amendment.
-    resolution: null
+    resolution: >-
+      Resolved by explicit user approval on 2026-07-14. The primary NHIS and
+      NHANES cohorts use the same four consistently measured exclusions: coronary
+      heart disease, angina, myocardial infarction, and stroke. CONHFAILEV remains
+      unknown outside 1999/2002 and is used only for an NHIS 1999/2002 CHF-strict
+      sensitivity subset; MCQ160B is retained for the parallel NHANES sensitivity.
     official_sources:
       - https://nhis.ipums.org/nhis-action/variables/170854

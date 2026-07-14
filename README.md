@@ -64,6 +64,12 @@ data/raw/nhis/
 2015–2018 сохраняются отдельно как `recent_censored` и не добавляются в
 пятилетний binary outcome.
 
+Primary prevalent-CVD exclusion одинаков для NHIS и NHANES и включает coronary
+heart disease, angina, myocardial infarction и stroke. `CONHFAILEV` в NHIS
+доступна только в 1999/2002, поэтому CHF сохраняется как sensitivity-only:
+NIU не считается отсутствием заболевания. Параллельный CHF-strict флаг строится
+для NHIS 1999/2002 и NHANES 1999–2014.
+
 Для race/ethnicity audit добавьте в extract согласованные IPUMS-переменные расы и
 этничности и сохраните их labels/codebook. До сверки codebook неизвестные числовые
 коды нельзя интерпретировать как категории.
@@ -138,7 +144,8 @@ development, stop-gate и обучения.
 ## Обязательный stop-gate
 
 До этапа моделирования `make audit` должен создать cohort flow, event counts,
-missingness, feature availability и диагностические графики. Минимальные желательные
+missingness, feature availability, CHF sensitivity, R/Taylor survey precision,
+DEFF, design/Kish ESS, `pmsampsize` gate и диагностические графики. Минимальные желательные
 числа событий: 500 в NHIS development, 200 в NHIS temporal test и 100 в NHANES
 external validation. Также проверяются 20 событий на каждый предварительно
 зафиксированный effective degree of freedom логистической модели.

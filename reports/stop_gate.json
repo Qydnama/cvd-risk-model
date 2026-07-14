@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-14T16:14:19.553622Z",
+  "ready_for_modeling": true,
+  "summary": "PASS: all pre-specified feasibility checks passed.",
+  "effective_degrees_of_freedom": 20,
+  "policy": "Temporal/external labels were accessed only for the pre-specified feasibility audit; they remain prohibited for model selection.",
+  "nhis_codebook_binding": {
+    "extract_sha256": "f6fbee8a4a033e2661f74dc7fc6d2fee0deda0648ca433d54d9a1348505ff36c",
+    "codebook_sha256": "03201d7b52ef0fc32166789d0a21223ddfd46089f582d4a3024223400298ae72",
+    "feature_mapping_sha256": "347e19239f80b66b07cc69395954a65598bf3e4c6511ee389db0e89c57bb74ac"
+  },
+  "race_ethnicity_audit_enabled": true,
+  "race_ethnicity_audit_ready": true,
+  "heldout_race_ethnicity_labels_sealed": true,
+  "protocol_discrepancies_ready": true,
+  "unresolved_blocking_protocol_discrepancies": [],
+  "inputs": {
+    "nhis_cohort": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\processed\\nhis_cohort.parquet",
+      "size_bytes": 8714545,
+      "sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b"
+    },
+    "nhanes_cohort": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\processed\\nhanes_cohort_v2_4.parquet",
+      "size_bytes": 2009905,
+      "sha256": "ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964"
+    },
+    "nhis_flow": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\interim\\nhis_cohort_flow.csv",
+      "size_bytes": 368,
+      "sha256": "5f272b42e93f89b10ee91ee724de876667fc9a242f5885519bfc1b45c63c5bcd"
+    },
+    "nhanes_flow": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\interim\\nhanes_cohort_flow.csv",
+      "size_bytes": 424,
+      "sha256": "dba4702acdaa4d6350972ba0192e293404589d55e56844632a5b3e2c286f61d7"
+    },
+    "protocol_discrepancies": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\protocol_discrepancies.yaml",
+      "size_bytes": 2868,
+      "sha256": "52716af4d48def87cc091b7985d26d50391f119040e77789958f4d13a5e7de02"
+    },
+    "experiment_config": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\experiment.yaml",
+      "size_bytes": 4954,
+      "sha256": "5e4a6a89bf6419ac180430d6e66775f83fca8836b057768a083660c9718bcbd4"
+    },
+    "research_protocol": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md",
+      "size_bytes": 107827,
+      "sha256": "c57ab77c2f36f30f9180c1595c30dedf1ac9a9919f7f810511c888d6348a28ce"
+    },
+    "feature_mapping": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\feature_mapping.yaml",
+      "size_bytes": 12719,
+      "sha256": "347e19239f80b66b07cc69395954a65598bf3e4c6511ee389db0e89c57bb74ac"
+    },
+    "harmonization_differences_input": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\interim\\harmonization_differences.csv",
+      "size_bytes": 2310,
+      "sha256": "b3271eab773ea30fc035b2a22f3155a868e7cab22280bf0ae2e32a67b3a187f3"
+    }
+  },
+  "outputs": {
+    "cohort_flow_nhis": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\cohort_flow_nhis.csv",
+      "size_bytes": 368,
+      "sha256": "5f272b42e93f89b10ee91ee724de876667fc9a242f5885519bfc1b45c63c5bcd"
+    },
+    "cohort_flow_nhanes": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\cohort_flow_nhanes.csv",
+      "size_bytes": 424,
+      "sha256": "dba4702acdaa4d6350972ba0192e293404589d55e56844632a5b3e2c286f61d7"
+    },
+    "event_counts": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\event_counts.csv",
+      "size_bytes": 533,
+      "sha256": "794a4a115a9bda09f74a2e3abe6014572449838bb2f17420f97e9f63cbd1724c"
+    },
+    "missingness_by_source": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\missingness_by_source.csv",
+      "size_bytes": 5483,
+      "sha256": "0055d47cd710cc2da6b474a39996d0499a07471bd8a63eb2495dbc9f193d69e1"
+    },
+    "feature_availability": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\feature_availability.csv",
+      "size_bytes": 16299,
+      "sha256": "a1a1f112c1d90d99491a091d3f3ebe2c91d98d5eb74f0a498cdd969e35cd4058"
+    },
+    "data_discrepancies": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\data_discrepancies.csv",
+      "size_bytes": 51,
+      "sha256": "1a80c5c8eb552f64f60d6e6bbe2c4538adaad9daf8fe8f52e8795fcfb318c533"
+    },
+    "harmonization_differences": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\harmonization_differences.csv",
+      "size_bytes": 2310,
+      "sha256": "b3271eab773ea30fc035b2a22f3155a868e7cab22280bf0ae2e32a67b3a187f3"
+    },
+    "race_ethnicity_event_counts": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\race_ethnicity_event_counts.csv",
+      "size_bytes": 1593,
+      "sha256": "53749e7e4d653cb51cc4475891916471f4c6f922d00fa6b908a360a62378159c"
+    },
+    "protocol_discrepancies_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\protocol_discrepancies.csv",
+      "size_bytes": 2429,
+      "sha256": "a108b1fd36058a7cda8ef8a3926e982ee5a9ef49c41ce4e44ec5b3c130ca4651"
+    },
+    "baseline_cvd_sensitivity": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\baseline_cvd_sensitivity.csv",
+      "size_bytes": 258,
+      "sha256": "0eb35d38613a061fa4f321048663b54512a0125ce82cbe3416a0887ebb2908aa"
+    },
+    "survey_design_precision": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\survey_design_precision.csv",
+      "size_bytes": 896,
+      "sha256": "3a0945cf375bdd5978b2accc85423fa44ce03f03df58176d08a9c4f9e85b87a8"
+    },
+    "effective_sample_size": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\effective_sample_size.csv",
+      "size_bytes": 339,
+      "sha256": "6c5220b93714ffd9aa49f59abcbb7e320997ff46e952159be81191eb50eb791c"
+    },
+    "sample_size_gate": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\sample_size_gate.csv",
+      "size_bytes": 168,
+      "sha256": "ef6b291ba504b4ed85f528ee97da6443cf3720ad077eae961945779e15ba5df7"
+    },
+    "nhanes_design_collision_audit": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\nhanes_design_collision_audit.csv",
+      "size_bytes": 299,
+      "sha256": "fa8d0b79b5b02c802fb9ee7a460f0a4b41d8013881f3771eeb58d6bdd3336087"
+    },
+    "huq_hsd_disagreement": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\huq_hsd_disagreement.csv",
+      "size_bytes": 10089,
+      "sha256": "532ddceb6ddd1b4e15e490b67f7cdf92ad28fa4da143fe727d984f67d108c5bf"
+    },
+    "stop_gate_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stop_gate.csv",
+      "size_bytes": 882,
+      "sha256": "f3ae6de885b5b371a95bdca5ad9053960ea27002fcb87d34d77b5dbb3840d21b"
+    },
+    "outcome_by_year_nhis_development": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\figures\\outcome_by_year_nhis_development.png",
+      "size_bytes": 106431,
+      "sha256": "7d9c2b221aff016ca3f36cf972cb3e9cbb34ab4559ec69cfbf68808fd8dd84b6"
+    },
+    "age_distribution": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\figures\\age_distribution.png",
+      "size_bytes": 42499,
+      "sha256": "3f236725f4ba09fba9f8c6477f1bf88c95bb27d36b8de2b8c1899856ec20845d"
+    },
+    "feasibility_report": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\feasibility_report.md",
+      "size_bytes": 42314,
+      "sha256": "2728c92e732bfe530f6d703ae8a16082457447f53bece1e85d1e66e91d5ad2f4"
+    }
+  }
+}

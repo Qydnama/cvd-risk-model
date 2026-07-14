@@ -1,0 +1,16 @@
+check,observed,minimum,status
+events:nhis_development,2036.0,500,pass
+events:nhis_temporal_test,834.0,200,pass
+events:nhanes_external,255.0,100,pass
+events_per_effective_df:nhis_development,101.8,20,pass
+risk_precision:nhis_development,0.0005351375787263,0.0025,pass
+design_df:nhis_development,639.0,8.0,pass
+pmsampsize_information:nhis_development,130786.538519483,8934.0,pass
+risk_precision:nhis_temporal_test,0.0007700206758337,0.0025,pass
+design_df:nhis_temporal_test,300.0,8.0,pass
+risk_precision:nhanes_external,0.0015828529694421,0.0025,pass
+design_df:nhanes_external,123.0,8.0,pass
+published_strata_psu_pairs_repeated_across_cycles,0,0,pass
+automatic_cycle_interaction_forbidden,False,False,pass
+protocol_discrepancy:nhanes_pooled_weight_1999_2002,resolved,resolved,pass
+protocol_discrepancy:nhis_congestive_heart_failure_availability,resolved,resolved,pass

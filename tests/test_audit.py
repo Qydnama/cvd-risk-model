@@ -58,6 +58,7 @@ def _cohort(n: int, events: int, *, split: str | None = None) -> pd.DataFrame:
             "hypertension_dx": [False] * n,
             "diabetes_dx": [False] * n,
             "general_health": ["good"] * n,
+            "general_health_hsd_sensitivity": ["good"] * n,
             "cvd_death_5y": target,
             "analysis_weight": [1.0] * n,
             "strata": [1] * n,
@@ -66,6 +67,10 @@ def _cohort(n: int, events: int, *, split: str | None = None) -> pd.DataFrame:
             "extract_sha256": ["a" * 64] * n,
             "codebook_sha256": ["b" * 64] * n,
             "feature_mapping_sha256": ["c" * 64] * n,
+            "congestive_heart_failure": [False] * n,
+            "baseline_cvd_status_with_chf": ["absent"] * n,
+            "chf_sensitivity_available": [True] * n,
+            "cohort_chf_sensitivity_eligible": [True] * n,
         }
     )
     if split is not None:
@@ -73,8 +78,38 @@ def _cohort(n: int, events: int, *, split: str | None = None) -> pd.DataFrame:
     return frame
 
 
-def test_stage3_audit_writes_protocol_outputs(tmp_path: Path) -> None:
+def test_stage3_audit_writes_protocol_outputs(tmp_path: Path, monkeypatch) -> None:
     pytest.importorskip("pyarrow")
+
+    def fake_r_gate(cohorts, **_kwargs):
+        rows = []
+        for name, frame in cohorts.items():
+            rows.append(
+                {
+                    "cohort": name,
+                    "n_nominal": len(frame),
+                    "raw_events": int(frame["cvd_death_5y"].sum()),
+                    "p_hat": float(frame["cvd_death_5y"].mean()),
+                    "se": 0.001,
+                    "ci_low": 0.001,
+                    "ci_high": 0.003,
+                    "max_ci_half_width": 0.001,
+                    "deff_y": 1.0,
+                    "deff_y_gate": 1.0,
+                    "n_eff_design": float(len(frame)),
+                    "n_eff_kish": float(len(frame)),
+                    "design_df": 10,
+                    "expected_r2_cs": 0.01 if name == "nhis_development" else pd.NA,
+                    "pmsampsize_required_n": 100 if name == "nhis_development" else pd.NA,
+                    "required_n_nominal": 100 if name == "nhis_development" else pd.NA,
+                    "pass_information": name != "nhis_development" or len(frame) >= 100,
+                    "pass_risk_precision": True,
+                    "pass_design_df": True,
+                }
+            )
+        return pd.DataFrame(rows)
+
+    monkeypatch.setattr("cvd_risk.reporting.audit._run_r_survey_design_gate", fake_r_gate)
     nhis_development = _cohort(600, 500, split="development")
     nhis_development["survey_year"] = [1997 + (index % 13) for index in range(600)]
     nhis_temporal = _cohort(250, 200, split="temporal_test")
@@ -94,6 +129,9 @@ def test_stage3_audit_writes_protocol_outputs(tmp_path: Path) -> None:
     ]
     nhanes["survey_cycle"] = [cycles[index % 8] for index in range(120)]
     nhanes["survey_year"] = nhanes["survey_cycle"].str.slice(0, 4).astype(int)
+    nhanes["strata"] = nhanes["survey_cycle"].map(
+        {cycle: index + 1 for index, cycle in enumerate(cycles)}
+    )
     nhis_path = tmp_path / "nhis.parquet"
     nhanes_path = tmp_path / "nhanes.parquet"
     nhis.to_parquet(nhis_path, index=False)
@@ -130,10 +168,16 @@ def test_stage3_audit_writes_protocol_outputs(tmp_path: Path) -> None:
     assert (tmp_path / "reports/stop_gate.json").exists()
     assert (tmp_path / "reports/feasibility_report.md").exists()
     assert (tmp_path / "reports/tables/protocol_discrepancies.csv").exists()
+    assert (tmp_path / "reports/tables/baseline_cvd_sensitivity.csv").exists()
+    assert (tmp_path / "reports/tables/survey_design_precision.csv").exists()
+    assert (tmp_path / "reports/tables/huq_hsd_disagreement.csv").exists()
     status = json.loads((tmp_path / "reports/stop_gate.json").read_text(encoding="utf-8"))
     assert status["protocol_discrepancies_ready"] is True
     assert "protocol_discrepancies" in status["inputs"]
     assert "protocol_discrepancies_table" in status["outputs"]
+    assert "baseline_cvd_sensitivity" in status["outputs"]
+    assert "survey_design_precision" in status["outputs"]
+    assert "huq_hsd_disagreement" in status["outputs"]
 
     blocked_result = run_stage3_audit(
         nhis_cohort_path=nhis_path,

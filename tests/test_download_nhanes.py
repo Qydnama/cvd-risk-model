@@ -85,7 +85,7 @@ def _lmf_spec():
 def test_official_inventory_contains_all_cycles_and_legacy_names():
     specs = load_file_specs("configs/nhanes_files.yaml")
 
-    assert len(specs) == 93
+    assert len(specs) == 100
     assert {spec.cycle for spec in specs} == {
         "1999-2000",
         "2001-2002",
@@ -101,6 +101,7 @@ def test_official_inventory_contains_all_cycles_and_legacy_names():
     assert filenames[("2001-2002", "TCHOL_HDL")] == "L13_B.xpt"
     assert filenames[("2003-2004", "GHB")] == "L10_C.xpt"
     assert filenames[("2005-2006", "TCHOL")] == "TCHOL_D.xpt"
+    assert filenames[("2013-2014", "HUQ")] == "HUQ_H.xpt"
 
 
 def test_extended_download_profile_includes_fast_and_extended_tiers():

@@ -1,0 +1,10 @@
+step_order,step,n_participants,removed_from_previous
+0,raw harmonized records,82091,0
+1,cycle and start year in 1999-2014 protocol,82091,0
+2,known age,82091,0
+3,age 40-79,25150,56941
+4,positive MEC examination weight,24143,1007
+5,mortality linkage eligible,24106,37
+6,exclude prevalent CVD,21047,3059
+7,baseline CVD status known absent,20914,133
+8,known five-year outcome with complete non-event follow-up,20911,3

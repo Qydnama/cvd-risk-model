@@ -12,6 +12,7 @@ from cvd_risk.data.cohort import (
 )
 from cvd_risk.data.harmonize import (
     BASELINE_CVD_COLUMNS,
+    SENSITIVITY_BASELINE_CVD_COLUMNS,
     VERIFIED_CODEBOOK_STATUS,
     CodebookVerificationError,
 )
@@ -99,6 +100,33 @@ def test_annotation_records_distinct_prevalent_and_unknown_exclusions() -> None:
     assert reasons["boundary"] == "outcome_unknown_or_ambiguous"
 
 
+def test_chf_is_sensitivity_only_and_does_not_change_primary_eligibility() -> None:
+    candidates = _cohort_candidates()
+    candidates.loc[0, "survey_year"] = 1999
+    candidates.loc[0, "congestive_heart_failure"] = True
+
+    annotated = annotate_nhis_cohort(candidates).set_index("participant_id")
+
+    assert annotated.loc["development", "baseline_cvd_status"] == "absent"
+    assert annotated.loc["development", "baseline_cvd_status_with_chf"] == "present"
+    assert bool(annotated.loc["development", "cohort_eligible"])
+    assert not bool(annotated.loc["development", "cohort_chf_sensitivity_eligible"])
+
+
+def test_nhis_chf_sensitivity_is_unavailable_outside_1999_and_2002() -> None:
+    candidates = _cohort_candidates()
+    candidates["congestive_heart_failure"] = candidates[
+        "congestive_heart_failure"
+    ].astype("boolean")
+    candidates.loc[0, "congestive_heart_failure"] = pd.NA
+
+    annotated = annotate_nhis_cohort(candidates).set_index("participant_id")
+
+    assert bool(annotated.loc["development", "cohort_eligible"])
+    assert annotated.loc["development", "baseline_cvd_status_with_chf"] == "unknown"
+    assert not bool(annotated.loc["development", "chf_sensitivity_available"])
+
+
 def test_split_is_fixed_by_year() -> None:
     splits = assign_nhis_split(pd.Series([1997, 2009, 2010, 2014]))
     assert splits.tolist() == [
@@ -110,4 +138,5 @@ def test_split_is_fixed_by_year() -> None:
 
 
 def test_all_baseline_conditions_are_present_in_fixture() -> None:
-    assert set(BASELINE_CVD_COLUMNS).issubset(_cohort_candidates().columns)
+    assert set(SENSITIVITY_BASELINE_CVD_COLUMNS).issubset(_cohort_candidates().columns)
+    assert "congestive_heart_failure" not in BASELINE_CVD_COLUMNS

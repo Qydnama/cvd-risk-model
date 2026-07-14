@@ -1,0 +1,4 @@
+cohort,primary_n,chf_available_n,chf_present_n,chf_unknown_n,chf_strict_n,scope
+nhis_development,178120,28123,202,17,27904,NHIS 1999/2002 only
+nhis_temporal_test,82860,0,0,0,0,NHIS 1999/2002 only
+nhanes_external,20911,20911,293,20,20598,NHANES 1999-2014

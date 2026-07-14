@@ -111,6 +111,18 @@ def test_annotation_preserves_distinct_exclusion_reasons() -> None:
     assert reasons["short-alive-followup"] == "outcome_unknown_or_incomplete_followup"
 
 
+def test_chf_is_excluded_only_from_the_nhanes_sensitivity_cohort() -> None:
+    candidates = _candidates()
+    candidates.loc[0, "congestive_heart_failure"] = True
+
+    annotated = annotate_nhanes_cohort(candidates).set_index("participant_id")
+
+    assert annotated.loc["alive", "baseline_cvd_status"] == "absent"
+    assert annotated.loc["alive", "baseline_cvd_status_with_chf"] == "present"
+    assert bool(annotated.loc["alive", "cohort_eligible"])
+    assert not bool(annotated.loc["alive", "cohort_chf_sensitivity_eligible"])
+
+
 def test_duplicate_participant_ids_are_rejected_before_flow() -> None:
     frame = _candidates()
     frame.loc[1, "participant_id"] = frame.loc[0, "participant_id"]

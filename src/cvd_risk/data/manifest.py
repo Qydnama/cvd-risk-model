@@ -40,14 +40,13 @@ def register_local_input(
         stored_path = path.relative_to(Path.cwd().resolve()).as_posix()
     except ValueError:
         stored_path = str(path)
-    entry = {
+    immutable_fields = {
         "source": "IPUMS NHIS",
         "dataset": dataset,
         "period": period,
         "component": component,
         "url": source_url,
         "local_path": stored_path,
-        "registered_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
         "size_bytes": path.stat().st_size,
         "sha256": sha256_file(path),
         "status": "manual_input",
@@ -64,8 +63,18 @@ def register_local_input(
         None,
     )
     if matching is None:
+        entry = {
+            **immutable_fields,
+            "registered_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+        }
         files.append(entry)
     else:
+        if all(matching.get(key) == value for key, value in immutable_fields.items()):
+            return dict(matching)
+        entry = {
+            **immutable_fields,
+            "registered_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+        }
         matching.clear()
         matching.update(entry)
     loaded["schema_version"] = 1

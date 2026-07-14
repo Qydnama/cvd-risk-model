@@ -1,0 +1,16 @@
+cohort,subgroup,category,status,n_participants,n_events,n_non_events,n_missing_subgroup,weighted_event_prevalence,eligible_for_performance_audit
+nhis_development,race_ethnicity,mexican_american,available,13318,132,13186,35,0.009121082440791546,True
+nhis_development,race_ethnicity,non_hispanic_black,available,24491,416,24075,35,0.01371946386407899,True
+nhis_development,race_ethnicity,non_hispanic_white,available,122791,1332,121459,35,0.008856451973174589,True
+nhis_development,race_ethnicity,other_hispanic,available,10761,99,10662,35,0.007322866895972334,True
+nhis_development,race_ethnicity,other_or_multiracial,available,6724,56,6668,35,0.00767620580388249,True
+nhis_temporal_test,race_ethnicity,mexican_american,sealed_until_model_lock,6993,,,0,,False
+nhis_temporal_test,race_ethnicity,non_hispanic_black,sealed_until_model_lock,12430,,,0,,False
+nhis_temporal_test,race_ethnicity,non_hispanic_white,sealed_until_model_lock,52766,,,0,,False
+nhis_temporal_test,race_ethnicity,other_hispanic,sealed_until_model_lock,5298,,,0,,False
+nhis_temporal_test,race_ethnicity,other_or_multiracial,sealed_until_model_lock,5373,,,0,,False
+nhanes_external,race_ethnicity,mexican_american,sealed_until_model_lock,3768,,,0,,False
+nhanes_external,race_ethnicity,non_hispanic_black,sealed_until_model_lock,4590,,,0,,False
+nhanes_external,race_ethnicity,non_hispanic_white,sealed_until_model_lock,9470,,,0,,False
+nhanes_external,race_ethnicity,other_hispanic,sealed_until_model_lock,1632,,,0,,False
+nhanes_external,race_ethnicity,other_or_multiracial,sealed_until_model_lock,1451,,,0,,False

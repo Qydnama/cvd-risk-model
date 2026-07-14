@@ -8,7 +8,7 @@ from typing import Any
 
 import pandas as pd
 
-from cvd_risk.data.harmonize import BASELINE_CVD_COLUMNS, FAST_FEATURES
+from cvd_risk.data.harmonize import FAST_FEATURES, SENSITIVITY_BASELINE_CVD_COLUMNS
 from cvd_risk.schemas import CanonicalSchemaError, validate_fast_feature_schema
 
 NHANES_CYCLE_START_YEAR: dict[str, int] = {
@@ -23,8 +23,7 @@ NHANES_CYCLE_START_YEAR: dict[str, int] = {
 }
 
 GENERAL_HEALTH_SOURCE: dict[str, str] = {
-    "1999-2000": "HUQ010",
-    **{cycle: "HSD010" for cycle in NHANES_CYCLE_START_YEAR if cycle != "1999-2000"},
+    cycle: "HUQ010" for cycle in NHANES_CYCLE_START_YEAR
 }
 
 # Official mg/dL names differ from the simplified conceptual component names.
@@ -557,6 +556,27 @@ def _assign_fast_features(
         dtype="string",
         strict=strict,
     )
+    if "HSD010" in raw:
+        hsd_source = pd.Series("HSD010", index=raw.index, dtype="string")
+        expected_unavailable = cycles.eq("1999-2000")
+        hsd_source.loc[expected_unavailable] = "EXPECTED_NOT_AVAILABLE"
+        _assign_feature(
+            output,
+            canonical="general_health_hsd_sensitivity",
+            raw_values=raw["HSD010"],
+            sources=hsd_source,
+            converter=_coded_converter(
+                "HSD010",
+                _GENERAL_HEALTH_MAPPING,
+                missing_codes=_STANDARD_MISSING_CODES,
+            ),
+            dtype="string",
+            strict=strict,
+        )
+        output.loc[
+            expected_unavailable,
+            "general_health_hsd_sensitivity_missing_reason",
+        ] = "expected_not_available"
 
 
 def _assign_race_and_baseline(output: pd.DataFrame, raw: pd.DataFrame, strict: bool) -> None:
@@ -748,7 +768,7 @@ def validate_harmonized_nhanes(
 
     canonical = {
         *FAST_FEATURES,
-        *BASELINE_CVD_COLUMNS,
+        *SENSITIVITY_BASELINE_CVD_COLUMNS,
         "race_ethnicity",
         "participant_id",
         "survey_cycle",
@@ -773,7 +793,7 @@ def validate_harmonized_nhanes(
         raise NHANESHarmonizationError(f"Harmonized NHANES misses columns: {missing}")
     provenance_variables = {
         *FAST_FEATURES,
-        *BASELINE_CVD_COLUMNS,
+        *SENSITIVITY_BASELINE_CVD_COLUMNS,
         "race_ethnicity",
         "participant_id",
     }

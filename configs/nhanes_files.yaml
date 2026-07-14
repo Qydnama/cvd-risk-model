@@ -107,6 +107,11 @@ cycles:
         format: xpt
         filename: DIQ_B.xpt
         url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/DIQ_B.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/HUQ_B.xpt
       - component: HSQ
         tier: fast
         format: xpt
@@ -169,6 +174,11 @@ cycles:
         format: xpt
         filename: DIQ_C.xpt
         url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/DIQ_C.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/HUQ_C.xpt
       - component: HSQ
         tier: fast
         format: xpt
@@ -231,6 +241,11 @@ cycles:
         format: xpt
         filename: DIQ_D.xpt
         url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/DIQ_D.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/HUQ_D.xpt
       - component: HSQ
         tier: fast
         format: xpt
@@ -297,6 +312,11 @@ cycles:
         format: xpt
         filename: DIQ_E.xpt
         url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/DIQ_E.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HUQ_E.xpt
       - component: HSQ
         tier: fast
         format: xpt
@@ -363,6 +383,11 @@ cycles:
         format: xpt
         filename: DIQ_F.xpt
         url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/DIQ_F.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HUQ_F.xpt
       - component: HSQ
         tier: fast
         format: xpt
@@ -429,6 +454,11 @@ cycles:
         format: xpt
         filename: DIQ_G.xpt
         url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/DIQ_G.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HUQ_G.xpt
       - component: HSQ
         tier: fast
         format: xpt
@@ -495,6 +525,11 @@ cycles:
         format: xpt
         filename: DIQ_H.xpt
         url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DIQ_H.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HUQ_H.xpt
       - component: HSQ
         tier: fast
         format: xpt

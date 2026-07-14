@@ -23,3 +23,11 @@ def test_protocol_config_rejects_bool_disguised_as_integer() -> None:
     config["outcome"]["horizon_months"] = True
     with pytest.raises(ValueError, match="horizon_months"):
         validate_locked_protocol(config)
+
+
+def test_primary_and_sensitivity_cvd_conditions_are_locked_separately() -> None:
+    config = deepcopy(load_config())
+    config["cohort"]["prevalent_cvd_conditions"].append("congestive_heart_failure")
+
+    with pytest.raises(ValueError, match="prevalent_cvd_conditions"):
+        validate_locked_protocol(config)

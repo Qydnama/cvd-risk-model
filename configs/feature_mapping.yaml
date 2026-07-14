@@ -171,7 +171,7 @@ variables:
 
   congestive_heart_failure:
     source: CONHFAILEV
-    role: baseline_cvd_exclusion
+    role: baseline_cvd_sensitivity
     kind: boolean
     mapping: *nhis_yes_no
     missing_codes: *nhis_yes_no_missing
@@ -351,8 +351,8 @@ cross_source_features:
       missing_rules: [not_in_universe_0, refused_7, not_ascertained_8, dont_know_9]
       years_available: [1997, 2018]
     nhanes:
-      source: NHANES_HUQ_or_HSQ
-      raw_names: [HUQ010_1999_2000, HSD010_2001_2014]
+      source: NHANES_HUQ
+      raw_names: [HUQ010_1999_2014]
       raw_codes: {1: excellent, 2: very_good, 3: good, 4: fair, 5: poor}
       missing_rules: [refused_7, dont_know_9, sas_dot_is_missing]
       years_available: [1999-2000, 2013-2014]

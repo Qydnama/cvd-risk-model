@@ -9,6 +9,7 @@ import pandas as pd
 
 from cvd_risk.data.harmonize import (
     BASELINE_CVD_COLUMNS,
+    SENSITIVITY_BASELINE_CVD_COLUMNS,
     require_verified_codebook,
 )
 from cvd_risk.schemas import FAST_FEATURES
@@ -366,7 +367,7 @@ def annotate_nhis_cohort(
         "age",
         "mortality_eligible",
         "mortality_weight",
-        *BASELINE_CVD_COLUMNS,
+        *SENSITIVITY_BASELINE_CVD_COLUMNS,
     }
     _require_columns(frame, required, "NHIS cohort input")
     annotated = derive_nhis_cvd_outcome(
@@ -374,6 +375,10 @@ def annotate_nhis_cohort(
         include_ambiguous_boundary=include_ambiguous_boundary,
     )
     annotated["baseline_cvd_status"] = derive_baseline_cvd_status(annotated)
+    annotated["baseline_cvd_status_with_chf"] = derive_baseline_cvd_status(
+        annotated,
+        condition_columns=SENSITIVITY_BASELINE_CVD_COLUMNS,
+    )
     annotated["split"] = assign_nhis_split(annotated["survey_year"], strict=False)
 
     age = pd.to_numeric(annotated["age"], errors="coerce")
@@ -399,6 +404,15 @@ def annotate_nhis_cohort(
     for values in flags.values():
         eligible &= values.astype(bool)
     annotated["cohort_eligible"] = eligible
+    chf_year_available = pd.to_numeric(
+        annotated["survey_year"], errors="coerce"
+    ).isin({1999, 2002})
+    annotated["chf_sensitivity_available"] = chf_year_available.astype(bool)
+    annotated["cohort_chf_sensitivity_eligible"] = (
+        eligible
+        & chf_year_available
+        & annotated["baseline_cvd_status_with_chf"].eq("absent")
+    ).astype(bool)
 
     reason = pd.Series(pd.NA, index=annotated.index, dtype="string")
     ordered_reasons = (

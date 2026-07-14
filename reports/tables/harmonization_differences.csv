@@ -1,0 +1,13 @@
+feature,nhis_measurement,nhanes_measurement,comparability,required_action
+age,Interview age (IPUMS AGE),Interview age (RIDAGEYR),closely comparable after common 40–79 restriction,validate integer range and cycle/year coverage
+sex,SEX,RIAGENDR (official release label: Gender),binary male/female coding; wording is not explicitly sex at birth,document wording mismatch for the future site interface
+bmi,derived from self-reported height and weight,measured MEC BMI (BMXBMI),"same unit, materially different measurement process",report external-distribution shift and calibration
+smoking_status,harmonized SMOKESTATUS2,derived jointly from SMQ020 and SMQ040,common never/former/current categories,keep unknown question-universe responses missing
+hypertension_dx,self-reported prior diagnosis (HYPERTENEV),self-reported prior diagnosis (BPQ020),questionnaire diagnosis; not measured blood pressure,do not substitute BP measurements in fast model
+diabetes_dx,self-reported prior diagnosis (DIABETICEV),self-reported prior diagnosis (DIQ010),borderline responses are not equivalent to No,retain borderline as a distinct missing reason
+general_health,HEALTH,HUQ010 in every 1999–2014 cycle; HSD010 sensitivity-only,common ordered excellent→poor labels after cycle check,report label-free HUQ/HSD disagreement; never backfill HUQ from HSD
+race_ethnicity,verified five-category bridge from RACEA + HISPETH,RIDRETH1 audit categories,audit-only collapsed bridge; historical classifications differ,exclude from predictors and retain subgroup limitations
+outcome_timing,interview/death year and quarter,PERMTH_INT exact integer months,same five-year estimand with different precision,"NHIS quarter 20 excluded in primary, included in sensitivity"
+survey_design,"MORTWTSA, STRATA, PSU; annual pooled weights","WTMEC2YR, SDMVSTRA, SDMVPSU; eight MEC cycles",source-specific design and scaling,never concatenate and apply one shared survey weight
+legacy_xpt_zero,not applicable,legacy SAS zero may decode near 5.397605e-79,"parser artifact, not a biological measurement",normalize machine-zero before age/weight eligibility checks
+extended_laboratory_files,not available,1999–2004 LAB13/L13 and LAB10/L10 legacy files,NHANES-only extended analysis,use cycle-aware HDL names and verify laboratory weights
