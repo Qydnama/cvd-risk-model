@@ -1,0 +1,439 @@
+schema_version: 1
+source: IPUMS NHIS 1997-2014
+
+# The implementation is fail-fast on unmapped codes. These mappings must still
+# be compared with the codebook delivered with the user's exact IPUMS extract.
+codebook_verification:
+  status: pending_user_extract
+  required_before_cohort_audit: true
+  extract_sha256: null
+  codebook_sha256: null
+
+variables:
+  survey_year:
+    source: YEAR
+    role: design
+    kind: integer
+    valid_range: [1997, 2014]
+
+  participant_id:
+    source: NHISPID
+    role: identifier
+    kind: identity
+
+  interview_quarter:
+    source: QUARTER
+    role: design
+    kind: integer
+    valid_range: [1, 4]
+
+  strata:
+    source: STRATA
+    role: design
+    kind: identity
+
+  psu:
+    source: PSU
+    role: design
+    kind: identity
+
+  mortality_weight:
+    source: MORTWTSA
+    role: weight
+    kind: numeric
+    valid_range: [0, null]
+
+  age:
+    source: AGE
+    role: predictor
+    kind: integer
+    valid_range: [0, 85]
+    missing_codes:
+      dont_know: [99, 999]
+
+  sex:
+    source: SEX
+    role: predictor
+    kind: category
+    mapping:
+      1: male
+      2: female
+    missing_codes:
+      refused: [7]
+      not_ascertained: [8]
+      dont_know: [9]
+
+  bmi:
+    source: BMI
+    role: predictor
+    kind: numeric
+    # IPUMS documents two implied decimal places. Converted CSV/Stata files may
+    # already contain the decimal, so scaling is conditional on abs(value)>=100.
+    scale: 0.01
+    apply_scale_when_abs_gte: 100
+    valid_range: [10, 99.8]
+    missing_codes:
+      not_in_universe: [0]
+      unknown: [9999]
+
+  smoking_status:
+    source: SMOKESTATUS2
+    role: predictor
+    kind: category
+    mapping:
+      10: current
+      11: current
+      12: current
+      13: current
+      20: former
+      30: never
+    missing_codes:
+      not_in_universe: [0]
+      current_status_unknown: [40]
+      unknown_if_ever_smoked: [90]
+
+  hypertension_dx:
+    source: HYPERTENEV
+    role: predictor
+    kind: boolean
+    mapping: &nhis_yes_no
+      1: false
+      2: true
+    missing_codes: &nhis_yes_no_missing
+      not_in_universe: [0]
+      refused: [7]
+      not_ascertained: [8]
+      dont_know: [9]
+
+  diabetes_dx:
+    source: DIABETICEV
+    role: predictor
+    kind: boolean
+    mapping:
+      1: false
+      2: true
+    missing_codes:
+      not_in_universe: [0]
+      borderline_response_requires_protocol_decision: [3]
+      refused: [7]
+      not_ascertained: [8]
+      dont_know: [9]
+
+  general_health:
+    source: HEALTH
+    role: predictor
+    kind: category
+    ordered_categories: [excellent, very_good, good, fair, poor]
+    mapping:
+      1: excellent
+      2: very_good
+      3: good
+      4: fair
+      5: poor
+    missing_codes:
+      not_in_universe: [0]
+      refused: [7]
+      not_ascertained: [8]
+      dont_know: [9]
+
+  coronary_heart_disease:
+    source: CHEARTDIEV
+    role: baseline_cvd_exclusion
+    kind: boolean
+    mapping: *nhis_yes_no
+    missing_codes: *nhis_yes_no_missing
+
+  angina_pectoris:
+    source: ANGIPECEV
+    role: baseline_cvd_exclusion
+    kind: boolean
+    mapping: *nhis_yes_no
+    missing_codes: *nhis_yes_no_missing
+
+  myocardial_infarction:
+    source: HEARTATTEV
+    role: baseline_cvd_exclusion
+    kind: boolean
+    mapping: *nhis_yes_no
+    missing_codes: *nhis_yes_no_missing
+
+  stroke:
+    source: STROKEV
+    role: baseline_cvd_exclusion
+    kind: boolean
+    mapping: *nhis_yes_no
+    missing_codes: *nhis_yes_no_missing
+
+  congestive_heart_failure:
+    source: CONHFAILEV
+    role: baseline_cvd_exclusion
+    kind: boolean
+    mapping: *nhis_yes_no
+    missing_codes: *nhis_yes_no_missing
+
+  mortality_eligible:
+    source: MORTELIG
+    role: linkage
+    kind: boolean
+    mapping:
+      1: true
+      2: false
+      3: false
+
+  deceased:
+    source: MORTSTAT
+    role: outcome_component
+    kind: boolean
+    mapping:
+      0: false
+      1: true
+    missing_codes:
+      not_in_universe: [9]
+
+  ucod_leading:
+    source: MORTUCODLD
+    role: outcome_component
+    kind: code
+    width: 3
+    missing_codes:
+      not_in_universe: [0, "000"]
+      unknown: [99, 999, "099", "999"]
+
+  death_year:
+    source: MORTDODY
+    role: outcome_component
+    kind: integer
+    valid_range: [1986, 2019]
+    missing_codes:
+      not_in_universe: [0]
+      unknown: [9999]
+
+  death_quarter:
+    source: MORTDODQ
+    role: outcome_component
+    kind: integer
+    valid_range: [1, 4]
+    missing_codes:
+      not_in_universe: [0]
+      unknown: [9]
+
+  race_ethnicity:
+    # Audit-only and optional. Never coalesce RACENEW/RACEA with HISPETH: the
+    # final cross-year field must be explicitly derived from both race and
+    # Hispanic-ethnicity codes after reviewing the exact extract codebook.
+    source_candidates: [RACE_ETHNICITY]
+    derivation_sources_pending_codebook_review: [RACEA, HISPETH]
+    supplemental_sensitivity_sources: [RACENEW, RACEBR]
+    required: false
+    role: audit_only
+    kind: identity
+    comparability: not_harmonized_until_extract_codebook_review
+
+# Cross-source contract used to review stage-2 comparability. The executable
+# NHIS recodes remain under ``variables`` above; NHANES recodes are cycle-aware
+# in ``harmonize_nhanes.py`` and are documented here so schema changes cannot be
+# mistaken for simple renames.
+cross_source_features:
+  age:
+    final_type: integer
+    final_categories: null
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [AGE]
+      raw_codes: continuous_integer
+      missing_rules: [dont_know_99_or_999]
+      years_available: [1997, 2014]
+    nhanes:
+      source: NHANES_DEMO
+      raw_names: [RIDAGEYR]
+      raw_codes: continuous_integer_topcoded_85_or_80
+      missing_rules: [sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: Common interview age after the locked 40-79 restriction.
+
+  sex:
+    final_type: category
+    final_categories: [male, female]
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [SEX]
+      raw_codes: {1: male, 2: female}
+      missing_rules: [refused_7, not_ascertained_8, dont_know_9]
+      years_available: [1997, 2014]
+    nhanes:
+      source: NHANES_DEMO
+      raw_names: [RIAGENDR]
+      raw_codes: {1: male, 2: female}
+      missing_rules: [sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: Binary categories align; NHANES labels the item Gender.
+
+  bmi:
+    final_type: numeric_kg_per_m2
+    final_categories: null
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [BMI]
+      raw_codes: numeric_with_possible_two_implied_decimals
+      missing_rules: [not_in_universe_0, unknown_9999]
+      years_available: [1997, 2014]
+    nhanes:
+      source: NHANES_BMX
+      raw_names: [BMXBMI]
+      raw_codes: measured_numeric_kg_per_m2
+      missing_rules: [sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: NHIS is self-reported/derived; NHANES is measured at MEC.
+
+  smoking_status:
+    final_type: category
+    final_categories: [never, former, current]
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [SMOKESTATUS2]
+      raw_codes: {10: current, 11: current, 12: current, 13: current, 20: former, 30: never}
+      missing_rules: [not_in_universe_0, current_status_unknown_40, ever_smoked_unknown_90]
+      years_available: [1997, 2014]
+    nhanes:
+      source: NHANES_SMQ
+      raw_names: [SMQ020, SMQ040]
+      raw_codes: {SMQ020_2: never, SMQ020_1_SMQ040_1_or_2: current, SMQ020_1_SMQ040_3: former}
+      missing_rules: [refused_7, dont_know_9, structural_SMQ040_missing_for_never]
+      years_available: [1999-2000, 2013-2014]
+    comparability: Common categories; question universe and unknowns stay explicit.
+
+  hypertension_dx:
+    final_type: boolean
+    final_categories: [false, true]
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [HYPERTENEV]
+      raw_codes: {1: false, 2: true}
+      missing_rules: [not_in_universe_0, refused_7, not_ascertained_8, dont_know_9]
+      years_available: [1997, 2014]
+    nhanes:
+      source: NHANES_BPQ
+      raw_names: [BPQ020]
+      raw_codes: {1: true, 2: false}
+      missing_rules: [refused_7, dont_know_9, sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: Self-reported diagnosis in both sources; not measured BP.
+
+  diabetes_dx:
+    final_type: boolean
+    final_categories: [false, true]
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [DIABETICEV]
+      raw_codes: {1: false, 2: true}
+      missing_rules: [not_in_universe_0, borderline_3, refused_7, not_ascertained_8, dont_know_9]
+      years_available: [1997, 2014]
+    nhanes:
+      source: NHANES_DIQ
+      raw_names: [DIQ010]
+      raw_codes: {1: true, 2: false}
+      missing_rules: [borderline_3, refused_7, dont_know_9, sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: Self-reported diagnosis; borderline is never recoded as No.
+
+  general_health:
+    final_type: ordered_category
+    final_categories: [excellent, very_good, good, fair, poor]
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [HEALTH]
+      raw_codes: {1: excellent, 2: very_good, 3: good, 4: fair, 5: poor}
+      missing_rules: [not_in_universe_0, refused_7, not_ascertained_8, dont_know_9]
+      years_available: [1997, 2014]
+    nhanes:
+      source: NHANES_HUQ_or_HSQ
+      raw_names: [HUQ010_1999_2000, HSD010_2001_2014]
+      raw_codes: {1: excellent, 2: very_good, 3: good, 4: fair, 5: poor}
+      missing_rules: [refused_7, dont_know_9, sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: Same ordered labels; source name changes after the first cycle.
+
+  race_ethnicity:
+    final_type: audit_only_category
+    final_categories: pending_cross_source_codebook_review
+    nhis:
+      source: IPUMS_NHIS
+      raw_names: [RACE_ETHNICITY_or_RACEA_plus_HISPETH]
+      raw_codes: pending_exact_extract_codebook
+      missing_rules: [preserve_all_codebook_missing_categories]
+      years_available: pending_exact_extract_codebook
+    nhanes:
+      source: NHANES_DEMO
+      raw_names: [RIDRETH1]
+      raw_codes: {1: mexican_american, 2: other_hispanic, 3: non_hispanic_white, 4: non_hispanic_black, 5: other_or_multiracial}
+      missing_rules: [refused_7, dont_know_9, sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: Audit only; NHIS categories cannot be declared comparable before codebook review.
+
+  systolic_bp:
+    final_type: numeric_mmHg
+    final_categories: null
+    nhis:
+      source: unavailable_for_fast_extract
+      raw_names: []
+      raw_codes: null
+      missing_rules: [not_collected]
+      years_available: []
+    nhanes:
+      source: NHANES_BPX
+      raw_names: [BPXSY1, BPXSY2, BPXSY3, BPXSY4]
+      raw_codes: mean_of_available_valid_readings
+      missing_rules: [sas_dot_is_missing, no_valid_reading]
+      years_available: [1999-2000, 2013-2014]
+    comparability: NHANES-only extended predictor measured at MEC.
+
+  total_cholesterol:
+    final_type: numeric_mg_per_dL
+    final_categories: null
+    nhis:
+      source: unavailable_for_fast_extract
+      raw_names: []
+      raw_codes: null
+      missing_rules: [not_collected]
+      years_available: []
+    nhanes:
+      source: NHANES_laboratory
+      raw_names: [LBXTC]
+      raw_codes: measured_numeric_mg_per_dL
+      missing_rules: [sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: NHANES-only extended predictor; laboratory methods vary by cycle.
+
+  hdl_cholesterol:
+    final_type: numeric_mg_per_dL
+    final_categories: null
+    nhis:
+      source: unavailable_for_fast_extract
+      raw_names: []
+      raw_codes: null
+      missing_rules: [not_collected]
+      years_available: []
+    nhanes:
+      source: NHANES_laboratory
+      raw_names: [LBDHDL_1999_2002, LBXHDD_2003_2004, LBDHDD_2005_2014]
+      raw_codes: measured_numeric_mg_per_dL
+      missing_rules: [sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: NHANES-only; assay changes must be reported in trend analyses.
+
+  hba1c:
+    final_type: numeric_percent
+    final_categories: null
+    nhis:
+      source: unavailable_for_fast_extract
+      raw_names: []
+      raw_codes: null
+      missing_rules: [not_collected]
+      years_available: []
+    nhanes:
+      source: NHANES_laboratory
+      raw_names: [LBXGH]
+      raw_codes: measured_numeric_percent
+      missing_rules: [sas_dot_is_missing]
+      years_available: [1999-2000, 2013-2014]
+    comparability: NHANES-only; use released values and retain cycle metadata.

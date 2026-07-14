@@ -1,0 +1,532 @@
+schema_version: 1
+verified_on: "2026-07-14"
+
+# These are the exact public links exposed by the official CDC/NCHS cycle
+# catalogs.  Do not derive legacy laboratory names from the cycle suffix:
+# 1999-2004 use LAB13/L13_* and LAB10/L10_* rather than TCHOL/HDL/GHB.
+allowed_hosts:
+  - wwwn.cdc.gov
+  - ftp.cdc.gov
+
+official_sources:
+  nhanes_cycle_catalog: https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx
+  linked_mortality_catalog: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/
+  linked_mortality_read_program: https://ftp.cdc.gov/pub/Health_statistics/NCHS/datalinkage/linked_mortality/R_ReadInProgramAllSurveys.R
+  linked_mortality_dictionary: https://www.cdc.gov/nchs/data/datalinkage/public-use-linked-mortality-files-data-dictionary.pdf
+
+cycles:
+  "1999-2000":
+    start_year: 1999
+    end_year: 2000
+    suffix: ""
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DEMO.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/BMX.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/SMQ.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/BPQ.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DIQ.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/HUQ.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/MCQ.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/BPX.xpt
+      - component: TCHOL_HDL
+        logical_components: [TCHOL, HDL]
+        tier: extended
+        format: xpt
+        filename: LAB13.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/LAB13.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: LAB10.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/LAB10.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_1999_2000_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_1999_2000_MORT_2019_PUBLIC.dat
+
+  "2001-2002":
+    start_year: 2001
+    end_year: 2002
+    suffix: _B
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/DEMO_B.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/BMX_B.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/SMQ_B.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/BPQ_B.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/DIQ_B.xpt
+      - component: HSQ
+        tier: fast
+        format: xpt
+        filename: HSQ_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/HSQ_B.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/MCQ_B.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/BPX_B.xpt
+      - component: TCHOL_HDL
+        logical_components: [TCHOL, HDL]
+        tier: extended
+        format: xpt
+        filename: L13_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/L13_B.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: L10_B.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2001/DataFiles/L10_B.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2001_2002_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2001_2002_MORT_2019_PUBLIC.dat
+
+  "2003-2004":
+    start_year: 2003
+    end_year: 2004
+    suffix: _C
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/DEMO_C.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/BMX_C.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/SMQ_C.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/BPQ_C.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/DIQ_C.xpt
+      - component: HSQ
+        tier: fast
+        format: xpt
+        filename: HSQ_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/HSQ_C.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/MCQ_C.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/BPX_C.xpt
+      - component: TCHOL_HDL
+        logical_components: [TCHOL, HDL]
+        tier: extended
+        format: xpt
+        filename: L13_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/L13_C.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: L10_C.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2003/DataFiles/L10_C.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2003_2004_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2003_2004_MORT_2019_PUBLIC.dat
+
+  "2005-2006":
+    start_year: 2005
+    end_year: 2006
+    suffix: _D
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/DEMO_D.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/BMX_D.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/SMQ_D.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/BPQ_D.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/DIQ_D.xpt
+      - component: HSQ
+        tier: fast
+        format: xpt
+        filename: HSQ_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/HSQ_D.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/MCQ_D.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/BPX_D.xpt
+      - component: TCHOL
+        tier: extended
+        format: xpt
+        filename: TCHOL_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/TCHOL_D.xpt
+      - component: HDL
+        tier: extended
+        format: xpt
+        filename: HDL_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/HDL_D.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: GHB_D.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2005/DataFiles/GHB_D.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2005_2006_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2005_2006_MORT_2019_PUBLIC.dat
+
+  "2007-2008":
+    start_year: 2007
+    end_year: 2008
+    suffix: _E
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/DEMO_E.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/BMX_E.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/SMQ_E.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/BPQ_E.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/DIQ_E.xpt
+      - component: HSQ
+        tier: fast
+        format: xpt
+        filename: HSQ_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HSQ_E.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/MCQ_E.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/BPX_E.xpt
+      - component: TCHOL
+        tier: extended
+        format: xpt
+        filename: TCHOL_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/TCHOL_E.xpt
+      - component: HDL
+        tier: extended
+        format: xpt
+        filename: HDL_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HDL_E.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: GHB_E.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/GHB_E.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2007_2008_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2007_2008_MORT_2019_PUBLIC.dat
+
+  "2009-2010":
+    start_year: 2009
+    end_year: 2010
+    suffix: _F
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/DEMO_F.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/BMX_F.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/SMQ_F.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/BPQ_F.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/DIQ_F.xpt
+      - component: HSQ
+        tier: fast
+        format: xpt
+        filename: HSQ_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HSQ_F.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/MCQ_F.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/BPX_F.xpt
+      - component: TCHOL
+        tier: extended
+        format: xpt
+        filename: TCHOL_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/TCHOL_F.xpt
+      - component: HDL
+        tier: extended
+        format: xpt
+        filename: HDL_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HDL_F.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: GHB_F.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/GHB_F.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2009_2010_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2009_2010_MORT_2019_PUBLIC.dat
+
+  "2011-2012":
+    start_year: 2011
+    end_year: 2012
+    suffix: _G
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/DEMO_G.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BMX_G.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SMQ_G.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BPQ_G.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/DIQ_G.xpt
+      - component: HSQ
+        tier: fast
+        format: xpt
+        filename: HSQ_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HSQ_G.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/MCQ_G.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BPX_G.xpt
+      - component: TCHOL
+        tier: extended
+        format: xpt
+        filename: TCHOL_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/TCHOL_G.xpt
+      - component: HDL
+        tier: extended
+        format: xpt
+        filename: HDL_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HDL_G.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: GHB_G.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/GHB_G.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2011_2012_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2011_2012_MORT_2019_PUBLIC.dat
+
+  "2013-2014":
+    start_year: 2013
+    end_year: 2014
+    suffix: _H
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DEMO_H.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/BMX_H.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/SMQ_H.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/BPQ_H.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DIQ_H.xpt
+      - component: HSQ
+        tier: fast
+        format: xpt
+        filename: HSQ_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HSQ_H.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/MCQ_H.xpt
+      - component: BPX
+        tier: extended
+        format: xpt
+        filename: BPX_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/BPX_H.xpt
+      - component: TCHOL
+        tier: extended
+        format: xpt
+        filename: TCHOL_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/TCHOL_H.xpt
+      - component: HDL
+        tier: extended
+        format: xpt
+        filename: HDL_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HDL_H.xpt
+      - component: GHB
+        tier: extended
+        format: xpt
+        filename: GHB_H.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/GHB_H.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2013_2014_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2013_2014_MORT_2019_PUBLIC.dat

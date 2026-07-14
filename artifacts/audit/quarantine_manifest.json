@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "nhanes_cohort_pre_amendment_2_4",
+      "blocked_uses": [
+        "external_validation",
+        "clinical_model_development",
+        "stage3_stop_gate",
+        "model_training"
+      ],
+      "created_at_utc": "2026-07-14T12:00:29.5174521Z",
+      "original_path": "data/processed/nhanes_cohort.parquet",
+      "quarantine_path": "artifacts/quarantine/pre_amendment_2_4/nhanes_cohort.parquet",
+      "reason": "Labelled NHANES cohort was built before amendment 2.4 and uses superseded pooling, feature and access rules.",
+      "sha256": "3ad309b476fb66c6ef2d78cf1027855bdca439f75195f03360463e3fd73285b5",
+      "size_bytes": 1956892,
+      "status": "quarantined_pre_amendment"
+    }
+  ],
+  "protocol_sha256": "046184611a12e46d3bab2d428dfdb72b887809e07ce10de85107cc088e1f98b1",
+  "protocol_version": "2.4",
+  "schema_version": 1
+}

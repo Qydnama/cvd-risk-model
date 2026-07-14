@@ -1,0 +1,25 @@
+schema_version: 1
+
+discrepancies:
+  - id: nhanes_pooled_weight_1999_2002
+    title: NHANES 1999-2002 pooled MEC weight scaling
+    status: resolved
+    blocking: true
+    locked_protocol_rule: >-
+      Amendment 2.4 uses WTMEC4YR / 4 for 1999-2002 and WTMEC2YR / 8
+      for 2003-2014 in the pooled 1999-2014 NHANES estimand.
+    official_guidance: >-
+      CDC instructs analysts combining 1999-2000 with 2001-2002 to use the
+      provided four-year weight because the two cycles used different census
+      reference populations.
+    recommended_resolution: >-
+      For a 16-year 1999-2014 pooled analysis, use WTMEC4YR / 4 for
+      1999-2002 and WTMEC2YR / 8 for 2003-2014, then update the locked
+      protocol, implementation, and tests together before marking resolved.
+    resolution: >-
+      Resolved by protocol amendment 2.4 on 2026-07-14. The experiment
+      configuration, locked runtime contract, harmonization code and tests
+      must use the CDC-compatible source-specific pooled-weight rules.
+    official_sources:
+      - https://wwwn.cdc.gov/nchs/nhanes/tutorials/weighting.aspx
+      - https://wwwn.cdc.gov/nchs/data/nhanes/analyticguidelines/05-06-analytic-guidelines.pdf

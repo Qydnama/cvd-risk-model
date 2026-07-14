@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "protocol_lock": {
+      "path": "CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md",
+      "sha256": "046184611a12e46d3bab2d428dfdb72b887809e07ce10de85107cc088e1f98b1",
+      "status": "PASS"
+    },
+    "quarantine": {
+      "artifact_count": 1,
+      "manifest": "artifacts\\audit\\quarantine_manifest.json",
+      "status": "PASS"
+    },
+    "rscript": {
+      "executable": null,
+      "status": "BLOCKED_RSCRIPT_NOT_FOUND"
+    }
+  },
+  "generated_at": "2026-07-14T14:23:40.151238+00:00",
+  "protocol_version": "2.4",
+  "r_packages": {
+    "pmsampsize": "1.1.3",
+    "pmvalsampsize": "0.1.0",
+    "survey": "4.5"
+  },
+  "r_version": null,
+  "ready_for_stage1": false,
+  "reference_backend": "R",
+  "schema_version": 1,
+  "stage": 0,
+  "status": "BLOCKED_RSCRIPT_NOT_FOUND"
+}
