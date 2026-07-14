@@ -14,6 +14,27 @@ from cvd_risk.provenance import sha256_file, verify_quarantine
 from cvd_risk.runtime import DEFAULT_CONFIG_PATH, initialize_runtime
 
 
+def _find_rscript() -> str | None:
+    """Find Rscript on PATH or in the version-pinned Windows installation."""
+
+    executable = shutil.which("Rscript")
+    if executable is not None or os.name != "nt":
+        return executable
+
+    version_file = Path(".R-version")
+    if not version_file.is_file():
+        return None
+    version = version_file.read_text(encoding="utf-8").strip()
+    roots = [os.environ.get("ProgramFiles"), os.environ.get("LOCALAPPDATA")]
+    for root in filter(None, roots):
+        installation = Path(root) / "R" / f"R-{version}"
+        for relative in (Path("bin/Rscript.exe"), Path("bin/x64/Rscript.exe")):
+            candidate = installation / relative
+            if candidate.is_file():
+                return str(candidate)
+    return None
+
+
 def _atomic_json(payload: dict[str, Any], destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = destination.with_name(f".{destination.name}.tmp")
@@ -45,7 +66,7 @@ def run_stage0_check(
 
     quarantine_manifest = Path(paths["quarantine_manifest"])
     quarantine = verify_quarantine(quarantine_manifest)
-    rscript = shutil.which("Rscript")
+    rscript = _find_rscript()
     checks: dict[str, dict[str, Any]] = {
         "protocol_lock": {
             "status": "PASS",
@@ -78,8 +99,59 @@ def run_stage0_check(
             status = "BLOCKED_R_LOCKS_MISSING"
             checks["r_locks"] = {"status": status, "missing": missing_locks}
         else:
-            status = "PASS"
             checks["r_locks"] = {"status": "PASS", "files": [str(p) for p in required_locks]}
+            locked_r_version = Path(".R-version").read_text(encoding="utf-8").strip()
+            if locked_r_version not in r_version:
+                status = "BLOCKED_R_VERSION_MISMATCH"
+                checks["r_environment"] = {
+                    "status": status,
+                    "expected_r_version": locked_r_version,
+                    "observed": r_version,
+                }
+            else:
+                environment_check = subprocess.run(
+                    [rscript, "scripts/r/check_environment.R"],
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                )
+                environment_output = (
+                    environment_check.stdout or environment_check.stderr
+                ).strip()
+                if environment_check.returncode != 0:
+                    status = "BLOCKED_R_ENVIRONMENT_INVALID"
+                    checks["r_environment"] = {
+                        "status": status,
+                        "returncode": environment_check.returncode,
+                        "output": environment_output,
+                    }
+                else:
+                    checks["r_environment"] = {
+                        "status": "PASS",
+                        "output": environment_output,
+                    }
+                    reference_check = subprocess.run(
+                        [rscript, "scripts/r/run_reference_tests.R"],
+                        check=False,
+                        capture_output=True,
+                        text=True,
+                    )
+                    reference_output = (
+                        reference_check.stdout or reference_check.stderr
+                    ).strip()
+                    if reference_check.returncode != 0:
+                        status = "BLOCKED_R_REFERENCE_TEST_FAILED"
+                        checks["r_reference_tests"] = {
+                            "status": status,
+                            "returncode": reference_check.returncode,
+                            "output": reference_output,
+                        }
+                    else:
+                        status = "PASS"
+                        checks["r_reference_tests"] = {
+                            "status": "PASS",
+                            "output": reference_output,
+                        }
 
     payload: dict[str, Any] = {
         "schema_version": 1,

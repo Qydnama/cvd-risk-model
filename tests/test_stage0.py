@@ -9,7 +9,7 @@ from cvd_risk.stage0 import run_stage0_check
 def test_stage0_reports_missing_rscript_as_a_hard_block(
     tmp_path: Path, monkeypatch
 ) -> None:
-    monkeypatch.setattr("cvd_risk.stage0.shutil.which", lambda _: None)
+    monkeypatch.setattr("cvd_risk.stage0._find_rscript", lambda: None)
     output = tmp_path / "stage0.json"
 
     result = run_stage0_check(output_path=output)
@@ -26,6 +26,10 @@ def test_r_reference_scaffold_is_present() -> None:
         Path("scripts/r/check_environment.R"),
         Path("scripts/r/survey_reference.R"),
         Path("scripts/r/pmsampsize_reference.R"),
+        Path("scripts/r/pmvalsampsize_reference.R"),
+        Path("scripts/r/run_reference_tests.R"),
         Path("tests/fixtures/r/survey_binary.csv"),
+        Path("tests/fixtures/r/survey_binary_expected.csv"),
+        Path("tests/fixtures/r/sample_size_expected.csv"),
     ]
     assert all(path.is_file() for path in required)

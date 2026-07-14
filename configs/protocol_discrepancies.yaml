@@ -23,3 +23,26 @@ discrepancies:
     official_sources:
       - https://wwwn.cdc.gov/nchs/nhanes/tutorials/weighting.aspx
       - https://wwwn.cdc.gov/nchs/data/nhanes/analyticguidelines/05-06-analytic-guidelines.pdf
+
+  - id: nhis_congestive_heart_failure_availability
+    title: NHIS congestive-heart-failure exclusion is unavailable in most primary years
+    status: awaiting_user_decision
+    blocking: true
+    locked_protocol_rule: >-
+      Amendment 2.4 requires exclusion of baseline congestive heart failure together
+      with coronary heart disease, angina, myocardial infarction, and stroke for the
+      NHIS 1997-2014 fixed-horizon cohort.
+    official_guidance: >-
+      IPUMS NHIS documents CONHFAILEV as available only in 1999 and 2002. In the
+      delivered extract it is NIU in every other year, so treating NIU as absence
+      would silently misclassify baseline disease and treating it as unknown removes
+      all other years.
+    recommended_resolution: >-
+      For the cross-year primary NHIS cohort, use the four consistently measured
+      exclusions (coronary heart disease, angina, myocardial infarction, and stroke).
+      Retain CONHFAILEV only for a documented 1999/2002 sensitivity audit. An
+      alternative is the broader HEARTCONEV surrogate, but it is not equivalent to
+      congestive heart failure and would require a new IPUMS extract and amendment.
+    resolution: null
+    official_sources:
+      - https://nhis.ipums.org/nhis-action/variables/170854

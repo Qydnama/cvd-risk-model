@@ -16,6 +16,13 @@ from cvd_risk.data.manifest import register_local_input
 from cvd_risk.runtime import DEFAULT_CONFIG_PATH, initialize_runtime
 
 
+def _missing_codes(specification: dict) -> set[object]:
+    codes: set[object] = set()
+    for values in specification.get("missing_codes", {}).values():
+        codes.update(values)
+    return codes
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG_PATH)
@@ -49,6 +56,21 @@ def main() -> int:
     status = verification.get("status", "unspecified")
     race_candidates = ["RACE_ETHNICITY", "RACENEW", "RACEA", "HISPETH"]
     available_race = [column for column in race_candidates if column in raw]
+    expected_primary_years = set(range(1997, 2015))
+    baseline_availability: dict[str, list[int]] = {}
+    for name, specification in mapping.get("variables", {}).items():
+        if specification.get("role") != "baseline_cvd_exclusion":
+            continue
+        source = specification["source"]
+        substantive = raw[source].notna() & ~raw[source].isin(_missing_codes(specification))
+        baseline_availability[name] = sorted(
+            int(year) for year in raw.loc[substantive, "YEAR"].unique()
+        )
+    incomplete_baseline = {
+        name: years
+        for name, years in baseline_availability.items()
+        if not expected_primary_years.issubset(years)
+    }
 
     manifest_path = Path(paths.get("data_manifest", "configs/data_manifest.yaml"))
     extract_entry = register_local_input(
@@ -80,6 +102,17 @@ def main() -> int:
         f"- Years: {int(raw['YEAR'].min())}–{int(raw['YEAR'].max())}",
         f"- Mapping status: `{status}`",
         f"- Available race/ethnicity inputs: {available_race or 'none'}",
+        "",
+        "## Baseline CVD variable availability",
+        "",
+        "| Canonical variable | Years with substantive responses |",
+        "|---|---|",
+        *(
+            f"| `{name}` | {years[0]}–{years[-1]} |"
+            if years and years == list(range(years[0], years[-1] + 1))
+            else f"| `{name}` | {', '.join(map(str, years)) or 'none'} |"
+            for name, years in baseline_availability.items()
+        ),
     ]
     if status == VERIFIED_CODEBOOK_STATUS:
         verify_codebook_binding(
@@ -96,6 +129,17 @@ def main() -> int:
                 "extract/DDI SHA-256 digests.",
             ]
         )
+        if incomplete_baseline:
+            lines.extend(
+                [
+                    "",
+                    "## Cohort-contract result",
+                    "",
+                    "BLOCKED: at least one required baseline-CVD exclusion is not "
+                    "available in every 1997–2014 primary year. See "
+                    "`configs/protocol_discrepancies.yaml` before cohort construction.",
+                ]
+            )
     else:
         lines.extend(
             [
@@ -129,6 +173,12 @@ def main() -> int:
             "NHIS cohort construction remains blocked."
         )
         return 2
+    if incomplete_baseline:
+        print(
+            "STOP: required baseline-CVD variables are not available in every primary "
+            f"year: {incomplete_baseline}"
+        )
+        return 3
     print("PASS: mapping is bound to this exact extract and codebook.")
     return 0
 

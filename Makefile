@@ -36,7 +36,7 @@ data: stage0
 	$(PYTHON) scripts/00_inspect_nhis_input.py --config $(EXPERIMENT_CONFIG)
 	$(PYTHON) scripts/02_build_nhis_cohort.py --config $(EXPERIMENT_CONFIG)
 	$(PYTHON) scripts/01_download_nhanes.py --config $(NHANES_CONFIG) --manifest $(DATA_MANIFEST)
-	$(PYTHON) scripts/03_build_nhanes_cohort.py --config $(EXPERIMENT_CONFIG) --reuse-existing
+	$(PYTHON) scripts/03_build_nhanes_cohort.py --config $(EXPERIMENT_CONFIG)
 
 audit: stage0
 	$(PYTHON) scripts/04_audit_cohorts.py --config $(EXPERIMENT_CONFIG)

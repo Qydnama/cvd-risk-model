@@ -123,9 +123,13 @@ artifacts/            будущие модели и их metadata
 
 Amendment 2.4 закрепляет R как reference backend для `survey 4.5`,
 `pmsampsize 1.1.3` и `pmvalsampsize 0.1.0`. Команда `make stage0` проверяет SHA
-протокола, quarantine старого NHANES cohort, наличие `Rscript`, `.R-version` и
-`renv.lock`. Пока R не установлен, ожидаемый hard status —
-`BLOCKED_RSCRIPT_NOT_FOUND`; `make data` и `make audit` дальше не продолжаются.
+протокола, quarantine старого NHANES cohort, R 4.6.1, `renv.lock`, точные версии
+пакетов и замороженные reference outputs для survey/sample-size расчетов. Для
+чистой установки R-зависимостей выполните
+`Rscript -e "renv::restore(prompt = FALSE)"`, затем `make stage0`. На Windows
+Stage 0 также находит установленный R по `.R-version`, если `Rscript` ещё не
+добавлен в `PATH`. Любое расхождение получает hard `BLOCKED_*` status; `make data`
+и `make audit` дальше не продолжаются.
 
 Pre-amendment `nhanes_cohort.parquet` зарегистрирован в
 `artifacts/audit/quarantine_manifest.json` и запрещён для валидации, clinical

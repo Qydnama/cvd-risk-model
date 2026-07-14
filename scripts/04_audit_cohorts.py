@@ -69,7 +69,7 @@ def main() -> int:
     interim_dir = Path(paths.get("interim_dir", "data/interim"))
     configured_table_dir = Path(paths.get("report_tables_dir", "reports/tables"))
     nhis_cohort = args.nhis_cohort or processed_dir / "nhis_cohort.parquet"
-    nhanes_cohort = args.nhanes_cohort or processed_dir / "nhanes_cohort.parquet"
+    nhanes_cohort = args.nhanes_cohort or processed_dir / "nhanes_cohort_v2_4.parquet"
     nhis_flow = args.nhis_flow or interim_dir / "nhis_cohort_flow.csv"
     nhanes_flow = args.nhanes_flow or interim_dir / "nhanes_cohort_flow.csv"
     harmonization_differences = (

@@ -69,8 +69,15 @@ def main() -> int:
     )
     harmonized = harmonize_nhis(raw, mapping_path=args.mapping, strict=True)
     cohort, flow = build_nhis_cohort_with_flow(harmonized)
-    if set(cohort["survey_year"].astype(int)) != set(range(1997, 2015)):
-        raise ValueError("Final NHIS cohort does not retain participants in every protocol year")
+    expected_years = set(range(1997, 2015))
+    observed_years = set(cohort["survey_year"].astype(int))
+    if observed_years != expected_years:
+        missing = sorted(expected_years.difference(observed_years))
+        unexpected = sorted(observed_years.difference(expected_years))
+        raise ValueError(
+            "Final NHIS cohort does not retain participants in every protocol year; "
+            f"missing={missing}, unexpected={unexpected}"
+        )
     _atomic_parquet(cohort, output)
     _atomic_csv(flow, flow_output)
 

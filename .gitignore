@@ -12,6 +12,14 @@ htmlcov/
 .venv/
 venv/
 
+# R and renv local state
+.RData
+.Rhistory
+.Ruserdata
+renv/library/
+renv/staging/
+renv/local/
+
 # Editors and operating systems
 .idea/
 .vscode/

@@ -10,22 +10,38 @@
       "manifest": "artifacts\\audit\\quarantine_manifest.json",
       "status": "PASS"
     },
+    "r_environment": {
+      "output": "R=R version 4.6.1 (2026-06-24 ucrt)\nsurvey=4.5 expected=4.5\npmsampsize=1.1.3 expected=1.1.3\npmvalsampsize=0.1.0 expected=0.1.0",
+      "status": "PASS"
+    },
+    "r_locks": {
+      "files": [
+        ".R-version",
+        "renv.lock"
+      ],
+      "status": "PASS"
+    },
+    "r_reference_tests": {
+      "output": "survey_max_absolute_error=4.163336342344337e-16\nsurvey_max_relative_error=7.66348545752027e-16\npmsampsize_required_n=1592\npmvalsampsize_required_n=18839\nR_REFERENCE_TESTS=PASS",
+      "status": "PASS"
+    },
     "rscript": {
-      "executable": null,
-      "status": "BLOCKED_RSCRIPT_NOT_FOUND"
+      "executable": "C:\\Program Files\\R\\R-4.6.1\\bin\\Rscript.exe",
+      "status": "PASS",
+      "version": "Rscript (R) version 4.6.1 (2026-06-24)"
     }
   },
-  "generated_at": "2026-07-14T14:23:40.151238+00:00",
+  "generated_at": "2026-07-14T15:40:47.734398+00:00",
   "protocol_version": "2.4",
   "r_packages": {
     "pmsampsize": "1.1.3",
     "pmvalsampsize": "0.1.0",
     "survey": "4.5"
   },
-  "r_version": null,
-  "ready_for_stage1": false,
+  "r_version": "Rscript (R) version 4.6.1 (2026-06-24)",
+  "ready_for_stage1": true,
   "reference_backend": "R",
   "schema_version": 1,
   "stage": 0,
-  "status": "BLOCKED_RSCRIPT_NOT_FOUND"
+  "status": "PASS"
 }

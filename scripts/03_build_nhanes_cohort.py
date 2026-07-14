@@ -126,7 +126,7 @@ def main() -> int:
     raw_dir = args.raw_dir or Path(paths.get("nhanes_raw_dir", "data/raw/nhanes"))
     processed_dir = Path(paths.get("processed_dir", "data/processed"))
     interim_dir = Path(paths.get("interim_dir", "data/interim"))
-    output = args.output or processed_dir / "nhanes_cohort.parquet"
+    output = args.output or processed_dir / "nhanes_cohort_v2_4.parquet"
     flow_output = args.flow_output or interim_dir / "nhanes_cohort_flow.csv"
     differences_output = args.differences_output or interim_dir / "harmonization_differences.csv"
     required_configs = (args.config, args.nhanes_config, args.mapping)
