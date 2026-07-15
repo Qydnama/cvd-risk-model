@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "amendment_id": "external_validation_lock_amendment_001",
+  "status": "METADATA_BLOCKERS_CLOSED_NO_MODEL_CHANGE",
+  "metadata_only": true,
+  "original_lock": {
+    "repository_relative_path": "artifacts/minimal_v1/external_validation_lock.json",
+    "sha256": "983461d0eaf53592fc26b2615ad4f00a6e2768482d1adac6366f49526ea1f6a3",
+    "commit": "a75366b7ab29d7a29d18353dc18e2d29ef0b8218",
+    "locked_source_commit": "5cace77785c3e7e3398ead12efc101ae235034ec",
+    "immutable_original_not_modified": true
+  },
+  "validation_cohorts": {
+    "nhis_temporal_years": [
+      2010,
+      2011,
+      2012,
+      2013,
+      2014
+    ],
+    "nhanes_external_cycles": [
+      "1999-2000",
+      "2001-2002",
+      "2003-2004",
+      "2005-2006",
+      "2007-2008",
+      "2009-2010",
+      "2011-2012",
+      "2013-2014"
+    ],
+    "list_semantics": "explicit_enumeration_not_range_endpoints"
+  },
+  "portable_binding_policy": {
+    "repository_root_source": "git_rev_parse_show_toplevel",
+    "absolute_paths_required": false,
+    "binding_fields": [
+      "repository_relative_path",
+      "sha256",
+      "hash_mode"
+    ],
+    "content_verification": "normalized_lf_sha256_for_text_raw_sha256_for_binary_without_data_deserialization"
+  },
+  "portable_locked_bindings": {
+    "configs/model_lock.yaml": {
+      "repository_relative_path": "configs/model_lock.yaml",
+      "sha256": "38dfb3e352e7e271c6d55fe44767c14916121db4f3adfcc106a2ea8038a52279",
+      "hash_mode": "normalized_text_lf"
+    },
+    "configs/final_model_selection.yaml": {
+      "repository_relative_path": "configs/final_model_selection.yaml",
+      "sha256": "dc11a2b1d14e57dfcfd973377a5e5f17813d4c1e364b9c0983d5c6eb256805fe",
+      "hash_mode": "normalized_text_lf"
+    },
+    "configs/operating_point.yaml": {
+      "repository_relative_path": "configs/operating_point.yaml",
+      "sha256": "9cfb130d5c2408693b70bfd74666cc943312d03c1ff5ad96ea5e4e36d2bd389e",
+      "hash_mode": "normalized_text_lf"
+    },
+    "src/cvd_risk/modeling/preprocessing.py": {
+      "repository_relative_path": "src/cvd_risk/modeling/preprocessing.py",
+      "sha256": "0b858625df28e5240c44700792936b2c95d376628b5fd2c9d453d129a1c9f258",
+      "hash_mode": "normalized_text_lf"
+    },
+    "src/cvd_risk/modeling/baselines.py": {
+      "repository_relative_path": "src/cvd_risk/modeling/baselines.py",
+      "sha256": "79c545ede4e85ee8ef91d0e6c203fa9ff690a9cc4725b181fa634dd2c3489928",
+      "hash_mode": "normalized_text_lf"
+    },
+    "src/cvd_risk/modeling/training.py": {
+      "repository_relative_path": "src/cvd_risk/modeling/training.py",
+      "sha256": "82e9a830b293d5e53f6d17bfee9eb46d2466378811b6b70255c952f8c7470788",
+      "hash_mode": "normalized_text_lf"
+    },
+    "src/cvd_risk/modeling/operating_point.py": {
+      "repository_relative_path": "src/cvd_risk/modeling/operating_point.py",
+      "sha256": "75fe3af59c8acca483a4834d3fe84adc65534b78f4f568c4560a404da7ba1376",
+      "hash_mode": "normalized_text_lf"
+    },
+    "src/cvd_risk/modeling/model_lock.py": {
+      "repository_relative_path": "src/cvd_risk/modeling/model_lock.py",
+      "sha256": "1d8b67037a974fc1d36ab4c373cd0b911231c38d1a4768dc110645012a034f07",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/08_operating_point_audit.py": {
+      "repository_relative_path": "scripts/08_operating_point_audit.py",
+      "sha256": "479a564ab2ab1414a175b9ce5d3caa1a894283102df5b8fbf029b48ac4d6e86a",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/09_export_final_pipeline.py": {
+      "repository_relative_path": "scripts/09_export_final_pipeline.py",
+      "sha256": "1a255068d463126907ad1018872a314e42bfe860c53e9f97c78e725dfeaf7e98",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/10_create_model_lock.py": {
+      "repository_relative_path": "scripts/10_create_model_lock.py",
+      "sha256": "beae6bf594705908bcec53a16929f772143da11a18a0287655c4df693631cc53",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/11_validate_model_lock.py": {
+      "repository_relative_path": "scripts/11_validate_model_lock.py",
+      "sha256": "4e611a6d6c1319c395949d51a591d6cc5d2bf4311819d222513afccde157c866",
+      "hash_mode": "normalized_text_lf"
+    },
+    "CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md": {
+      "repository_relative_path": "CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md",
+      "sha256": "c57ab77c2f36f30f9180c1595c30dedf1ac9a9919f7f810511c888d6348a28ce",
+      "hash_mode": "normalized_text_lf"
+    },
+    "configs/experiment.yaml": {
+      "repository_relative_path": "configs/experiment.yaml",
+      "sha256": "5e4a6a89bf6419ac180430d6e66775f83fca8836b057768a083660c9718bcbd4",
+      "hash_mode": "normalized_text_lf"
+    },
+    "configs/modeling.yaml": {
+      "repository_relative_path": "configs/modeling.yaml",
+      "sha256": "b48021279343287c94bd186e42a9d2caa09bb409493dad4e1c1bcb7b078c23e2",
+      "hash_mode": "normalized_text_lf"
+    },
+    "pyproject.toml": {
+      "repository_relative_path": "pyproject.toml",
+      "sha256": "3a8c4c733a6e9d192146631037ab9f8293713d769e0aa63ced5cd2e71eb96980",
+      "hash_mode": "normalized_text_lf"
+    },
+    "uv.lock": {
+      "repository_relative_path": "uv.lock",
+      "sha256": "8b98259195bfa9e92f1e23679548ab0a2c873c6fb1fd293270bc7a711faed672",
+      "hash_mode": "normalized_text_lf"
+    },
+    "renv.lock": {
+      "repository_relative_path": "renv.lock",
+      "sha256": "25cec69c2c62ed9140c26122642c90a6d98c5d6d290c9bc5b890bcc048ceedbb",
+      "hash_mode": "normalized_text_lf"
+    },
+    "artifacts/audit/stage0_status.json": {
+      "repository_relative_path": "artifacts/audit/stage0_status.json",
+      "sha256": "316ac3085dcd54147557825095f6f4c17ff775c3cc6a051fffce149221d18393",
+      "hash_mode": "normalized_text_lf"
+    },
+    "artifacts/stage4_baselines/manifest.json": {
+      "repository_relative_path": "artifacts/stage4_baselines/manifest.json",
+      "sha256": "207fc4b51e1d5819eb85478f3947f10379a917ef0e400577e58f16709cd79fd3",
+      "hash_mode": "normalized_text_lf"
+    },
+    "artifacts/stage5_ml_candidates/manifest.json": {
+      "repository_relative_path": "artifacts/stage5_ml_candidates/manifest.json",
+      "sha256": "7147e0958556655f7efc4d813b97746cfadb8d454501b975ea566bd905f8e96f",
+      "hash_mode": "normalized_text_lf"
+    },
+    "artifacts/stage5a_planning/manifest.json": {
+      "repository_relative_path": "artifacts/stage5a_planning/manifest.json",
+      "sha256": "b7d3dcffe68eab3d6c8f2ee6ac05187d98dabde93525dac7b7ceb761032dbf02",
+      "hash_mode": "normalized_text_lf"
+    },
+    "artifacts/stage5b_operating_point/manifest.json": {
+      "repository_relative_path": "artifacts/stage5b_operating_point/manifest.json",
+      "sha256": "c15a09622bea56183e986e11fa187329260029beda04a40a7804422debeecb72",
+      "hash_mode": "normalized_text_lf"
+    },
+    "artifacts/minimal_v1/serialized_pipeline_manifest.json": {
+      "repository_relative_path": "artifacts/minimal_v1/serialized_pipeline_manifest.json",
+      "sha256": "691ed59e738bc4a8ad50d05e5faa2718059eb303f626de77288b98d4e0967a0c",
+      "hash_mode": "normalized_text_lf"
+    },
+    "artifacts/minimal_v1/full_development_pipeline.joblib": {
+      "repository_relative_path": "artifacts/minimal_v1/full_development_pipeline.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+      "hash_mode": "raw_bytes"
+    },
+    "artifacts/minimal_v1/preprocessing.joblib": {
+      "repository_relative_path": "artifacts/minimal_v1/preprocessing.joblib",
+      "sha256": "6509ebab833c6ae449f9ba569c7ceaae53386a962914734597e24aa3a739d857",
+      "hash_mode": "raw_bytes"
+    },
+    "artifacts/minimal_v1/estimator.joblib": {
+      "repository_relative_path": "artifacts/minimal_v1/estimator.joblib",
+      "sha256": "b6c1827a9703ef9d4714088109588159fed40ed1526cba2145ddc6956e1495f7",
+      "hash_mode": "raw_bytes"
+    },
+    "artifacts/minimal_v1/calibrator.joblib": {
+      "repository_relative_path": "artifacts/minimal_v1/calibrator.joblib",
+      "sha256": "ff2291dc373e7ce934b84b07a069ba9cc02c3bff0f94b81492da40de7f31d525",
+      "hash_mode": "raw_bytes"
+    },
+    "model.full_pipeline": {
+      "repository_relative_path": "artifacts/minimal_v1/full_development_pipeline.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+      "hash_mode": "raw_bytes"
+    },
+    "model.preprocessing": {
+      "repository_relative_path": "artifacts/minimal_v1/preprocessing.joblib",
+      "sha256": "6509ebab833c6ae449f9ba569c7ceaae53386a962914734597e24aa3a739d857",
+      "hash_mode": "raw_bytes"
+    },
+    "model.estimator": {
+      "repository_relative_path": "artifacts/minimal_v1/estimator.joblib",
+      "sha256": "b6c1827a9703ef9d4714088109588159fed40ed1526cba2145ddc6956e1495f7",
+      "hash_mode": "raw_bytes"
+    },
+    "model.calibrator": {
+      "repository_relative_path": "artifacts/minimal_v1/calibrator.joblib",
+      "sha256": "ff2291dc373e7ce934b84b07a069ba9cc02c3bff0f94b81492da40de7f31d525",
+      "hash_mode": "raw_bytes"
+    },
+    "development.cohort": {
+      "repository_relative_path": "data/processed/nhis_cohort.parquet",
+      "sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b",
+      "hash_mode": "raw_bytes"
+    },
+    "development.oof_predictions": {
+      "repository_relative_path": "artifacts/stage4_baselines/oof_predictions.parquet",
+      "sha256": "cd8817d7a818c02914777f8288b4901ffbc7f19d5e2d33e331c7577def50d386",
+      "hash_mode": "raw_bytes"
+    },
+    "development.stage4_manifest": {
+      "repository_relative_path": "artifacts/stage4_baselines/manifest.json",
+      "sha256": "207fc4b51e1d5819eb85478f3947f10379a917ef0e400577e58f16709cd79fd3",
+      "hash_mode": "normalized_text_lf"
+    },
+    "development.stage5_manifest": {
+      "repository_relative_path": "artifacts/stage5_ml_candidates/manifest.json",
+      "sha256": "7147e0958556655f7efc4d813b97746cfadb8d454501b975ea566bd905f8e96f",
+      "hash_mode": "normalized_text_lf"
+    },
+    "development.stage5a_manifest": {
+      "repository_relative_path": "artifacts/stage5a_planning/manifest.json",
+      "sha256": "b7d3dcffe68eab3d6c8f2ee6ac05187d98dabde93525dac7b7ceb761032dbf02",
+      "hash_mode": "normalized_text_lf"
+    },
+    "development.stage5b_manifest": {
+      "repository_relative_path": "artifacts/stage5b_operating_point/manifest.json",
+      "sha256": "c15a09622bea56183e986e11fa187329260029beda04a40a7804422debeecb72",
+      "hash_mode": "normalized_text_lf"
+    },
+    "development.serialized_pipeline_manifest": {
+      "repository_relative_path": "artifacts/minimal_v1/serialized_pipeline_manifest.json",
+      "sha256": "691ed59e738bc4a8ad50d05e5faa2718059eb303f626de77288b98d4e0967a0c",
+      "hash_mode": "normalized_text_lf"
+    },
+    "development.chf_lineage": {
+      "repository_relative_path": "reports/tables/stage5b_chf_lineage.csv",
+      "sha256": "d1a00bc267d199a91eef7932496710de21898300affc54ce385abd7818976764",
+      "hash_mode": "normalized_text_lf"
+    }
+  },
+  "audit_manifest_bindings": {
+    "access_provenance": {
+      "repository_relative_path": "artifacts/audit/access_provenance_manifest.json",
+      "sha256": "1afce2639d744b605ab455d7ef457fcd876076e15a0452577145f700f5d73350",
+      "hash_mode": "normalized_text_lf"
+    },
+    "quarantine": {
+      "repository_relative_path": "artifacts/audit/quarantine_manifest.json",
+      "sha256": "18b4a6c2796913cf654be431883389dfc8c01173cf5da87270a790122db28ce7",
+      "hash_mode": "normalized_text_lf"
+    },
+    "sealed_audit": {
+      "repository_relative_path": "artifacts/audit/sealed_audit_manifest.json",
+      "sha256": "907254ecd28274121d0920969daff48e7c750e70689f0e17df228cb45de88475",
+      "hash_mode": "normalized_text_lf"
+    }
+  },
+  "locked_values_unchanged": {
+    "full_pipeline_sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+    "preprocessing_sha256": "6509ebab833c6ae449f9ba569c7ceaae53386a962914734597e24aa3a739d857",
+    "estimator_sha256": "b6c1827a9703ef9d4714088109588159fed40ed1526cba2145ddc6956e1495f7",
+    "calibrator_sha256": "ff2291dc373e7ce934b84b07a069ba9cc02c3bff0f94b81492da40de7f31d525",
+    "cohort_sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b",
+    "oof_predictions_sha256": "cd8817d7a818c02914777f8288b4901ffbc7f19d5e2d33e331c7577def50d386",
+    "cutoff": 0.007469058716065273,
+    "cutoff_selection_rule": "maximum_development_oof_cutoff_with_sensitivity_at_least_target"
+  },
+  "heldout_outcomes_accessed_for_amendment": false,
+  "heldout_outcomes_unsealed": false,
+  "next_permitted_action_after_commit_and_validation": "create_label_free_predictions",
+  "metadata_only_commit_paths": [
+    "artifacts/audit/access_provenance_manifest.json",
+    "artifacts/audit/sealed_audit_manifest.json",
+    "artifacts/minimal_v1/external_validation_lock_amendment_001.json",
+    "src/cvd_risk/modeling/lock_amendment.py",
+    "scripts/12_create_lock_amendment.py",
+    "scripts/13_validate_lock_amendment.py",
+    "tests/test_lock_amendment.py"
+  ]
+}

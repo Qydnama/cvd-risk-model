@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "protocol_version": "2.4",
+  "status": "SEALED_AGGREGATE_AUDIT_RECORDED",
+  "individual_heldout_records_exposed_by_manifest": false,
+  "individual_heldout_outcomes_unsealed": false,
+  "allowed_prelock_content": [
+    "aggregate_n",
+    "aggregate_event_count",
+    "aggregate_cohort_flow",
+    "unstratified_missingness",
+    "design_based_prevalence_and_precision",
+    "sample_size_and_event_stop_gates"
+  ],
+  "content_access_mode": "existing_aggregate_artifacts_hashed_without_label_join",
+  "bindings": {
+    "canonical_stop_gate": {
+      "repository_relative_path": "reports/stop_gate.json",
+      "sha256": "8d5a64045efcf8d68d658f4c52a07dca8e90b1caccbdb6e976b5882a42896a79",
+      "hash_mode": "normalized_text_lf"
+    },
+    "event_counts": {
+      "repository_relative_path": "reports/tables/event_counts.csv",
+      "sha256": "63d70827a16bef9ff3f4bfe7ad6953801addb6ada5826e1968e31257ef0d4b47",
+      "hash_mode": "normalized_text_lf"
+    },
+    "sample_size_gate": {
+      "repository_relative_path": "reports/tables/sample_size_gate.csv",
+      "sha256": "2c8d8d8c5a6f6ec3ac58e8eafd21968cf6b4417d0be9595ed57a261c4e475cd1",
+      "hash_mode": "normalized_text_lf"
+    },
+    "survey_design_precision": {
+      "repository_relative_path": "reports/tables/survey_design_precision.csv",
+      "sha256": "3f2318e671ffd1ffd9beb55b5c283b9bdbcdc5442c0b3c65d282df42372e7cfc",
+      "hash_mode": "normalized_text_lf"
+    },
+    "effective_sample_size": {
+      "repository_relative_path": "reports/tables/effective_sample_size.csv",
+      "sha256": "623c4c91166e1f5edcf3557901629cc9f228a70b6ab6ffce7f9b77c6f81f7f79",
+      "hash_mode": "normalized_text_lf"
+    }
+  }
+}

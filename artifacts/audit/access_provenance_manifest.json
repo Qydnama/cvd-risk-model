@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "protocol_version": "2.4",
+  "status": "ACCESS_PROVENANCE_RECORDED_WITHOUT_HELDOUT_UNSEAL",
+  "recorded_on": "2026-07-15",
+  "pre_amendment_labelled_artifact": {
+    "individual_labels_were_materialized": true,
+    "known_aggregate_n": 20598,
+    "known_aggregate_cvd_events": 225,
+    "known_prior_outputs": [
+      "aggregate_n",
+      "aggregate_event_count"
+    ],
+    "performance_metrics_computed_before_amendment": "UNKNOWN",
+    "predictor_outcome_associations_before_amendment": "UNKNOWN",
+    "subgroup_or_cycle_results_before_amendment": "UNKNOWN",
+    "quarantined_artifact_sha256": "3ad309b476fb66c6ef2d78cf1027855bdca439f75195f03360463e3fd73285b5"
+  },
+  "post_amendment_controls": {
+    "heldout_outcomes_used_for_model_selection": false,
+    "heldout_individual_outcomes_unsealed_after_lock": false,
+    "label_free_predictions_created": false,
+    "next_permitted_action": "create_label_free_predictions"
+  },
+  "bindings": {
+    "quarantine_manifest": {
+      "repository_relative_path": "artifacts/audit/quarantine_manifest.json",
+      "sha256": "18b4a6c2796913cf654be431883389dfc8c01173cf5da87270a790122db28ce7",
+      "hash_mode": "normalized_text_lf"
+    },
+    "original_external_validation_lock": {
+      "repository_relative_path": "artifacts/minimal_v1/external_validation_lock.json",
+      "sha256": "983461d0eaf53592fc26b2615ad4f00a6e2768482d1adac6366f49526ea1f6a3",
+      "hash_mode": "normalized_text_lf"
+    }
+  }
+}
