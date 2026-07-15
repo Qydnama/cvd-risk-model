@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "stage": "stage6_preregistered_unseal_validation",
+  "status": "PREREGISTERED_OUTCOMES_REMAIN_SEALED",
+  "created_on": "2026-07-15T16:02:51.600654+00:00",
+  "heldout_outcomes_loaded": false,
+  "heldout_outcomes_joined": false,
+  "heldout_outcomes_analyzed": false,
+  "outcomes_unsealed": false,
+  "real_data_execution_performed": false,
+  "interpretation_locked": "underpowered_exploratory",
+  "precision_gates": {
+    "nhis_temporal": "FAIL",
+    "nhanes_external": "FAIL"
+  },
+  "locked_bindings": {
+    "original_lock": {
+      "repository_relative_path": "artifacts/minimal_v1/external_validation_lock.json",
+      "sha256": "983461d0eaf53592fc26b2615ad4f00a6e2768482d1adac6366f49526ea1f6a3",
+      "hash_mode": "normalized_text_lf"
+    },
+    "lock_amendment": {
+      "repository_relative_path": "artifacts/minimal_v1/external_validation_lock_amendment_001.json",
+      "sha256": "84a846207cf221dbe9839ede497503f708b4738f1900c943ffe66e146b0ab450",
+      "hash_mode": "normalized_text_lf"
+    },
+    "stage6_label_free_manifest": {
+      "repository_relative_path": "artifacts/stage6_label_free/manifest.json",
+      "sha256": "1179cc83b3b7d594d51c30a7f000537cd71211cabacbe96f6b5cb978f9cca1e2",
+      "hash_mode": "normalized_text_lf"
+    },
+    "stage6_label_free_commit": "66041aa9880c36ec710137358d50f32b4f900d54",
+    "pipeline": {
+      "repository_relative_path": "artifacts/minimal_v1/full_development_pipeline.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+      "hash_mode": "raw_bytes"
+    },
+    "prediction_sha256": {
+      "nhis_temporal": "010b5e45b162145ef77c714e499cb09ebef7007ee506c2cfe9946547721f2ab2",
+      "nhanes_external": "c8277dcc1ab1e1246d24790d253007b9d6dc6d143bd1269f1ac8604f97a301d0"
+    }
+  },
+  "outcome_contract": {
+    "identifier_column": "participant_id",
+    "outcome_columns": [
+      "cvd_death_5y"
+    ],
+    "outcome_definition": "binary_five_year_cvd_mortality",
+    "allowed_values": [
+      0,
+      1
+    ],
+    "missing_outcomes": "forbidden_in_locked_validation_cohort",
+    "raw_outcome_columns_forbidden": [
+      "MORTSTAT",
+      "MORTDODQ",
+      "MORTDODY",
+      "MORTUCODLD",
+      "UCOD_LEADING",
+      "PERMTH_INT",
+      "mortality_eligible",
+      "deceased",
+      "ucod",
+      "followup_months",
+      "cvd_death_5y_boundary_20q"
+    ],
+    "subgroup_columns": [
+      "age",
+      "sex",
+      "race_ethnicity"
+    ],
+    "selection_columns": [
+      "split"
+    ],
+    "role_of_race_ethnicity": "audit_only_never_predictor"
+  },
+  "join_contract": {
+    "keys": [
+      "participant_id"
+    ],
+    "cardinality": "one_to_one",
+    "prediction_ids_unique_and_nonmissing": "required",
+    "outcome_ids_unique_and_nonmissing": "required",
+    "unmatched_prediction_ids": "fatal",
+    "unmatched_outcome_ids": "fatal",
+    "exact_id_set_equality": "required",
+    "preserve_prediction_row_order": true,
+    "row_count_change": "fatal",
+    "persist_joined_individual_data": false
+  },
+  "cohort_contracts": {
+    "nhis_temporal": {
+      "outcome_source_repository_relative_path": "data/processed/nhis_cohort.parquet",
+      "outcome_source_sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b",
+      "outcome_load_allowlist": [
+        "participant_id",
+        "cvd_death_5y",
+        "age",
+        "sex",
+        "race_ethnicity",
+        "split"
+      ],
+      "split_value": "temporal_test",
+      "expected_n": 82860,
+      "expected_periods": [
+        2010,
+        2011,
+        2012,
+        2013,
+        2014
+      ]
+    },
+    "nhanes_external": {
+      "outcome_source_repository_relative_path": "data/processed/nhanes_cohort_v2_4.parquet",
+      "outcome_source_sha256": "ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964",
+      "outcome_load_allowlist": [
+        "participant_id",
+        "cvd_death_5y",
+        "age",
+        "sex",
+        "race_ethnicity",
+        "split"
+      ],
+      "split_value": "external_validation",
+      "expected_n": 20911,
+      "expected_periods": [
+        "1999-2000",
+        "2001-2002",
+        "2003-2004",
+        "2005-2006",
+        "2007-2008",
+        "2009-2010",
+        "2011-2012",
+        "2013-2014"
+      ]
+    }
+  },
+  "analysis_contract": {
+    "interpretation": "underpowered_exploratory",
+    "precision_gate_status": {
+      "nhis_temporal": "fail",
+      "nhanes_external": "fail"
+    },
+    "claims_of_adequate_precision": "forbidden",
+    "primary_predictions": "original_frozen_sigmoid_predictions",
+    "prediction_column": "predicted_risk",
+    "outcome_column": "cvd_death_5y",
+    "weight_column": "analysis_weight",
+    "strata_column": "strata",
+    "psu_column": "psu",
+    "probability_clip": 1e-06,
+    "weighting": "target_cohort_unnormalized_survey_weights",
+    "original_overall_metrics": [
+      "weighted_prevalence",
+      "roc_auc",
+      "average_precision",
+      "brier_score",
+      "log_loss",
+      "calibration_intercept",
+      "calibration_slope",
+      "observed_expected_ratio",
+      "log_observed_expected_ratio",
+      "sensitivity",
+      "specificity",
+      "ppv",
+      "npv",
+      "flagged_fraction",
+      "tp_per_10000",
+      "fn_per_10000",
+      "fp_per_10000",
+      "tn_per_10000",
+      "net_benefit_model",
+      "net_benefit_treat_all",
+      "net_benefit_treat_none"
+    ],
+    "fixed_cutoff": {
+      "value": 0.007469058716065273,
+      "classification_rule": "predicted_risk_greater_than_or_equal_to_cutoff",
+      "role": "secondary_screening_operating_point",
+      "interpretation": "not_a_diagnosis_or_clinically_endorsed_high_risk_boundary",
+      "reselection_on_heldout_data": "forbidden",
+      "change_after_unseal": "forbidden"
+    },
+    "dca": {
+      "thresholds": [
+        0.007469058716065273
+      ],
+      "comparators": [
+        "treat_all",
+        "treat_none"
+      ],
+      "weights": "survey"
+    },
+    "calibration_plot": {
+      "method": "survey_weighted_equal_weight_quantile_bins",
+      "requested_bins": 10,
+      "boundaries": "weighted_empirical_prediction_quantiles",
+      "duplicate_boundaries": "collapse_and_report_actual_bin_count",
+      "x": "survey_weighted_mean_predicted_risk",
+      "y": "survey_weighted_observed_event_fraction",
+      "bootstrap_bands": "percentile_95_fixed_original_bin_boundaries",
+      "reference_line": "identity",
+      "smoother": "none"
+    },
+    "cluster_bootstrap": {
+      "method": "stratified_psu_with_replacement_within_strata",
+      "repetitions": 2000,
+      "seed": 20260714,
+      "confidence_level": 0.95,
+      "interval_method": "percentile",
+      "draw_count_per_stratum": "original_number_of_psus",
+      "participant_bootstrap": "forbidden",
+      "reselect_cutoff_in_each_replicate": false,
+      "minimum_valid_replicates": 1900,
+      "invalid_replicate_policy": "retain_nan_report_count_no_seed_change_no_retry"
+    },
+    "confidence_interval_width_checks": {
+      "roc_auc_full_width_max": 0.1,
+      "calibration_slope_full_width_max": 0.4,
+      "observed_expected_ratio_full_width_max": 0.2,
+      "design_based_overall_risk_full_width_max": 0.005,
+      "action_on_failure": "retain_underpowered_exploratory_status"
+    },
+    "subgroup_audit": {
+      "dimensions": {
+        "sex": {
+          "categories": [
+            "female",
+            "male"
+          ]
+        },
+        "age_group": {
+          "source": "age",
+          "categories": [
+            {
+              "label": "40-54",
+              "lower_inclusive": 40,
+              "upper_inclusive": 54
+            },
+            {
+              "label": "55-64",
+              "lower_inclusive": 55,
+              "upper_inclusive": 64
+            },
+            {
+              "label": "65-79",
+              "lower_inclusive": 65,
+              "upper_inclusive": 79
+            }
+          ]
+        },
+        "race_ethnicity": {
+          "categories": "observed_harmonized_categories",
+          "role": "audit_only"
+        }
+      },
+      "minimum_events_per_category": 20,
+      "minimum_non_events_per_category": 20,
+      "missing_values": "report_count_exclude_from_category_metrics_no_imputation",
+      "ineligible_category": "counts_only_no_performance_metrics",
+      "eligible_metrics": [
+        "roc_auc",
+        "brier_score",
+        "calibration_intercept",
+        "calibration_slope",
+        "sensitivity",
+        "ppv"
+      ],
+      "fairness_claim_from_auc_alone": "forbidden"
+    },
+    "period_stability": {
+      "nhis_temporal": "survey_year",
+      "nhanes_external": "survey_cycle",
+      "cutoff_reselection": "forbidden",
+      "interpretation": "descriptive_exploratory"
+    },
+    "recalibration_in_the_large": {
+      "role": "sensitivity_analysis_only",
+      "method": "weighted_logistic_offset_intercept_with_original_lp_fixed",
+      "refit_slope": false,
+      "replace_primary_predictions": false,
+      "update_serialized_calibrator": false,
+      "use_for_model_selection": false,
+      "metrics": [
+        "brier_score",
+        "log_loss",
+        "calibration_intercept",
+        "observed_expected_ratio"
+      ]
+    },
+    "immutable_components": {
+      "model": "no_change",
+      "preprocessing": "no_change",
+      "calibrator": "no_change",
+      "cutoff": "no_change"
+    }
+  },
+  "authorization_contract": {
+    "required": true,
+    "manifest_path": "artifacts/audit/unseal_authorization.json",
+    "access_receipt_path": "artifacts/audit/unseal_access_receipt.json",
+    "explicit_user_permission_required": true,
+    "one_time_unseal": true,
+    "authorization_must_bind_plan_commit": true,
+    "authorization_must_bind_prediction_sha": true,
+    "refuse_when_authorization_absent": true
+  },
+  "synthetic_label_tests": {
+    "path": "tests/test_unseal_validation.py",
+    "real_heldout_paths_used": false,
+    "required_before_unseal": true
+  },
+  "source_bindings": {
+    "configs/stage6_unseal_validation.yaml": {
+      "repository_relative_path": "configs/stage6_unseal_validation.yaml",
+      "sha256": "d92f861b6448149696f67f0a28033f27b0ec01ce7456d63882c9e6eebd6889f7",
+      "hash_mode": "normalized_text_lf"
+    },
+    "src/cvd_risk/modeling/unseal_validation.py": {
+      "repository_relative_path": "src/cvd_risk/modeling/unseal_validation.py",
+      "sha256": "0470b1cb5dbf8c3bd3128eaf9b86b78030846babf67ec8f3b956f4e2fef91001",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/16_create_unseal_plan.py": {
+      "repository_relative_path": "scripts/16_create_unseal_plan.py",
+      "sha256": "6258e28d2dde7ea95e5c035317024814c28418f97633a6b367c6f67edea76b33",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/17_validate_unseal_plan.py": {
+      "repository_relative_path": "scripts/17_validate_unseal_plan.py",
+      "sha256": "82d3d8140190aa03bb72352b4743a14fa7ae696431e21f509d4e3425a6c7821b",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/18_external_validate_after_unseal.py": {
+      "repository_relative_path": "scripts/18_external_validate_after_unseal.py",
+      "sha256": "9098761fbedfa2f4d080c408a35f801fbde3efa72dc44087abdfc0aeb0bf3747",
+      "hash_mode": "normalized_text_lf"
+    },
+    "scripts/r/stage6_design_risk_precision.R": {
+      "repository_relative_path": "scripts/r/stage6_design_risk_precision.R",
+      "sha256": "277c3e7f2467b5e189c5fdbc7af2aff0a31dbd034c90245ba9d07244d0cf6848",
+      "hash_mode": "normalized_text_lf"
+    },
+    "tests/test_unseal_validation.py": {
+      "repository_relative_path": "tests/test_unseal_validation.py",
+      "sha256": "dc3ea417564b73bd2f1d5ba0c4de68a73c6f54cc6051113dc5773c8e7b7d3a9d",
+      "hash_mode": "normalized_text_lf"
+    }
+  },
+  "forbidden_changes_after_unseal": [
+    "model",
+    "preprocessing",
+    "calibrator",
+    "cutoff",
+    "prediction_artifacts",
+    "outcome_contract",
+    "metric_definitions",
+    "bootstrap_seed_or_repetitions"
+  ],
+  "next_action": "request_separate_explicit_one_time_unseal_authorization"
+}
