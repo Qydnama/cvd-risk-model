@@ -50,6 +50,8 @@ artifacts/**/*.pickle
 artifacts/**/*.bin
 artifacts/**/*.onnx
 artifacts/**/oof_predictions.parquet
+artifacts/stage6_label_free/predictions/*.parquet
+artifacts/stage6_label_free/pmvalsampsize_*.csv
 artifacts/quarantine/**
 
 # The explicitly frozen minimal pipeline and its components are versioned.

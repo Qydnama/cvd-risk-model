@@ -4,7 +4,7 @@ EXPERIMENT_CONFIG ?= configs/experiment.yaml
 NHANES_CONFIG ?= configs/nhanes_files.yaml
 DATA_MANIFEST ?= configs/data_manifest.yaml
 
-.PHONY: help sync test stage0 check-nhis nhanes data audit train ml plan-validation audit-operating-point export-pipeline lock-model validate-lock
+.PHONY: help sync test stage0 check-nhis nhanes data audit train ml plan-validation audit-operating-point export-pipeline lock-model validate-lock label-free validate-label-free
 
 help:
 	@echo "Targets:"
@@ -22,6 +22,8 @@ help:
 	@echo "  export-pipeline  Serialize the final full-development pipeline without refit"
 	@echo "  lock-model  Create the immutable external-validation model lock"
 	@echo "  validate-lock  Verify lock ancestry, scope and all frozen SHA bindings"
+	@echo "  label-free  Freeze Stage 6 held-out predictions without reading outcomes"
+	@echo "  validate-label-free  Verify frozen Stage 6 prediction and provenance SHA bindings"
 
 sync:
 	$(UV) sync --locked --dev
@@ -67,3 +69,9 @@ lock-model:
 
 validate-lock:
 	$(UV) run --extra modeling python scripts/11_validate_model_lock.py
+
+label-free:
+	$(UV) run --extra modeling python scripts/14_stage6_label_free.py --config configs/stage6_label_free.yaml
+
+validate-label-free:
+	$(UV) run --extra modeling python scripts/15_validate_stage6_label_free.py

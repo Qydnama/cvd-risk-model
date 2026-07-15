@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "stage": "stage6_preunseal_label_free_predictions",
+  "status": "LABEL_FREE_PREDICTIONS_FROZEN_OUTCOMES_STILL_SEALED",
+  "heldout_outcomes_accessed": false,
+  "heldout_outcomes_unsealed": false,
+  "model_retrained_or_modified": false,
+  "original_lock": {
+    "repository_relative_path": "artifacts/minimal_v1/external_validation_lock.json",
+    "sha256": "983461d0eaf53592fc26b2615ad4f00a6e2768482d1adac6366f49526ea1f6a3",
+    "commit": "a75366b7ab29d7a29d18353dc18e2d29ef0b8218"
+  },
+  "lock_amendment": {
+    "repository_relative_path": "artifacts/minimal_v1/external_validation_lock_amendment_001.json",
+    "sha256": "84a846207cf221dbe9839ede497503f708b4738f1900c943ffe66e146b0ab450",
+    "hash_mode": "normalized_text_lf",
+    "commit": "907c8f5cb8062b5a0c83013c78935a6d547acf11"
+  },
+  "pipeline": {
+    "repository_relative_path": "artifacts/minimal_v1/full_development_pipeline.joblib",
+    "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+    "calibration": "sigmoid"
+  },
+  "cutoff": 0.007469058716065273,
+  "input_bindings": {
+    "nhis_temporal": {
+      "repository_relative_path": "data/processed/nhis_cohort.parquet",
+      "sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b",
+      "loaded_columns": [
+        "participant_id",
+        "survey_year",
+        "strata",
+        "psu",
+        "analysis_weight",
+        "age",
+        "sex",
+        "bmi",
+        "smoking_status",
+        "hypertension_dx",
+        "diabetes_dx",
+        "general_health",
+        "split"
+      ],
+      "outcome_columns_loaded": [],
+      "predictor_missing_counts": {
+        "age": 0,
+        "sex": 0,
+        "bmi": 3147,
+        "smoking_status": 400,
+        "hypertension_dx": 60,
+        "diabetes_dx": 1535,
+        "general_health": 46
+      },
+      "missing_value_handling": "frozen_development_fitted_preprocessor",
+      "split": "temporal_test"
+    },
+    "nhanes_external": {
+      "repository_relative_path": "data/processed/nhanes_cohort_v2_4.parquet",
+      "sha256": "ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964",
+      "loaded_columns": [
+        "participant_id",
+        "survey_cycle",
+        "survey_year",
+        "strata",
+        "psu",
+        "analysis_weight",
+        "age",
+        "sex",
+        "bmi",
+        "smoking_status",
+        "hypertension_dx",
+        "diabetes_dx",
+        "general_health",
+        "split"
+      ],
+      "outcome_columns_loaded": [],
+      "predictor_missing_counts": {
+        "age": 0,
+        "sex": 0,
+        "bmi": 362,
+        "smoking_status": 19,
+        "hypertension_dx": 64,
+        "diabetes_dx": 478,
+        "general_health": 11
+      },
+      "missing_value_handling": "frozen_development_fitted_preprocessor",
+      "split": "external_validation"
+    }
+  },
+  "prevalence_argument": {
+    "value": 0.009271379395474347,
+    "source": "frozen_nhis_development_survey_weighted_prevalence",
+    "heldout_prevalence_used": false
+  },
+  "pmvalsampsize_arguments": {
+    "package_version": "0.1.0",
+    "type": "b",
+    "cstatistic": 0.75,
+    "cstatciwidth": 0.1,
+    "cslope": 1.0,
+    "csciwidth": 0.4,
+    "oe": 1.0,
+    "oeciwidth": 0.2,
+    "initial_simobs": 1000000,
+    "repeat_simobs": 2000000,
+    "maximum_simobs": 16000000,
+    "stability_relative_tolerance": 0.01,
+    "seed": 20260714,
+    "graph": false,
+    "trace": false
+  },
+  "cohorts": {
+    "nhis_temporal": {
+      "n": 82860,
+      "prediction_path": "artifacts/stage6_label_free/predictions/nhis_temporal_predictions.parquet",
+      "prediction_sha256": "010b5e45b162145ef77c714e499cb09ebef7007ee506c2cfe9946547721f2ab2",
+      "prediction_columns": [
+        "cohort",
+        "participant_id",
+        "survey_cycle",
+        "survey_year",
+        "strata",
+        "psu",
+        "analysis_weight",
+        "predicted_risk",
+        "linear_predictor",
+        "secondary_screen_positive"
+      ],
+      "outcome_columns": [],
+      "stability": {
+        "previous_required_n": 41084.0,
+        "current_required_n": 41084.0,
+        "relative_difference": 0.0,
+        "tolerance": 0.01,
+        "stable": true,
+        "provisional_required_n": 41084
+      }
+    },
+    "nhanes_external": {
+      "n": 20911,
+      "prediction_path": "artifacts/stage6_label_free/predictions/nhanes_external_predictions.parquet",
+      "prediction_sha256": "c8277dcc1ab1e1246d24790d253007b9d6dc6d143bd1269f1ac8604f97a301d0",
+      "prediction_columns": [
+        "cohort",
+        "participant_id",
+        "survey_cycle",
+        "survey_year",
+        "strata",
+        "psu",
+        "analysis_weight",
+        "predicted_risk",
+        "linear_predictor",
+        "secondary_screen_positive"
+      ],
+      "outcome_columns": [],
+      "stability": {
+        "previous_required_n": 41084.0,
+        "current_required_n": 41084.0,
+        "relative_difference": 0.0,
+        "tolerance": 0.01,
+        "stable": true,
+        "provisional_required_n": 41084
+      }
+    }
+  },
+  "environment": {
+    "python": "3.12.1",
+    "rscript": "C:\\Program Files\\R\\R-4.6.1\\bin\\Rscript.exe",
+    "survey": "4.5",
+    "pmvalsampsize": "0.1.0"
+  },
+  "source_bindings": {
+    "configs/stage6_label_free.yaml": "4b0cabf254b5bdd9c5acea686a56706ed322200d7da427dd10a4266dc6753146",
+    "src/cvd_risk/modeling/stage6.py": "89fa44df408bec0f4460dd08050364267295013e28e2698e11bd5d395deb72fa",
+    "scripts/14_stage6_label_free.py": "6ac278d8e3dbc4f4381d0b204d40ac9a5b8629708a1c2e42f2516ecfa66ea724",
+    "scripts/15_validate_stage6_label_free.py": "8863da7a0752b1229ee8e8f52b35c5bae741139f26dd638ac9142ee41adbbc01",
+    "scripts/r/label_free_design_effects.R": "f97f46d1b2803929f841c55c8488c3eec040991907bfc5cdc377cd5db64afa7e",
+    "scripts/r/pmvalsampsize_stage5a.R": "2ceaa1fe8105df6a0f3c665ee864787825ec54605e6c4fe71790f96cc8d6ea3f",
+    "artifacts/stage5a_planning/manifest.json": "02c92d90ec1ad7f9e33b1ea8cd6f871d7bb57a00b2ca559439677bc805759d5e",
+    "reports/tables/survey_design_precision.csv": "3a0945cf375bdd5978b2accc85423fa44ce03f03df58176d08a9c4f9e85b87a8"
+  },
+  "outputs": {
+    "summary": {
+      "repository_relative_path": "reports/tables/stage6_label_free_prediction_summary.csv",
+      "sha256": "dc22f63f3b4006146a9957a120d8998ef83c63953c54bfc58ddaf78e7e64de91"
+    },
+    "stability": {
+      "repository_relative_path": "reports/tables/stage6_pmvalsampsize_stability.csv",
+      "sha256": "923f1cb37a18be3d422b7d7d1eb1b14b2654b411daad9c001a86fdf64e4ce15b"
+    },
+    "design_effects": {
+      "repository_relative_path": "reports/tables/stage6_label_free_design_effects.csv",
+      "sha256": "e0350126622393d6a17945d810c7118567e398c80939356f922334b2e1bfa106"
+    },
+    "precision_gate": {
+      "repository_relative_path": "reports/tables/stage6_precision_gate.csv",
+      "sha256": "3c880f83de00029d1099a15a572b146ddd20780f43cf1d481d836d7ac756d3af"
+    },
+    "report": {
+      "repository_relative_path": "reports/stage6_preunseal_label_free_report.md",
+      "sha256": "240c50c95216d9599caa24a4926d63cfedcbc2340a38a64355924ce65c945904"
+    }
+  },
+  "next_action_requires_explicit_unseal": true
+}
