@@ -1,0 +1,27 @@
+schema_version: 1
+protocol_version: "2.4"
+selection_stage: pre_lock_stage5a
+approved_by_user_on: "2026-07-15"
+
+primary:
+  model: LogisticRegression
+  route: minimal
+  calibration: sigmoid
+  artifact: artifacts/stage4_baselines/LogisticRegression.joblib
+  oof_predictions: artifacts/stage4_baselines/oof_predictions.parquet
+  rationale: best_weighted_oof_brier_auc_calibration_stability_and_parsimony
+
+fallback:
+  model: LogisticRegressionNoGeneralHealth
+  route: minimal_no_general_health
+  calibration: sigmoid
+  artifact: artifacts/stage4_baselines/LogisticRegressionNoGeneralHealth.joblib
+  status: carry_forward_for_separate_validation
+
+benchmarks:
+  - AgeSexLogistic
+  - RandomForest
+  - XGBoost
+
+heldout_outcomes_used_for_selection: false
+external_validation_lock_created: false

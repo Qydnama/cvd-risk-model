@@ -1,0 +1,2 @@
+"package","package_version","type","prevalence","lp_mean","lp_sd","simobs","seed","criterion_oe_n","criterion_slope_n","criterion_cstatistic_n","required_n","required_events","achieved_oe_ci_width","achieved_slope_ci_width","achieved_cstatistic_ci_width"
+"pmvalsampsize","0.1.0","binary",0.00927137939547435,-5.38517991801175,1.13269114553036,1e+06,20260714,41084,9668,9860,41084,380.905351083668,0.200253099866491,0.4,0.1

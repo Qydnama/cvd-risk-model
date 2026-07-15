@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "stage": "stage5a_provisional_external_validation_planning",
+  "status": "PROVISIONAL_PLANNING_COMPLETE_NOT_LOCKED",
+  "selected_model": {
+    "model": "LogisticRegression",
+    "route": "minimal",
+    "calibration": "sigmoid",
+    "artifact": "artifacts/stage4_baselines/LogisticRegression.joblib",
+    "oof_predictions": "artifacts/stage4_baselines/oof_predictions.parquet",
+    "rationale": "best_weighted_oof_brier_auc_calibration_stability_and_parsimony"
+  },
+  "heldout_outcomes_accessed": false,
+  "external_validation_lock_created": false,
+  "threshold_policy_locked": false,
+  "input_bindings": {
+    "selection": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\final_model_selection.yaml",
+      "sha256": "dc11a2b1d14e57dfcfd973377a5e5f17813d4c1e364b9c0983d5c6eb256805fe"
+    },
+    "stage4_manifest": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\manifest.json",
+      "sha256": "bd527d250d4bb51241adaee92ae6a4c92e9cbdfd2372a5b3aa6f38624c6c6914"
+    },
+    "stage5_manifest": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5_ml_candidates\\manifest.json",
+      "sha256": "4ea4eacbd4bdea863d1a26f3eec8b87a438f9cad6e41dc52cb8fc8574212b21a"
+    },
+    "selected_model": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\LogisticRegression.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010"
+    },
+    "oof_predictions": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\oof_predictions.parquet",
+      "sha256": "cd8817d7a818c02914777f8288b4901ffbc7f19d5e2d33e331c7577def50d386"
+    },
+    "config": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\stage5a_planning.yaml",
+      "sha256": "b96e72728ae72cf1299e52581ab27d1e7853c27ad2ce3e326bab1ca483e922a4"
+    },
+    "r_script": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\scripts\\r\\pmvalsampsize_stage5a.R",
+      "sha256": "2ceaa1fe8105df6a0f3c665ee864787825ec54605e6c4fe71790f96cc8d6ea3f"
+    },
+    "renv_lock": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\renv.lock",
+      "sha256": "5f116951220320e940c2970ada9664551a4b7d63cc2f539a84a34292f86a93e0"
+    }
+  },
+  "environment": {
+    "python": "3.12.1",
+    "rscript": "C:\\Program Files\\R\\R-4.6.1\\bin\\Rscript.exe",
+    "pmvalsampsize": "0.1.0"
+  },
+  "lp_summary": {
+    "weighted_prevalence": 0.009271379395474347,
+    "weighted_lp_mean": -5.385179918011751,
+    "weighted_lp_sd": 1.1326911455303639,
+    "prediction_min": 0.0004450504732765819,
+    "prediction_max": 0.4011334235727214,
+    "n_clipped_low": 0,
+    "n_clipped_high": 0
+  },
+  "pmvalsampsize_arguments": {
+    "package_version": "0.1.0",
+    "type": "b",
+    "cstatistic": 0.75,
+    "cstatciwidth": 0.1,
+    "cslope": 1.0,
+    "csciwidth": 0.4,
+    "oe": 1.0,
+    "oeciwidth": 0.2,
+    "initial_simobs": 1000000,
+    "repeat_simobs": 2000000,
+    "maximum_simobs": 16000000,
+    "stability_relative_tolerance": 0.01,
+    "seed": 20260714,
+    "graph": false,
+    "trace": false
+  },
+  "stability": {
+    "previous_required_n": 41084.0,
+    "current_required_n": 41084.0,
+    "relative_difference": 0.0,
+    "tolerance": 0.01,
+    "stable": true,
+    "provisional_required_n": 41084
+  },
+  "design_correction_status": "DEFERRED_TO_STAGE6_LABEL_FREE_PREDICTIONS",
+  "outputs": {
+    "stability_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage5a_pmvalsampsize_stability.csv",
+      "sha256": "10d996e86212e9ffb3637494b8d4a0e12d3b1bc7edac9eeb5c4df93b4a080b0d"
+    },
+    "raw_runs": [
+      {
+        "simobs": 1000000,
+        "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5a_planning\\pmvalsampsize_1000000.csv",
+        "sha256": "580180d0a79a0b700d422cb49d391f30498860ca0f4691215365d6d658d9429d"
+      },
+      {
+        "simobs": 2000000,
+        "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5a_planning\\pmvalsampsize_2000000.csv",
+        "sha256": "bbf1d5357f26356d89f30a111e083999d89279f614d637683b0bf5c518583403"
+      }
+    ],
+    "report": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\stage5a_provisional_planning_report.md",
+      "sha256": "0bda460dea9e62bfb5cebedc643ee07bab61beda0ec9f4d9268021f25b0dd313"
+    }
+  }
+}

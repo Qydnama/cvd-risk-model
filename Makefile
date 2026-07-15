@@ -4,7 +4,7 @@ EXPERIMENT_CONFIG ?= configs/experiment.yaml
 NHANES_CONFIG ?= configs/nhanes_files.yaml
 DATA_MANIFEST ?= configs/data_manifest.yaml
 
-.PHONY: help sync test stage0 check-nhis nhanes data audit train ml
+.PHONY: help sync test stage0 check-nhis nhanes data audit train ml plan-validation
 
 help:
 	@echo "Targets:"
@@ -17,6 +17,7 @@ help:
 	@echo "  audit  Produce the required cohort audit and evaluate the stop-gate"
 	@echo "  train  Fit Stage 4 logistic baselines on NHIS development only"
 	@echo "  ml     Tune Stage 5 RF/XGBoost candidates on NHIS development only"
+	@echo "  plan-validation  Run Stage 5a provisional pmvalsampsize planning"
 
 sync:
 	$(UV) sync --locked --dev
@@ -47,3 +48,6 @@ train:
 
 ml:
 	$(UV) run --extra modeling python scripts/06_train_ml_candidates.py --config $(EXPERIMENT_CONFIG)
+
+plan-validation:
+	$(UV) run --extra modeling python scripts/07_stage5a_planning.py --config $(EXPERIMENT_CONFIG)

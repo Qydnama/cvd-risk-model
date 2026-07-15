@@ -1,0 +1,33 @@
+schema_version: 1
+stage: stage5a_provisional_external_validation_planning
+
+selected_model_config: configs/final_model_selection.yaml
+stage4_manifest: artifacts/stage4_baselines/manifest.json
+stage5_manifest: artifacts/stage5_ml_candidates/manifest.json
+
+prediction_column: prediction_sigmoid
+probability_clip: 1.0e-6
+prevalence_source: nhis_development_survey_weighted_outcome_prevalence
+weighted_sd_definition: population
+
+pmvalsampsize:
+  package_version: "0.1.0"
+  type: b
+  cstatistic: 0.75
+  cstatciwidth: 0.10
+  cslope: 1.0
+  csciwidth: 0.40
+  oe: 1.0
+  oeciwidth: 0.20
+  initial_simobs: 1000000
+  repeat_simobs: 2000000
+  maximum_simobs: 16000000
+  stability_relative_tolerance: 0.01
+  seed: 20260714
+  graph: false
+  trace: false
+
+outputs:
+  artifact_dir: artifacts/stage5a_planning
+  stability_table: reports/tables/stage5a_pmvalsampsize_stability.csv
+  report: reports/stage5a_provisional_planning_report.md

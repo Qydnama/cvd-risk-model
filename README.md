@@ -47,6 +47,7 @@ GNU Make удобен, но не обязателен на Windows. Эквива
 | Cohort audit | `make audit` | `uv run python scripts/04_audit_cohorts.py --config configs/experiment.yaml` |
 | Baseline-модели | `make train` | `uv run --extra modeling python scripts/05_train_minimal.py --config configs/experiment.yaml` |
 | RF/XGBoost-кандидаты | `make ml` | `uv run --extra modeling python scripts/06_train_ml_candidates.py --config configs/experiment.yaml` |
+| Provisional validation planning | `make plan-validation` | `uv run --extra modeling python scripts/07_stage5a_planning.py --config configs/experiment.yaml` |
 
 `make train` проверяет неизменность Stage 3 stop-gate и обучает только три
 логистических baseline-кандидата на NHIS development 1997–2009. Imputation,
@@ -59,6 +60,11 @@ grouped tuning `RandomForestClassifier` и `XGBoost` только на NHIS deve
 Inner tuning минимизирует survey-weighted Brier score; sigmoid calibration
 обучается по inner out-of-fold predictions. Результат остается набором
 development-кандидатов и также не создает model lock.
+
+`make plan-validation` использует только OOF predictions выбранной development
+модели и запускает locked R `pmvalsampsize 0.1.0` сначала с `1,000,000`, затем
+с `2,000,000` simulated observations. Команда не читает held-out outcomes и не
+создает model lock; design correction переносится на Stage 6.
 
 ## Ручной файл IPUMS NHIS
 
