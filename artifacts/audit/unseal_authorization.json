@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "AUTHORIZED_ONE_TIME_UNSEAL",
+  "authorized_by_user": true,
+  "authorized_at": "2026-07-15T21:18:37.4875501+05:00",
+  "explicit_user_permission": true,
+  "one_time_unseal": true,
+  "stage6_label_free_commit": "66041aa9880c36ec710137358d50f32b4f900d54",
+  "unseal_plan_commit": "1c0e1aa36ab21184beb7d8be9455ee2eb2424b49",
+  "prediction_sha256": {
+    "nhis_temporal": "010b5e45b162145ef77c714e499cb09ebef7007ee506c2cfe9946547721f2ab2",
+    "nhanes_external": "c8277dcc1ab1e1246d24790d253007b9d6dc6d143bd1269f1ac8604f97a301d0"
+  },
+  "interpretation": "underpowered_exploratory",
+  "model_change_authorized": false,
+  "calibrator_change_authorized": false,
+  "cutoff_change_authorized": false,
+  "frozen_cutoff": 0.007469058716065273,
+  "authorized_scope": [
+    "load_only_preregistered_harmonized_outcome_allowlist",
+    "strict_one_to_one_join_with_frozen_predictions",
+    "preregistered_temporal_and_external_validation",
+    "preregistered_stratified_psu_cluster_bootstrap_2000",
+    "preregistered_calibration_dca_subgroup_and_period_analyses",
+    "recalibration_in_the_large_sensitivity_only"
+  ],
+  "forbidden_scope": [
+    "model_change_or_refit",
+    "preprocessing_change",
+    "sigmoid_calibrator_change_or_refit",
+    "prediction_change",
+    "cutoff_change_or_reselection",
+    "new_model_or_threshold_search",
+    "analysis_outside_plan_commit"
+  ],
+  "pre_unseal_checks": {
+    "checked_at": "2026-07-15T21:18:37.4875501+05:00",
+    "head": "1c0e1aa36ab21184beb7d8be9455ee2eb2424b49",
+    "origin_main": "1c0e1aa36ab21184beb7d8be9455ee2eb2424b49",
+    "clean_working_tree_before_authorization_manifest": true,
+    "original_lock_sha256_normalized_lf": "983461d0eaf53592fc26b2615ad4f00a6e2768482d1adac6366f49526ea1f6a3",
+    "lock_amendment_sha256_normalized_lf": "84a846207cf221dbe9839ede497503f708b4738f1900c943ffe66e146b0ab450",
+    "pipeline_sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+    "stage6_label_free_validator": "STAGE6_LABEL_FREE_VALID",
+    "unseal_plan_validator": "UNSEAL_PLAN_VALID_OUTCOMES_SEALED",
+    "legacy_model_lock_validator": "scope_guard_not_applicable_after_authorized_post_lock_commits",
+    "legacy_amendment_validator": "scope_guard_not_applicable_after_authorized_post_amendment_commits",
+    "all_current_portable_sha_and_ancestry_bindings_valid": true,
+    "heldout_outcomes_loaded": false,
+    "heldout_outcomes_unsealed": false
+  }
+}

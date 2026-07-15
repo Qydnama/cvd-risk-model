@@ -1,0 +1,3 @@
+cohort,expected_prediction_n,outcome_rows_after_locked_split,joined_n,prediction_duplicate_ids,outcome_duplicate_ids,unmatched_prediction_ids,unmatched_outcome_ids,missing_outcomes,exact_id_set_equality,one_to_one_validated,prediction_order_preserved,outcome_allowlist_valid,joined_individual_data_persisted,status,evidence
+nhis_temporal,82860,82860,82860,0,0,0,0,0,True,True,True,True,False,PASS,strict_runner_completed_without_join_exception
+nhanes_external,20911,20911,20911,0,0,0,0,0,True,True,True,True,False,PASS,strict_runner_completed_without_join_exception

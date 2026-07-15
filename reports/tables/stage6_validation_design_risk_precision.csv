@@ -1,0 +1,3 @@
+cohort,n_nominal,raw_events,weighted_prevalence,ci_lower,ci_upper,full_ci_width,target_full_ci_width,passes_target,design_df,method
+nhis_temporal,82860,834,0.00843397657108293,0.00772787455854193,0.00920399724328783,0.00147612268474589,0.005,TRUE,300,survey_svyciprop_logit
+nhanes_external,20911,255,0.00830878168820465,0.00697743087827548,0.00989163465458187,0.00291420377630639,0.005,TRUE,123,survey_svyciprop_logit

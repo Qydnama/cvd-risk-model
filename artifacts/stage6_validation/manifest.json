@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "stage": "stage6_authorized_unseal_validation",
+  "status": "COMPLETE_UNDERPOWERED_EXPLORATORY",
+  "completed_at": "2026-07-15T16:48:09.170965+00:00",
+  "outcomes_unsealed": true,
+  "heldout_outcomes_loaded": true,
+  "heldout_outcomes_joined": true,
+  "heldout_outcomes_analyzed": true,
+  "interpretation": "underpowered_exploratory",
+  "model_modified": false,
+  "calibrator_modified": false,
+  "cutoff_modified_or_reselected": false,
+  "cutoff": 0.007469058716065273,
+  "plan_commit": "1c0e1aa36ab21184beb7d8be9455ee2eb2424b49",
+  "authorization": {
+    "repository_relative_path": "artifacts/audit/unseal_authorization.json",
+    "sha256": "cfeb02bb670c8699c5d7c70c4884deedb448ea24a651e6e435bae7a33d9c00bc",
+    "hash_mode": "normalized_text_lf"
+  },
+  "environment": {
+    "python": "3.12.1"
+  },
+  "outputs": {
+    "report": {
+      "repository_relative_path": "reports/stage6_underpowered_exploratory_validation.md",
+      "sha256": "43502565f10899f27f870b9ad8902a95d74ec92073f8a69c51c42578f13cc436",
+      "hash_mode": "normalized_text_lf"
+    },
+    "overall_metrics": {
+      "repository_relative_path": "reports/tables/stage6_validation_overall_metrics.csv",
+      "sha256": "0cc7a5f9d7e80b85e769f385a74de98cbce92c9d8c606b578d9c265c4b673649",
+      "hash_mode": "normalized_text_lf"
+    },
+    "confidence_intervals": {
+      "repository_relative_path": "reports/tables/stage6_validation_bootstrap_ci.csv",
+      "sha256": "7a01945f09a8da8c7d9ed6f7b07151e4b763b7d71801e6218bd47812b1c9255d",
+      "hash_mode": "normalized_text_lf"
+    },
+    "calibration_bins": {
+      "repository_relative_path": "reports/tables/stage6_validation_calibration_bins.csv",
+      "sha256": "87fcbcfb6d20cf3530dbd40d8349da977e5a5a12945ed9da05db277bdf206567",
+      "hash_mode": "normalized_text_lf"
+    },
+    "subgroup_metrics": {
+      "repository_relative_path": "reports/tables/stage6_validation_subgroups.csv",
+      "sha256": "e3887c082674b9e29aab0aae6184156787180004142e16729434ac1ad87ef79d",
+      "hash_mode": "normalized_text_lf"
+    },
+    "period_stability": {
+      "repository_relative_path": "reports/tables/stage6_validation_period_stability.csv",
+      "sha256": "6cbf2fd0278e58abb04c6ba79c5a311119fabb7d4828272a32eb59b8076d4ea3",
+      "hash_mode": "normalized_text_lf"
+    },
+    "recalibration_sensitivity": {
+      "repository_relative_path": "reports/tables/stage6_validation_recalibration_sensitivity.csv",
+      "sha256": "063810be5e758fdc38f89eb27d84866135592da52d3b5ced733268eed8d63847",
+      "hash_mode": "normalized_text_lf"
+    },
+    "design_risk_precision": {
+      "repository_relative_path": "reports/tables/stage6_validation_design_risk_precision.csv",
+      "sha256": "f0966e64c9224e511ed9a30ab0be6ff61c79e7bf1ca0d5f3d54d9935eaa8d1f3",
+      "hash_mode": "normalized_text_lf"
+    },
+    "calibration_figure_nhis_temporal": {
+      "repository_relative_path": "reports/figures/stage6_validation/nhis_temporal_calibration.png",
+      "sha256": "d7acd3e7778076ed0e1129babee68dfb822ba67c398d5a971af0f599ba853bf2",
+      "hash_mode": "raw_bytes"
+    },
+    "calibration_figure_nhanes_external": {
+      "repository_relative_path": "reports/figures/stage6_validation/nhanes_external_calibration.png",
+      "sha256": "39693ac9ae3e9208fd946c66e73dac6bb77c9b81cc3d2828c1dea87b16f904f1",
+      "hash_mode": "raw_bytes"
+    }
+  },
+  "joined_individual_data_persisted": false
+}

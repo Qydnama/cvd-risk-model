@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "ONE_TIME_UNSEAL_VALIDATION_COMPLETE",
+  "started_at": "2026-07-15T16:19:27.628402+00:00",
+  "authorization": {
+    "repository_relative_path": "artifacts/audit/unseal_authorization.json",
+    "sha256": "cfeb02bb670c8699c5d7c70c4884deedb448ea24a651e6e435bae7a33d9c00bc",
+    "hash_mode": "normalized_text_lf"
+  },
+  "plan_commit": "1c0e1aa36ab21184beb7d8be9455ee2eb2424b49",
+  "stage6_label_free_commit": "66041aa9880c36ec710137358d50f32b4f900d54",
+  "outcomes_unsealed": true,
+  "model_change_authorized": false,
+  "calibrator_change_authorized": false,
+  "cutoff_change_authorized": false,
+  "completed_at": "2026-07-15T16:48:09.174964+00:00",
+  "execution_manifest": {
+    "repository_relative_path": "artifacts/stage6_validation/manifest.json",
+    "sha256": "bdc0053ce6885c85fa9408a19e52e62fb0532a76dc53f1d2db49694d203e132a",
+    "hash_mode": "normalized_text_lf"
+  }
+}
