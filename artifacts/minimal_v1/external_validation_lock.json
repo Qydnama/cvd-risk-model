@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "lock_type": "external_validation_model_lock",
+  "status": "MODEL_LOCKED_AWAITING_LABEL_FREE_VALIDATION_PREDICTIONS",
+  "immutable": true,
+  "created_at_utc": "2026-07-15T15:04:13.753819+00:00",
+  "protocol_version": "2.4",
+  "locked_source_commit": "5cace77785c3e7e3398ead12efc101ae235034ec",
+  "heldout_outcomes_accessed_before_lock": false,
+  "model": {
+    "name": "LogisticRegression",
+    "route": "minimal",
+    "calibration": "sigmoid",
+    "artifact": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\full_development_pipeline.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010"
+    },
+    "preprocessing": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\preprocessing.joblib",
+      "sha256": "6509ebab833c6ae449f9ba569c7ceaae53386a962914734597e24aa3a739d857"
+    },
+    "estimator": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\estimator.joblib",
+      "sha256": "b6c1827a9703ef9d4714088109588159fed40ed1526cba2145ddc6956e1495f7"
+    },
+    "calibrator": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\calibrator.joblib",
+      "sha256": "ff2291dc373e7ce934b84b07a069ba9cc02c3bff0f94b81492da40de7f31d525"
+    },
+    "feature_schema": {
+      "input_order": [
+        "age",
+        "sex",
+        "bmi",
+        "smoking_status",
+        "hypertension_dx",
+        "diabetes_dx",
+        "general_health"
+      ],
+      "input_types_and_levels": {
+        "age": "numeric",
+        "sex": [
+          "female",
+          "male"
+        ],
+        "bmi": "numeric",
+        "smoking_status": [
+          "never",
+          "former",
+          "current"
+        ],
+        "hypertension_dx": "boolean",
+        "diabetes_dx": "boolean",
+        "general_health": [
+          "excellent",
+          "very_good",
+          "good",
+          "fair",
+          "poor"
+        ]
+      },
+      "transformed_order": [
+        "age",
+        "age_rcs_1",
+        "age_rcs_2",
+        "sex_male",
+        "bmi",
+        "bmi_rcs_1",
+        "bmi_rcs_2",
+        "smoking_former",
+        "smoking_current",
+        "hypertension_yes",
+        "diabetes_yes",
+        "health_very_good",
+        "health_good",
+        "health_fair",
+        "health_poor"
+      ],
+      "transformed_count": 15
+    },
+    "feature_names": [
+      "age",
+      "age_rcs_1",
+      "age_rcs_2",
+      "sex_male",
+      "bmi",
+      "bmi_rcs_1",
+      "bmi_rcs_2",
+      "smoking_former",
+      "smoking_current",
+      "hypertension_yes",
+      "diabetes_yes",
+      "health_very_good",
+      "health_good",
+      "health_fair",
+      "health_poor"
+    ],
+    "predictor_parameters": 15,
+    "probability_clip": 1e-06
+  },
+  "output_policy": {
+    "primary": "continuous_five_year_risk",
+    "secondary_screening_operating_point": {
+      "cutoff": 0.007469058716065273,
+      "selection_rule": "maximum_development_oof_cutoff_with_sensitivity_at_least_target",
+      "classification_rule": "predicted_risk_greater_than_or_equal_to_cutoff",
+      "target_survey_weighted_sensitivity": 0.8,
+      "development_oof_sensitivity": 0.8002346723528583,
+      "interpretation": "not_a_diagnosis_or_clinically_endorsed_high_risk_boundary",
+      "next_higher_cutoff": 0.007469092541980801,
+      "next_higher_cutoff_sensitivity": 0.7998431457010277
+    }
+  },
+  "development_evidence": {
+    "cohort": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\processed\\nhis_cohort.parquet",
+      "sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b"
+    },
+    "oof_predictions": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\oof_predictions.parquet",
+      "sha256": "cd8817d7a818c02914777f8288b4901ffbc7f19d5e2d33e331c7577def50d386"
+    },
+    "stage4_manifest": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\manifest.json",
+      "sha256": "bd527d250d4bb51241adaee92ae6a4c92e9cbdfd2372a5b3aa6f38624c6c6914"
+    },
+    "stage5_manifest": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5_ml_candidates\\manifest.json",
+      "sha256": "4ea4eacbd4bdea863d1a26f3eec8b87a438f9cad6e41dc52cb8fc8574212b21a"
+    },
+    "stage5a_manifest": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5a_planning\\manifest.json",
+      "sha256": "02c92d90ec1ad7f9e33b1ea8cd6f871d7bb57a00b2ca559439677bc805759d5e"
+    },
+    "stage5b_manifest": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5b_operating_point\\manifest.json",
+      "sha256": "6819c6df58cf7b41486ef49d91be72258d6a4c2a62ec2370f73e527de3dc0bee"
+    },
+    "serialized_pipeline_manifest": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\serialized_pipeline_manifest.json",
+      "sha256": "ec62971fcfd60a1841ea998167e0ca596800732c8845924f34e63d6c9c25203c"
+    },
+    "post_chf_lineage_confirmed": true,
+    "chf_lineage": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage5b_chf_lineage.csv",
+      "sha256": "c5e9b9ac33953a4e894618a0ae52802546e96aab9493e92cdf551bbff78305b5"
+    },
+    "sigmoid_comparison_blocker_closed": true,
+    "cluster_bootstrap": {
+      "method": "stratified_psu_with_replacement_within_strata",
+      "repetitions": 2000,
+      "seed": 20260714,
+      "confidence_level": 0.95,
+      "interval_method": "percentile",
+      "reselect_cutoff_in_each_replicate": false
+    },
+    "stability_ranges": {
+      "fold_sensitivity_min": 0.7813018138977214,
+      "fold_sensitivity_max": 0.8204106135472394,
+      "year_sensitivity_min": 0.7372383191747571,
+      "year_sensitivity_max": 0.8474150113582334
+    }
+  },
+  "git": {
+    "commit": "5cace77785c3e7e3398ead12efc101ae235034ec",
+    "tree": "61926f4e7abebe51cf38b8763d0d405f3bf51491",
+    "branch": "main",
+    "upstream": "origin/main",
+    "remote": "https://github.com/Qydnama/cvd-risk-model.git"
+  },
+  "environment": {
+    "python": "3.12.1",
+    "r": "Rscript (R) version 4.6.1 (2026-06-24)",
+    "r_packages": {
+      "pmsampsize": "1.1.3",
+      "pmvalsampsize": "0.1.0",
+      "survey": "4.5"
+    },
+    "python_packages": {
+      "numpy": "2.5.1",
+      "pandas": "2.3.3",
+      "scikit-learn": "1.9.0",
+      "joblib": "1.5.3",
+      "pyarrow": "23.0.1",
+      "xgboost": "3.3.0"
+    }
+  },
+  "seeds": {
+    "experiment": 20260714,
+    "stage4_baselines": 20260714,
+    "stage5_ml_candidates": 20260714,
+    "stage5a_pmvalsampsize": 20260714,
+    "stage5b_cluster_bootstrap": 20260714,
+    "stage5b_calibration_comparison": 20260714
+  },
+  "code_and_config_bindings": {
+    "configs/model_lock.yaml": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\model_lock.yaml",
+      "sha256": "38dfb3e352e7e271c6d55fe44767c14916121db4f3adfcc106a2ea8038a52279"
+    },
+    "configs/final_model_selection.yaml": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\final_model_selection.yaml",
+      "sha256": "dc11a2b1d14e57dfcfd973377a5e5f17813d4c1e364b9c0983d5c6eb256805fe"
+    },
+    "configs/operating_point.yaml": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\operating_point.yaml",
+      "sha256": "9cfb130d5c2408693b70bfd74666cc943312d03c1ff5ad96ea5e4e36d2bd389e"
+    },
+    "src/cvd_risk/modeling/preprocessing.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\src\\cvd_risk\\modeling\\preprocessing.py",
+      "sha256": "0b858625df28e5240c44700792936b2c95d376628b5fd2c9d453d129a1c9f258"
+    },
+    "src/cvd_risk/modeling/baselines.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\src\\cvd_risk\\modeling\\baselines.py",
+      "sha256": "79c545ede4e85ee8ef91d0e6c203fa9ff690a9cc4725b181fa634dd2c3489928"
+    },
+    "src/cvd_risk/modeling/training.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\src\\cvd_risk\\modeling\\training.py",
+      "sha256": "82e9a830b293d5e53f6d17bfee9eb46d2466378811b6b70255c952f8c7470788"
+    },
+    "src/cvd_risk/modeling/operating_point.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\src\\cvd_risk\\modeling\\operating_point.py",
+      "sha256": "75fe3af59c8acca483a4834d3fe84adc65534b78f4f568c4560a404da7ba1376"
+    },
+    "src/cvd_risk/modeling/model_lock.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\src\\cvd_risk\\modeling\\model_lock.py",
+      "sha256": "1d8b67037a974fc1d36ab4c373cd0b911231c38d1a4768dc110645012a034f07"
+    },
+    "scripts/08_operating_point_audit.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\scripts\\08_operating_point_audit.py",
+      "sha256": "479a564ab2ab1414a175b9ce5d3caa1a894283102df5b8fbf029b48ac4d6e86a"
+    },
+    "scripts/09_export_final_pipeline.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\scripts\\09_export_final_pipeline.py",
+      "sha256": "1a255068d463126907ad1018872a314e42bfe860c53e9f97c78e725dfeaf7e98"
+    },
+    "scripts/10_create_model_lock.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\scripts\\10_create_model_lock.py",
+      "sha256": "beae6bf594705908bcec53a16929f772143da11a18a0287655c4df693631cc53"
+    },
+    "scripts/11_validate_model_lock.py": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\scripts\\11_validate_model_lock.py",
+      "sha256": "4e611a6d6c1319c395949d51a591d6cc5d2bf4311819d222513afccde157c866"
+    },
+    "CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md",
+      "sha256": "c57ab77c2f36f30f9180c1595c30dedf1ac9a9919f7f810511c888d6348a28ce"
+    },
+    "configs/experiment.yaml": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\experiment.yaml",
+      "sha256": "5e4a6a89bf6419ac180430d6e66775f83fca8836b057768a083660c9718bcbd4"
+    },
+    "configs/modeling.yaml": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\configs\\modeling.yaml",
+      "sha256": "b48021279343287c94bd186e42a9d2caa09bb409493dad4e1c1bcb7b078c23e2"
+    },
+    "pyproject.toml": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\pyproject.toml",
+      "sha256": "3a8c4c733a6e9d192146631037ab9f8293713d769e0aa63ced5cd2e71eb96980"
+    },
+    "uv.lock": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\uv.lock",
+      "sha256": "8b98259195bfa9e92f1e23679548ab0a2c873c6fb1fd293270bc7a711faed672"
+    },
+    "renv.lock": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\renv.lock",
+      "sha256": "5f116951220320e940c2970ada9664551a4b7d63cc2f539a84a34292f86a93e0"
+    },
+    "artifacts/audit/stage0_status.json": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\audit\\stage0_status.json",
+      "sha256": "5f2b6683c8ea762c34107ff75d44dd7433d286d850d1884bd4b426667a181728"
+    },
+    "artifacts/stage4_baselines/manifest.json": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\manifest.json",
+      "sha256": "bd527d250d4bb51241adaee92ae6a4c92e9cbdfd2372a5b3aa6f38624c6c6914"
+    },
+    "artifacts/stage5_ml_candidates/manifest.json": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5_ml_candidates\\manifest.json",
+      "sha256": "4ea4eacbd4bdea863d1a26f3eec8b87a438f9cad6e41dc52cb8fc8574212b21a"
+    },
+    "artifacts/stage5a_planning/manifest.json": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5a_planning\\manifest.json",
+      "sha256": "02c92d90ec1ad7f9e33b1ea8cd6f871d7bb57a00b2ca559439677bc805759d5e"
+    },
+    "artifacts/stage5b_operating_point/manifest.json": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5b_operating_point\\manifest.json",
+      "sha256": "6819c6df58cf7b41486ef49d91be72258d6a4c2a62ec2370f73e527de3dc0bee"
+    },
+    "artifacts/minimal_v1/serialized_pipeline_manifest.json": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\serialized_pipeline_manifest.json",
+      "sha256": "ec62971fcfd60a1841ea998167e0ca596800732c8845924f34e63d6c9c25203c"
+    },
+    "artifacts/minimal_v1/full_development_pipeline.joblib": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\full_development_pipeline.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010"
+    },
+    "artifacts/minimal_v1/preprocessing.joblib": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\preprocessing.joblib",
+      "sha256": "6509ebab833c6ae449f9ba569c7ceaae53386a962914734597e24aa3a739d857"
+    },
+    "artifacts/minimal_v1/estimator.joblib": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\estimator.joblib",
+      "sha256": "b6c1827a9703ef9d4714088109588159fed40ed1526cba2145ddc6956e1495f7"
+    },
+    "artifacts/minimal_v1/calibrator.joblib": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\calibrator.joblib",
+      "sha256": "ff2291dc373e7ce934b84b07a069ba9cc02c3bff0f94b81492da40de7f31d525"
+    }
+  },
+  "validation_sequence": {
+    "next": "create_label_free_predictions",
+    "model_changes_after_lock_forbidden": true,
+    "heldout_predictor_analysis_before_unseal_allowed": true,
+    "heldout_outcome_access_before_prediction_freeze_forbidden": true,
+    "nhis_temporal_years": [
+      2010,
+      2014
+    ],
+    "nhanes_external_cycles": [
+      1999,
+      2014
+    ]
+  }
+}
