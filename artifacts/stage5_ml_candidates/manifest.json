@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "stage": "stage5_ml_candidates",
+  "status": "ML_CANDIDATES_FITTED_NOT_MODEL_LOCKED",
+  "scope": "NHIS development 1997-2009 only",
+  "heldout_outcomes_accessed": false,
+  "final_model_selected": false,
+  "external_validation_lock_created": false,
+  "seed": 20260714,
+  "n": 178120,
+  "events": 2036,
+  "input_cohort": {
+    "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\processed\\nhis_cohort.parquet",
+    "sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b"
+  },
+  "stage4_manifest": {
+    "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\manifest.json",
+    "sha256": "bd527d250d4bb51241adaee92ae6a4c92e9cbdfd2372a5b3aa6f38624c6c6914"
+  },
+  "source_bindings": {
+    "C:/Users/amang/Desktop/Sabak/Codes/Python/Machine Learning/SSR/src/cvd_risk/modeling/stage5.py": "1e141b87400a008748f3c2246a0592814a33fd1ff69e11375fc014b58c05c78c",
+    "C:/Users/amang/Desktop/Sabak/Codes/Python/Machine Learning/SSR/src/cvd_risk/modeling/ml_candidates.py": "c85c4ab83d8fc95e811d0415231079e03686fbf8d1b4a67d112d55707195b30b",
+    "C:/Users/amang/Desktop/Sabak/Codes/Python/Machine Learning/SSR/src/cvd_risk/modeling/preprocessing.py": "0b858625df28e5240c44700792936b2c95d376628b5fd2c9d453d129a1c9f258",
+    "C:/Users/amang/Desktop/Sabak/Codes/Python/Machine Learning/SSR/src/cvd_risk/modeling/baselines.py": "79c545ede4e85ee8ef91d0e6c203fa9ff690a9cc4725b181fa634dd2c3489928",
+    "configs/stage5_ml.yaml": "5ebb61b23dbe97b690278aff5870a2451186a127453ef7ad619f82405653a720",
+    "artifacts/stage4_baselines/manifest.json": "bd527d250d4bb51241adaee92ae6a4c92e9cbdfd2372a5b3aa6f38624c6c6914",
+    "pyproject.toml": "3a8c4c733a6e9d192146631037ab9f8293713d769e0aa63ced5cd2e71eb96980",
+    "uv.lock": "8b98259195bfa9e92f1e23679548ab0a2c873c6fb1fd293270bc7a711faed672"
+  },
+  "environment": {
+    "python": "3.12.1",
+    "scikit_learn": "1.9.0",
+    "xgboost": "3.3.0",
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "joblib": "1.5.3"
+  },
+  "git": {
+    "base_commit": "a486317de194a99ce16fa65ba3b40c63fda458ba",
+    "working_tree_dirty": true
+  },
+  "outer_cross_validation": {
+    "splitter": "StratifiedGroupKFold",
+    "n_splits": 5,
+    "shuffle": true
+  },
+  "inner_tuning": {
+    "splitter": "StratifiedGroupKFold",
+    "n_splits": 3,
+    "shuffle": true,
+    "primary_metric": "survey_weighted_brier",
+    "tie_breaker": "candidate_id",
+    "final_hyperparameters": "lowest_mean_inner_score_across_outer_folds"
+  },
+  "models": [
+    {
+      "name": "RandomForest",
+      "estimator": "RandomForestClassifier",
+      "parameters": {
+        "n_estimators": 300,
+        "criterion": "log_loss",
+        "max_features": "sqrt",
+        "bootstrap": true,
+        "n_jobs": 1,
+        "max_depth": 10,
+        "min_samples_leaf": 100
+      },
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5_ml_candidates\\RandomForest.joblib",
+      "sha256": "eaebfcd60ca65fa1d0cb16f601d3d474d230132c6cd655ab571a88c200c07afd",
+      "feature_names": [
+        "age",
+        "age_rcs_1",
+        "age_rcs_2",
+        "sex_male",
+        "bmi",
+        "bmi_rcs_1",
+        "bmi_rcs_2",
+        "smoking_former",
+        "smoking_current",
+        "hypertension_yes",
+        "diabetes_yes",
+        "health_very_good",
+        "health_good",
+        "health_fair",
+        "health_poor"
+      ],
+      "spline_knots": {
+        "age": [
+          41.0,
+          48.0,
+          57.0,
+          74.0
+        ],
+        "bmi": [
+          20.33,
+          25.08,
+          28.34,
+          37.81
+        ]
+      }
+    },
+    {
+      "name": "XGBoost",
+      "estimator": "XGBClassifier",
+      "parameters": {
+        "n_estimators": 300,
+        "learning_rate": 0.05,
+        "objective": "binary:logistic",
+        "eval_metric": "logloss",
+        "tree_method": "hist",
+        "subsample": 1.0,
+        "colsample_bytree": 1.0,
+        "reg_lambda": 1.0,
+        "n_jobs": 1,
+        "verbosity": 0,
+        "max_depth": 2,
+        "min_child_weight": 20
+      },
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5_ml_candidates\\XGBoost.joblib",
+      "sha256": "f31818ea7c88c4ea8298fc036de7d4b9046c7d2889c86097cae2875cda0ab5a5",
+      "feature_names": [
+        "age",
+        "age_rcs_1",
+        "age_rcs_2",
+        "sex_male",
+        "bmi",
+        "bmi_rcs_1",
+        "bmi_rcs_2",
+        "smoking_former",
+        "smoking_current",
+        "hypertension_yes",
+        "diabetes_yes",
+        "health_very_good",
+        "health_good",
+        "health_fair",
+        "health_poor"
+      ],
+      "spline_knots": {
+        "age": [
+          41.0,
+          48.0,
+          57.0,
+          74.0
+        ],
+        "bmi": [
+          20.33,
+          25.08,
+          28.34,
+          37.81
+        ]
+      }
+    }
+  ],
+  "outer_fold_selections": [
+    {
+      "model": "RandomForest",
+      "fold": 1,
+      "selected_candidate_id": "rf_depth10_leaf100",
+      "inner_brier_weighted": 0.008896636023062217,
+      "inner_roc_auc_weighted": 0.7997066683847031,
+      "n_validation": 29673,
+      "events_validation": 378
+    },
+    {
+      "model": "RandomForest",
+      "fold": 2,
+      "selected_candidate_id": "rf_depth10_leaf100",
+      "inner_brier_weighted": 0.008811157623510322,
+      "inner_roc_auc_weighted": 0.8076030059234375,
+      "n_validation": 39493,
+      "events_validation": 461
+    },
+    {
+      "model": "RandomForest",
+      "fold": 3,
+      "selected_candidate_id": "rf_depth10_leaf100",
+      "inner_brier_weighted": 0.00923085798921205,
+      "inner_roc_auc_weighted": 0.8122854708247209,
+      "n_validation": 40532,
+      "events_validation": 412
+    },
+    {
+      "model": "RandomForest",
+      "fold": 4,
+      "selected_candidate_id": "rf_depth10_leaf100",
+      "inner_brier_weighted": 0.009279834202454236,
+      "inner_roc_auc_weighted": 0.8047700382943714,
+      "n_validation": 39914,
+      "events_validation": 430
+    },
+    {
+      "model": "RandomForest",
+      "fold": 5,
+      "selected_candidate_id": "rf_depth10_leaf100",
+      "inner_brier_weighted": 0.008854348797203593,
+      "inner_roc_auc_weighted": 0.8097121646006765,
+      "n_validation": 28508,
+      "events_validation": 355
+    },
+    {
+      "model": "XGBoost",
+      "fold": 1,
+      "selected_candidate_id": "xgb_depth2_child20",
+      "inner_brier_weighted": 0.008875162036621028,
+      "inner_roc_auc_weighted": 0.8098941940736815,
+      "n_validation": 29673,
+      "events_validation": 378
+    },
+    {
+      "model": "XGBoost",
+      "fold": 2,
+      "selected_candidate_id": "xgb_depth2_child20",
+      "inner_brier_weighted": 0.00880915781656325,
+      "inner_roc_auc_weighted": 0.8160192914643176,
+      "n_validation": 39493,
+      "events_validation": 461
+    },
+    {
+      "model": "XGBoost",
+      "fold": 3,
+      "selected_candidate_id": "xgb_depth2_child20",
+      "inner_brier_weighted": 0.009212660246429381,
+      "inner_roc_auc_weighted": 0.8185815462087931,
+      "n_validation": 40532,
+      "events_validation": 412
+    },
+    {
+      "model": "XGBoost",
+      "fold": 4,
+      "selected_candidate_id": "xgb_depth2_child20",
+      "inner_brier_weighted": 0.009266665106109816,
+      "inner_roc_auc_weighted": 0.8116322267910012,
+      "n_validation": 39914,
+      "events_validation": 430
+    },
+    {
+      "model": "XGBoost",
+      "fold": 5,
+      "selected_candidate_id": "xgb_depth2_child20",
+      "inner_brier_weighted": 0.008834154171179533,
+      "inner_roc_auc_weighted": 0.8138011040587667,
+      "n_validation": 28508,
+      "events_validation": 355
+    }
+  ],
+  "outputs": {
+    "oof_predictions": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage5_ml_candidates\\oof_predictions.parquet",
+      "sha256": "521af642b56527c353c85ab6ea6bbd85b0c2be8a5d6b55e6a285deb5014e3f1a"
+    },
+    "comparison_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage5_model_comparison.csv",
+      "sha256": "946c5e7c6d6e85daf2b856eda38007c5588dfa3cd34db44a586dca220a8b3631"
+    },
+    "tuning_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage5_inner_tuning.csv",
+      "sha256": "37b4e107859f1ebdf0ac64d32a96e1764dedfd09a75d2688214ec8e9df389cd5"
+    },
+    "fold_metrics_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage5_fold_metrics.csv",
+      "sha256": "d320fcced385343969b99cea0eb4c754f8752c99ecdfea377883cb47afd9b7b6"
+    },
+    "feature_importance_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage5_feature_importance.csv",
+      "sha256": "dbb7300861acdcd45ceeebe968079c88de29fa14ae1bbf367022634039b0b957"
+    },
+    "report": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\stage5_ml_comparison_report.md",
+      "sha256": "fd61d9eec05d72a64bc099c9c886502d1c75e9872715205feb49208a5270bbd7"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+schema_version: 1
+stage: stage5_ml_candidates
+
+development_cohort: nhis_development
+route: minimal
+outcome: cvd_death_5y
+weight: analysis_weight
+group: survey_year
+seed: 20260714
+
+outer_cross_validation:
+  splitter: StratifiedGroupKFold
+  n_splits: 5
+  shuffle: true
+
+inner_tuning:
+  splitter: StratifiedGroupKFold
+  n_splits: 3
+  shuffle: true
+  primary_metric: survey_weighted_brier
+  tie_breaker: candidate_id
+  final_hyperparameters: lowest_mean_inner_score_across_outer_folds
+
+preprocessing:
+  source: stage4_minimal_preprocessor
+  restricted_cubic_spline_quantiles: [0.05, 0.35, 0.65, 0.95]
+  imputation: within_training_fold
+  weight_normalization: mean_one_within_training_fold
+
+calibration:
+  method: sigmoid
+  probability_clip: 1.0e-6
+
+models:
+  - name: RandomForest
+    estimator: RandomForestClassifier
+    common_parameters:
+      n_estimators: 300
+      criterion: log_loss
+      max_features: sqrt
+      bootstrap: true
+      n_jobs: 1
+    candidates:
+      - candidate_id: rf_depth10_leaf100
+        max_depth: 10
+        min_samples_leaf: 100
+      - candidate_id: rf_unlimited_leaf300
+        max_depth: null
+        min_samples_leaf: 300
+  - name: XGBoost
+    estimator: XGBClassifier
+    common_parameters:
+      n_estimators: 300
+      learning_rate: 0.05
+      objective: binary:logistic
+      eval_metric: logloss
+      tree_method: hist
+      subsample: 1.0
+      colsample_bytree: 1.0
+      reg_lambda: 1.0
+      n_jobs: 1
+      verbosity: 0
+    candidates:
+      - candidate_id: xgb_depth2_child20
+        max_depth: 2
+        min_child_weight: 20
+      - candidate_id: xgb_depth3_child50
+        max_depth: 3
+        min_child_weight: 50
+
+outputs:
+  artifact_dir: artifacts/stage5_ml_candidates
+  report: reports/stage5_ml_comparison_report.md
+  comparison_table: reports/tables/stage5_model_comparison.csv
+  tuning_table: reports/tables/stage5_inner_tuning.csv
+  fold_metrics_table: reports/tables/stage5_fold_metrics.csv
+  feature_importance_table: reports/tables/stage5_feature_importance.csv
