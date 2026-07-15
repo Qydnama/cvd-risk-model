@@ -45,10 +45,13 @@ GNU Make удобен, но не обязателен на Windows. Эквива
 | Только NHANES | `make nhanes` | `uv run python scripts/01_download_nhanes.py` |
 | Данные и когорты | `make data` | последовательно запустить скрипты `00`–`03` из `scripts/` |
 | Cohort audit | `make audit` | `uv run python scripts/04_audit_cohorts.py --config configs/experiment.yaml` |
-| Проверка допуска к обучению | `make train` | `uv run python scripts/05_train_minimal.py --config configs/experiment.yaml` |
+| Baseline-модели | `make train` | `uv run --extra modeling python scripts/05_train_minimal.py --config configs/experiment.yaml` |
 
-`make train` сейчас является guard-командой: она не должна обучать модель, пока
-обязательные таблицы аудита не созданы и stop-gate не подтвержден.
+`make train` проверяет неизменность Stage 3 stop-gate и обучает только три
+логистических baseline-кандидата на NHIS development 1997–2009. Imputation,
+weighted spline knots и sigmoid calibration обучаются внутри grouped folds;
+NHIS temporal и NHANES outcomes команда не загружает. Команда не выбирает
+финальную модель и не создает external-validation lock.
 
 ## Ручной файл IPUMS NHIS
 

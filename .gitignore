@@ -44,11 +44,12 @@ data/processed/**
 !data/processed/**/.gitkeep
 
 # Trained binary artifacts are reproducible outputs, not source files.
-artifacts/*.joblib
-artifacts/*.pkl
-artifacts/*.pickle
-artifacts/*.bin
-artifacts/*.onnx
+artifacts/**/*.joblib
+artifacts/**/*.pkl
+artifacts/**/*.pickle
+artifacts/**/*.bin
+artifacts/**/*.onnx
+artifacts/**/oof_predictions.parquet
 artifacts/quarantine/**
 
 # Notebook execution state

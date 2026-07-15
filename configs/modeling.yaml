@@ -1,0 +1,51 @@
+schema_version: 1
+stage: stage4_baselines
+
+development_cohort: nhis_development
+outcome: cvd_death_5y
+weight: analysis_weight
+group: survey_year
+seed: 20260714
+
+cross_validation:
+  splitter: StratifiedGroupKFold
+  n_splits: 5
+  shuffle: true
+
+restricted_cubic_splines:
+  quantiles: [0.05, 0.35, 0.65, 0.95]
+  continuous_features: [age, bmi]
+
+models:
+  - name: AgeSexLogistic
+    route: age_sex
+    predictor_parameters: 4
+  - name: LogisticRegressionNoGeneralHealth
+    route: minimal_no_general_health
+    predictor_parameters: 11
+  - name: LogisticRegression
+    route: minimal
+    predictor_parameters: 15
+
+logistic_regression:
+  penalty: null
+  solver: lbfgs
+  max_iter: 1000
+  tolerance: 1.0e-8
+
+calibration:
+  methods: [none, sigmoid]
+  primary: sigmoid
+  probability_clip: 1.0e-6
+  inner_splits: 4
+
+outputs:
+  artifact_dir: artifacts/stage4_baselines
+  report: reports/stage4_baseline_report.md
+  comparison_table: reports/tables/stage4_model_comparison.csv
+  fold_table: reports/tables/stage4_cv_folds.csv
+  development_description: reports/tables/stage4_development_description.csv
+  development_missingness: reports/tables/stage4_development_missingness.csv
+  predictor_drift: reports/tables/stage4_predictor_drift_by_year.csv
+  implausible_values: reports/tables/stage4_implausible_values.csv
+  coefficients: reports/tables/stage4_logistic_coefficients.csv

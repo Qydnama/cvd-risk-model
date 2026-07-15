@@ -111,11 +111,13 @@ modeling = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "joblib" },
     { name = "mypy" },
     { name = "pandas-stubs" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "ruff" },
+    { name = "scikit-learn" },
     { name = "types-pyyaml" },
     { name = "types-requests" },
 ]
@@ -137,11 +139,13 @@ provides-extras = ["modeling"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "joblib", specifier = ">=1.4,<2" },
     { name = "mypy", specifier = ">=1.14,<2" },
     { name = "pandas-stubs", specifier = ">=2.2,<3" },
     { name = "pytest", specifier = ">=8.3,<10" },
     { name = "pytest-cov", specifier = ">=6,<8" },
     { name = "ruff", specifier = ">=0.9,<1" },
+    { name = "scikit-learn", specifier = ">=1.6,<2" },
     { name = "types-pyyaml", specifier = ">=6.0.12" },
     { name = "types-requests", specifier = ">=2.32" },
 ]

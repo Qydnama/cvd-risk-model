@@ -1,0 +1,6 @@
+check,n_flagged,n_total
+age_outside_protocol_40_79,0,178120
+bmi_below_future_input_10,10,178120
+bmi_above_future_input_99_8,0,178120
+non_finite_age,0,178120
+non_finite_bmi,0,178120

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "stage": "stage4_baselines",
+  "status": "BASELINES_FITTED_NOT_MODEL_LOCKED",
+  "scope": "NHIS development 1997-2009 only",
+  "heldout_outcomes_accessed": false,
+  "final_model_selected": false,
+  "external_validation_lock_created": false,
+  "seed": 20260714,
+  "n": 178120,
+  "events": 2036,
+  "input_cohort": {
+    "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\data\\processed\\nhis_cohort.parquet",
+    "sha256": "f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b"
+  },
+  "source_bindings": {
+    "C:/Users/amang/Desktop/Sabak/Codes/Python/Machine Learning/SSR/src/cvd_risk/modeling/training.py": "82e9a830b293d5e53f6d17bfee9eb46d2466378811b6b70255c952f8c7470788",
+    "C:/Users/amang/Desktop/Sabak/Codes/Python/Machine Learning/SSR/src/cvd_risk/modeling/baselines.py": "79c545ede4e85ee8ef91d0e6c203fa9ff690a9cc4725b181fa634dd2c3489928",
+    "C:/Users/amang/Desktop/Sabak/Codes/Python/Machine Learning/SSR/src/cvd_risk/modeling/preprocessing.py": "0b858625df28e5240c44700792936b2c95d376628b5fd2c9d453d129a1c9f258",
+    "configs/experiment.yaml": "5e4a6a89bf6419ac180430d6e66775f83fca8836b057768a083660c9718bcbd4",
+    "configs/modeling.yaml": "b48021279343287c94bd186e42a9d2caa09bb409493dad4e1c1bcb7b078c23e2",
+    "pyproject.toml": "3a8c4c733a6e9d192146631037ab9f8293713d769e0aa63ced5cd2e71eb96980",
+    "uv.lock": "8b98259195bfa9e92f1e23679548ab0a2c873c6fb1fd293270bc7a711faed672"
+  },
+  "environment": {
+    "python": "3.12.1",
+    "scikit_learn": "1.9.0",
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "joblib": "1.5.3"
+  },
+  "git": {
+    "base_commit": "aeb95c093e9f2546faa6edbe2ca8a98d2a04a5fa",
+    "working_tree_dirty": true
+  },
+  "cross_validation": {
+    "splitter": "StratifiedGroupKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "group": "survey_year",
+    "nested_calibration_splits": 4
+  },
+  "models": [
+    {
+      "name": "AgeSexLogistic",
+      "route": "age_sex",
+      "predictor_parameters": 4,
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\AgeSexLogistic.joblib",
+      "sha256": "325b80ce8c7145051adf5a252d5167f39b1dab5afdac712693722a3df26ab2db",
+      "feature_names": [
+        "age",
+        "age_rcs_1",
+        "age_rcs_2",
+        "sex_male"
+      ],
+      "spline_knots": {
+        "age": [
+          41.0,
+          48.0,
+          57.0,
+          74.0
+        ]
+      },
+      "imputation_values": {
+        "age": 52.0,
+        "sex": "female"
+      }
+    },
+    {
+      "name": "LogisticRegressionNoGeneralHealth",
+      "route": "minimal_no_general_health",
+      "predictor_parameters": 11,
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\LogisticRegressionNoGeneralHealth.joblib",
+      "sha256": "719bc2787efa58c5d1aa20c726b528c48031225cb539d296d2fa5e59760876ff",
+      "feature_names": [
+        "age",
+        "age_rcs_1",
+        "age_rcs_2",
+        "sex_male",
+        "bmi",
+        "bmi_rcs_1",
+        "bmi_rcs_2",
+        "smoking_former",
+        "smoking_current",
+        "hypertension_yes",
+        "diabetes_yes"
+      ],
+      "spline_knots": {
+        "age": [
+          41.0,
+          48.0,
+          57.0,
+          74.0
+        ],
+        "bmi": [
+          20.33,
+          25.08,
+          28.34,
+          37.81
+        ]
+      },
+      "imputation_values": {
+        "age": 52.0,
+        "bmi": 26.59,
+        "sex": "female",
+        "smoking_status": "never",
+        "hypertension_dx": false,
+        "diabetes_dx": false
+      }
+    },
+    {
+      "name": "LogisticRegression",
+      "route": "minimal",
+      "predictor_parameters": 15,
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\LogisticRegression.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+      "feature_names": [
+        "age",
+        "age_rcs_1",
+        "age_rcs_2",
+        "sex_male",
+        "bmi",
+        "bmi_rcs_1",
+        "bmi_rcs_2",
+        "smoking_former",
+        "smoking_current",
+        "hypertension_yes",
+        "diabetes_yes",
+        "health_very_good",
+        "health_good",
+        "health_fair",
+        "health_poor"
+      ],
+      "spline_knots": {
+        "age": [
+          41.0,
+          48.0,
+          57.0,
+          74.0
+        ],
+        "bmi": [
+          20.33,
+          25.08,
+          28.34,
+          37.81
+        ]
+      },
+      "imputation_values": {
+        "age": 52.0,
+        "bmi": 26.59,
+        "sex": "female",
+        "smoking_status": "never",
+        "hypertension_dx": false,
+        "diabetes_dx": false,
+        "general_health": "very_good"
+      }
+    }
+  ],
+  "outputs": {
+    "oof_predictions": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\oof_predictions.parquet",
+      "sha256": "cd8817d7a818c02914777f8288b4901ffbc7f19d5e2d33e331c7577def50d386"
+    },
+    "comparison_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage4_model_comparison.csv",
+      "sha256": "9106ee533b20e80e9404c170b4205f436ff04ad25a7193afc1c26301a32954f9"
+    },
+    "fold_table": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage4_cv_folds.csv",
+      "sha256": "3a4832ce7b086baaae45915c62a366adef732ff9f9f7046d7bcc8933ccafd942"
+    },
+    "development_description": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage4_development_description.csv",
+      "sha256": "dfd5044a80dbf3a40a5dab0ea131cc60b0e6bb867fb41154aa317d8fff5aa5f7"
+    },
+    "development_missingness": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage4_development_missingness.csv",
+      "sha256": "fbd8ac93855a9c07cfc248c725685cfa089a67ceabd5cb73d44c85ffe3a171ea"
+    },
+    "predictor_drift": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage4_predictor_drift_by_year.csv",
+      "sha256": "5bf8071029920ff8a91fd3d2a87d70646db4435c3b881c2cbdd5cb788201add3"
+    },
+    "implausible_values": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage4_implausible_values.csv",
+      "sha256": "a8ba805ba6ca82460d71606303a32a60f591375626f8160733eca544ef0d2171"
+    },
+    "coefficients": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\tables\\stage4_logistic_coefficients.csv",
+      "sha256": "a3d9e62df92c08953cf987d9b84ede0c500fe24f7da3902f543db2be5a416c80"
+    },
+    "report": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\reports\\stage4_baseline_report.md",
+      "sha256": "06a6ee5d26b66f96d95552dd00b1b50518549be64561e228f19a4f03fd3fb32d"
+    }
+  }
+}

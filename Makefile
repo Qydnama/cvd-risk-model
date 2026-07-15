@@ -15,7 +15,7 @@ help:
 	@echo "  nhanes Download the configured NHANES/LMF inventory independently"
 	@echo "  data   Download NHANES and build the NHIS/NHANES cohorts"
 	@echo "  audit  Produce the required cohort audit and evaluate the stop-gate"
-	@echo "  train  Run the training guard (training remains blocked before stop-gate approval)"
+	@echo "  train  Fit Stage 4 logistic baselines on NHIS development only"
 
 sync:
 	$(UV) sync --locked --dev
@@ -42,4 +42,4 @@ audit: stage0
 	$(PYTHON) scripts/04_audit_cohorts.py --config $(EXPERIMENT_CONFIG)
 
 train:
-	$(PYTHON) scripts/05_train_minimal.py --config $(EXPERIMENT_CONFIG)
+	$(UV) run --extra modeling python scripts/05_train_minimal.py --config $(EXPERIMENT_CONFIG)
