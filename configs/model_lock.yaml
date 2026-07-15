@@ -1,0 +1,48 @@
+schema_version: 1
+stage: stage6_external_validation_model_lock
+
+protocol_version: "2.4"
+selected_model_config: configs/final_model_selection.yaml
+operating_point_config: configs/operating_point.yaml
+stage4_manifest: artifacts/stage4_baselines/manifest.json
+stage5_manifest: artifacts/stage5_ml_candidates/manifest.json
+stage5a_manifest: artifacts/stage5a_planning/manifest.json
+stage5b_manifest: artifacts/stage5b_operating_point/manifest.json
+serialized_pipeline_manifest: artifacts/minimal_v1/serialized_pipeline_manifest.json
+
+serialized_pipeline:
+  source: artifacts/stage4_baselines/LogisticRegression.joblib
+  full_pipeline: artifacts/minimal_v1/full_development_pipeline.joblib
+  preprocessing: artifacts/minimal_v1/preprocessing.joblib
+  estimator: artifacts/minimal_v1/estimator.joblib
+  calibrator: artifacts/minimal_v1/calibrator.joblib
+  manifest: artifacts/minimal_v1/serialized_pipeline_manifest.json
+
+pipeline_sources:
+  - src/cvd_risk/modeling/preprocessing.py
+  - src/cvd_risk/modeling/baselines.py
+  - src/cvd_risk/modeling/training.py
+  - src/cvd_risk/modeling/operating_point.py
+  - src/cvd_risk/modeling/model_lock.py
+  - scripts/08_operating_point_audit.py
+  - scripts/09_export_final_pipeline.py
+  - scripts/10_create_model_lock.py
+  - scripts/11_validate_model_lock.py
+
+runtime_bindings:
+  - CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md
+  - configs/experiment.yaml
+  - configs/modeling.yaml
+  - pyproject.toml
+  - uv.lock
+  - renv.lock
+  - artifacts/audit/stage0_status.json
+
+requirements:
+  clean_working_tree: true
+  head_equals_upstream: true
+  heldout_outcomes_accessed: false
+  post_chf_lineage_confirmed: true
+  prelock_audit_status: PRELOCK_OPERATING_POINT_AUDIT_COMPLETE
+
+output: artifacts/minimal_v1/external_validation_lock.json

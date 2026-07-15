@@ -1,0 +1,6 @@
+metric,uncalibrated,sigmoid,delta_sigmoid_minus_uncalibrated,delta_ci_lower,delta_ci_upper,decision,passed
+brier_score,0.0089788298056264,0.0089768129781046,-2.016827521799866e-06,-3.025566718093728e-06,-1.0411604984821103e-06,improved_paired_cluster_bootstrap_ci_below_zero,True
+log_loss,0.0455430221653368,0.0455430589130672,3.674773040029944e-08,-6.612262339466978e-06,6.665745427388338e-06,numerical_tie_no_bootstrap_evidence_of_worsening,True
+absolute_calibration_intercept,0.050977895830542,0.0160432161756859,-0.034934679654856096,,,absolute_calibration_error_improved,True
+absolute_calibration_slope_error,0.012169505196455987,0.0037305213596141584,-0.008438983836841829,,,absolute_calibration_error_improved,True
+absolute_observed_expected_error,0.0030784137149454383,0.0012930330926201883,-0.00178538062232525,,,absolute_calibration_error_improved,True

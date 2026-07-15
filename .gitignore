@@ -52,5 +52,11 @@ artifacts/**/*.onnx
 artifacts/**/oof_predictions.parquet
 artifacts/quarantine/**
 
+# The explicitly frozen minimal pipeline and its components are versioned.
+!artifacts/minimal_v1/full_development_pipeline.joblib
+!artifacts/minimal_v1/preprocessing.joblib
+!artifacts/minimal_v1/estimator.joblib
+!artifacts/minimal_v1/calibrator.joblib
+
 # Notebook execution state
 .ipynb_checkpoints/

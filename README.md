@@ -48,6 +48,10 @@ GNU Make удобен, но не обязателен на Windows. Эквива
 | Baseline-модели | `make train` | `uv run --extra modeling python scripts/05_train_minimal.py --config configs/experiment.yaml` |
 | RF/XGBoost-кандидаты | `make ml` | `uv run --extra modeling python scripts/06_train_ml_candidates.py --config configs/experiment.yaml` |
 | Provisional validation planning | `make plan-validation` | `uv run --extra modeling python scripts/07_stage5a_planning.py --config configs/experiment.yaml` |
+| Pre-lock operating-point audit | `make audit-operating-point` | `uv run --extra modeling python scripts/08_operating_point_audit.py --config configs/operating_point.yaml` |
+| Final pipeline serialization | `make export-pipeline` | `uv run --extra modeling python scripts/09_export_final_pipeline.py --config configs/model_lock.yaml` |
+| External-validation model lock | `make lock-model` | `uv run --extra modeling python scripts/10_create_model_lock.py --config configs/model_lock.yaml` |
+| Model-lock validation | `make validate-lock` | `uv run --extra modeling python scripts/11_validate_model_lock.py` |
 
 `make train` проверяет неизменность Stage 3 stop-gate и обучает только три
 логистических baseline-кандидата на NHIS development 1997–2009. Imputation,
@@ -65,6 +69,23 @@ development-кандидатов и также не создает model lock.
 модели и запускает locked R `pmvalsampsize 0.1.0` сначала с `1,000,000`, затем
 с `2,000,000` simulated observations. Команда не читает held-out outcomes и не
 создает model lock; design correction переносится на Stage 6.
+
+`make audit-operating-point` фиксирует secondary screening cutoff как максимальный
+development OOF cutoff с survey-weighted sensitivity не ниже 80%. Основным
+результатом остается непрерывный пятилетний риск; cutoff не является диагнозом
+или клинически утвержденной границей. Команда рассчитывает PPV/NPV, weighted
+confusion matrix на 10 000, stratified PSU cluster-bootstrap CI, fold/year
+stability и DCA без доступа к held-out outcomes.
+
+`make export-pipeline` копирует выбранный full-development pipeline и сериализует
+preprocessing, estimator и calibrator без повторного fit и без чтения данных.
+
+`make lock-model` разрешен только из чистого, синхронизированного с remote commit,
+содержащего прошедший Stage 5b audit. Lock фиксирует pipeline/config/code SHA и
+не открывает held-out outcomes.
+
+`make validate-lock` проверяет, что locked source commit является предком текущего
+HEAD, после него изменен только lock JSON и все зафиксированные SHA совпадают.
 
 ## Ручной файл IPUMS NHIS
 

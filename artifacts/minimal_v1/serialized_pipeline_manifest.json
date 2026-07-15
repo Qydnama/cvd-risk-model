@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "stage": "final_full_development_pipeline_serialization",
+  "status": "SERIALIZED_WITHOUT_REFIT",
+  "refit_performed": false,
+  "heldout_outcomes_accessed": false,
+  "source": {
+    "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\stage4_baselines\\LogisticRegression.joblib",
+    "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010"
+  },
+  "outputs": {
+    "full_pipeline": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\full_development_pipeline.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010"
+    },
+    "preprocessing": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\preprocessing.joblib",
+      "sha256": "6509ebab833c6ae449f9ba569c7ceaae53386a962914734597e24aa3a739d857"
+    },
+    "estimator": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\estimator.joblib",
+      "sha256": "b6c1827a9703ef9d4714088109588159fed40ed1526cba2145ddc6956e1495f7"
+    },
+    "calibrator": {
+      "path": "C:\\Users\\amang\\Desktop\\Sabak\\Codes\\Python\\Machine Learning\\SSR\\artifacts\\minimal_v1\\calibrator.joblib",
+      "sha256": "ff2291dc373e7ce934b84b07a069ba9cc02c3bff0f94b81492da40de7f31d525"
+    }
+  },
+  "feature_schema": {
+    "input_order": [
+      "age",
+      "sex",
+      "bmi",
+      "smoking_status",
+      "hypertension_dx",
+      "diabetes_dx",
+      "general_health"
+    ],
+    "input_types_and_levels": {
+      "age": "numeric",
+      "sex": [
+        "female",
+        "male"
+      ],
+      "bmi": "numeric",
+      "smoking_status": [
+        "never",
+        "former",
+        "current"
+      ],
+      "hypertension_dx": "boolean",
+      "diabetes_dx": "boolean",
+      "general_health": [
+        "excellent",
+        "very_good",
+        "good",
+        "fair",
+        "poor"
+      ]
+    },
+    "transformed_order": [
+      "age",
+      "age_rcs_1",
+      "age_rcs_2",
+      "sex_male",
+      "bmi",
+      "bmi_rcs_1",
+      "bmi_rcs_2",
+      "smoking_former",
+      "smoking_current",
+      "hypertension_yes",
+      "diabetes_yes",
+      "health_very_good",
+      "health_good",
+      "health_fair",
+      "health_poor"
+    ],
+    "transformed_count": 15
+  },
+  "pipeline": {
+    "name": "LogisticRegression",
+    "route": "minimal",
+    "probability_clip": 1e-06,
+    "has_fitted_preprocessor": true,
+    "has_fitted_estimator": true,
+    "has_fitted_calibrator": true
+  }
+}

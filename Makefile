@@ -4,7 +4,7 @@ EXPERIMENT_CONFIG ?= configs/experiment.yaml
 NHANES_CONFIG ?= configs/nhanes_files.yaml
 DATA_MANIFEST ?= configs/data_manifest.yaml
 
-.PHONY: help sync test stage0 check-nhis nhanes data audit train ml plan-validation
+.PHONY: help sync test stage0 check-nhis nhanes data audit train ml plan-validation audit-operating-point export-pipeline lock-model validate-lock
 
 help:
 	@echo "Targets:"
@@ -18,6 +18,10 @@ help:
 	@echo "  train  Fit Stage 4 logistic baselines on NHIS development only"
 	@echo "  ml     Tune Stage 5 RF/XGBoost candidates on NHIS development only"
 	@echo "  plan-validation  Run Stage 5a provisional pmvalsampsize planning"
+	@echo "  audit-operating-point  Run the Stage 5b fixed-cutoff pre-lock audit"
+	@echo "  export-pipeline  Serialize the final full-development pipeline without refit"
+	@echo "  lock-model  Create the immutable external-validation model lock"
+	@echo "  validate-lock  Verify lock ancestry, scope and all frozen SHA bindings"
 
 sync:
 	$(UV) sync --locked --dev
@@ -51,3 +55,15 @@ ml:
 
 plan-validation:
 	$(UV) run --extra modeling python scripts/07_stage5a_planning.py --config $(EXPERIMENT_CONFIG)
+
+audit-operating-point:
+	$(UV) run --extra modeling python scripts/08_operating_point_audit.py --config configs/operating_point.yaml
+
+export-pipeline:
+	$(UV) run --extra modeling python scripts/09_export_final_pipeline.py --config configs/model_lock.yaml
+
+lock-model:
+	$(UV) run --extra modeling python scripts/10_create_model_lock.py --config configs/model_lock.yaml
+
+validate-lock:
+	$(UV) run --extra modeling python scripts/11_validate_model_lock.py

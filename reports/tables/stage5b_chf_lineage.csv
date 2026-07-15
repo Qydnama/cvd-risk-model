@@ -1,0 +1,9 @@
+check,passed,evidence
+chf_amendment_resolved,True,"Resolved by explicit user approval on 2026-07-14. The primary NHIS and NHANES cohorts use the same four consistently measured exclusions: coronary heart disease, angina, myocardial infarction, and stroke. CONHFAILEV remains unknown outside 1999/2002 and is used only for an NHIS 1999/2002 CHF-strict sensitivity subset; MCQ160B is retained for the parallel NHANES sensitivity."
+primary_and_sensitivity_rules_locked,True,four-condition primary exclusion; CHF sensitivity only in 1999/2002
+cohort_contains_chf_amendment_fields,True,"baseline_cvd_status_with_chf, chf_sensitivity_available, cohort_chf_sensitivity_eligible, congestive_heart_failure"
+cohort_hash_bound_after_amendment,True,f1d1fd3fac65353bbbac64aaa07b7d9e9c1e35f1a81e98708dfe1dafd1c1380b
+oof_hash_matches_stage4_manifest,True,cd8817d7a818c02914777f8288b4901ffbc7f19d5e2d33e331c7577def50d386
+oof_rows_match_post_amendment_development_cohort,True,cohort_n=178120; oof_n=178120
+stage4_based_on_chf_amendment_commit,True,stage3/base=aeb95c093e9f2546faa6edbe2ca8a98d2a04a5fa; stage4_commit=a486317de194a99ce16fa65ba3b40c63fda458ba
+stage4_commit_follows_stage3_amendment,True,aeb95c093e9f2546faa6edbe2ca8a98d2a04a5fa -> a486317de194a99ce16fa65ba3b40c63fda458ba
