@@ -1,0 +1,46 @@
+schema_version: 1
+stage: stage8_clinical_preflight
+
+scope:
+  analysis: nhanes_internal_grouped_validation_preflight
+  external_validation_claim: false
+  models_may_be_fitted_only_if_gate_passes_and_protocol_is_unambiguous: true
+
+inputs:
+  cohort: data/processed/nhanes_cohort_v2_4.parquet
+  cohort_sha256: ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964
+  quarantine_manifest: artifacts/audit/quarantine_manifest.json
+  stage6_manifest: artifacts/stage6_validation/manifest.json
+  stage6_receipt: artifacts/audit/unseal_access_receipt.json
+
+cohort_filter:
+  split: external_validation
+  cohort_eligible: true
+
+features:
+  minimal: [age, sex, bmi, smoking_status, hypertension_dx, diabetes_dx, general_health]
+  clinical_core_canonical: [sbp_mean, total_cholesterol, hdl_cholesterol]
+  clinical_hba1c_canonical: [sbp_mean, total_cholesterol, hdl_cholesterol, hba1c]
+  materialized_aliases:
+    sbp_mean: systolic_bp_mean
+
+gate:
+  minimum_events:
+    clinical_core: 200
+    clinical_hba1c_paired: 200
+  action_on_failure: feasibility_report_and_stop_without_model_fitting
+  action_on_conflicting_complete_case_definitions: require_protocol_clarification
+
+complete_case_definitions_under_audit:
+  strict_section_10:
+    description: all_minimal_and_required_clinical_predictors_observed
+  route_policy_section_20:
+    description: required_clinical_predictors_observed_minimal_missingness_handled_in_folds
+
+outputs:
+  artifact_dir: artifacts/stage8_clinical_preflight
+  status: artifacts/stage8_clinical_preflight/status.json
+  report: reports/stage8_clinical_preflight_feasibility_report.md
+  route_gate: reports/tables/stage8_clinical_route_gate.csv
+  field_attrition: reports/tables/stage8_clinical_field_attrition.csv
+  cycle_support: reports/tables/stage8_clinical_cycle_support.csv
