@@ -1,0 +1,57 @@
+schema_version: 1
+stage: stage8_clinical_core_full_gate
+
+scope:
+  analysis: nhanes_internal_development_exploratory_clinical_core
+  external_validation_claim: false
+  fitting_forbidden_until_all_gates_pass: true
+
+bindings:
+  clarification_commit: 0b0a00a6cb41c0af71709d74aa89ec6fc4614610
+  clarification_path: artifacts/stage8_clinical_preflight/protocol_clarification.json
+  clarification_blob_sha1: 4d20cc80efcf80c4315e7f3c8f9756eb368a4e5d
+  cohort: data/processed/nhanes_cohort_v2_4.parquet
+  cohort_sha256: ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964
+  feature_mapping: configs/feature_mapping.yaml
+
+primary_cohort:
+  split: external_validation
+  cohort_eligible: true
+  complete_case_clinical_fields: [sbp_mean, total_cholesterol, hdl_cholesterol]
+  materialized_aliases:
+    sbp_mean: systolic_bp_mean
+  clinical_field_imputation: forbidden
+  minimal_missingness: fit_imputation_inside_training_fold_only
+
+full_gate:
+  raw_events_minimum: 200
+  predictor_parameters: 20
+  expected_r2_fraction_of_max: 0.15
+  shrinkage: 0.90
+  max_design_based_risk_ci_half_width: 0.0025
+  minimum_design_df: 8
+  require_n_eff_design_at_least_pmsampsize: true
+  require_all_checks: true
+
+survey_design:
+  backend: R_survey
+  survey_version: "4.5"
+  pmsampsize_version: "1.1.3"
+  lonely_psu: adjust
+  adjust_domain_lonely: true
+  strata: published_SDMVSTRA
+  psu: published_SDMVPSU
+  allowed_weight_sources: [WTMEC4YR/4, WTMEC2YR/8]
+  weight_protocol: amendment_2_4_source_specific_pooling
+  weight_estimand: nhanes_external_validation_1999_2014
+
+outputs:
+  artifact_dir: artifacts/stage8_clinical_gate
+  status: artifacts/stage8_clinical_gate/status.json
+  report: reports/stage8_clinical_core_full_gate_report.md
+  gate_table: reports/tables/stage8_clinical_core_full_gate.csv
+  design_metrics: reports/tables/stage8_clinical_core_design_metrics.csv
+  missingness_validation: reports/tables/stage8_clinical_core_missingness_validation.csv
+  weight_validation: reports/tables/stage8_clinical_core_weight_validation.csv
+  schema_mapping: reports/tables/stage8_clinical_core_schema_mapping.csv
+

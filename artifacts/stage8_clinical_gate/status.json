@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "stage": "stage8_clinical_core_full_gate",
+  "status": "FAIL_FULL_GATE_CLINICAL_CORE_FITTING_FORBIDDEN",
+  "generated_at": "2026-07-16T14:19:18.647890+00:00",
+  "interpretation": "nhanes_internal_development_exploratory_not_external_validation",
+  "clarification_commit": "0b0a00a6cb41c0af71709d74aa89ec6fc4614610",
+  "clarification_validation": {
+    "status": "PASS",
+    "artifact_sha256": "24c7905d27b925cc5ad68ee1320383e7a9bd6720b6aaf4b23715a6f1cc34bab9",
+    "history_commit": "a6fac5d365a7369ca8492178fcca0e568ee0c097",
+    "history_confirmed": true,
+    "section_10_status": "FAIL_198_EVENTS",
+    "section_20_event_gate_only": "PASS_218_EVENTS",
+    "fitting_authorized": false,
+    "sbp_alias_equality": "PASS"
+  },
+  "all_required_gates_pass": false,
+  "clinical_core_fitting_authorized": false,
+  "clinical_hba1c_fitting_authorized": false,
+  "models_fitted": false,
+  "input_bindings": {
+    "config": {
+      "repository_relative_path": "configs/stage8_clinical_gate.yaml",
+      "size_bytes": 2102,
+      "sha256": "a9b1eb5fd74f946e0fb1fcf5856632a914d0bdb6e49f104015d2b81d0b48bd04",
+      "hash_mode": "normalized_text_lf"
+    },
+    "cohort": {
+      "repository_relative_path": "data/processed/nhanes_cohort_v2_4.parquet",
+      "size_bytes": 2009905,
+      "sha256": "ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964",
+      "hash_mode": "raw_bytes"
+    },
+    "clarification": {
+      "repository_relative_path": "artifacts/stage8_clinical_preflight/protocol_clarification.json",
+      "size_bytes": 3941,
+      "sha256": "24c7905d27b925cc5ad68ee1320383e7a9bd6720b6aaf4b23715a6f1cc34bab9",
+      "hash_mode": "normalized_text_lf"
+    },
+    "r_gate_source": {
+      "repository_relative_path": "scripts/r/stage8_clinical_gate.R",
+      "size_bytes": 3158,
+      "sha256": "391fbdbbe82c9d9d9e7b823f34fe16a8def46648b5c4303a9d3327c8cb9810b0",
+      "hash_mode": "normalized_text_lf"
+    }
+  },
+  "outputs": {
+    "report": {
+      "repository_relative_path": "reports/stage8_clinical_core_full_gate_report.md",
+      "size_bytes": 4628,
+      "sha256": "25d04cfa3d09846484f6aed74c7c4e17aada339dd09287ac201c282f721b6801",
+      "hash_mode": "normalized_text_lf"
+    },
+    "gate_table": {
+      "repository_relative_path": "reports/tables/stage8_clinical_core_full_gate.csv",
+      "size_bytes": 279,
+      "sha256": "ec6d3a810d17a7d8ea0d6d4f4d7095b0b8b22a2803e34aa1f3089b8ea850c452",
+      "hash_mode": "normalized_text_lf"
+    },
+    "design_metrics": {
+      "repository_relative_path": "reports/tables/stage8_clinical_core_design_metrics.csv",
+      "size_bytes": 530,
+      "sha256": "d784ac67e4d087e712940b42505474e912dd6c36b0ab647c47a59834347a91ca",
+      "hash_mode": "normalized_text_lf"
+    },
+    "missingness_validation": {
+      "repository_relative_path": "reports/tables/stage8_clinical_core_missingness_validation.csv",
+      "size_bytes": 980,
+      "sha256": "85acfb19fd5bf7de7f7d6a6087d745103da9fbff502eadf155375251f9a7fd38",
+      "hash_mode": "normalized_text_lf"
+    },
+    "weight_validation": {
+      "repository_relative_path": "reports/tables/stage8_clinical_core_weight_validation.csv",
+      "size_bytes": 285,
+      "sha256": "90f6a361138240b9e94b16b8f82f6c3bf97ad0dbd41f5a482d6b4b8f28231b52",
+      "hash_mode": "normalized_text_lf"
+    },
+    "schema_mapping": {
+      "repository_relative_path": "reports/tables/stage8_clinical_core_schema_mapping.csv",
+      "size_bytes": 298,
+      "sha256": "0eaeb5ef9cfdaf0926d1668c5bde2dadd43489e5134735345d89091d3b6d24e1",
+      "hash_mode": "normalized_text_lf"
+    }
+  }
+}

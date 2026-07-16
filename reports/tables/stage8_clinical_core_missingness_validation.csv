@@ -1,0 +1,11 @@
+field,role,n,n_missing,missing_fraction,imputation_policy,status
+systolic_bp_mean,required_clinical,19018,0,0.0,forbidden,PASS
+total_cholesterol,required_clinical,19018,0,0.0,forbidden,PASS
+hdl_cholesterol,required_clinical,19018,0,0.0,forbidden,PASS
+age,minimal_fold_imputation_allowed,19018,0,0.0,fit_inside_training_fold_only,PASS
+sex,minimal_fold_imputation_allowed,19018,0,0.0,fit_inside_training_fold_only,PASS
+bmi,minimal_fold_imputation_allowed,19018,228,0.011988642338836892,fit_inside_training_fold_only,PASS
+smoking_status,minimal_fold_imputation_allowed,19018,17,0.0008938899989483647,fit_inside_training_fold_only,PASS
+hypertension_dx,minimal_fold_imputation_allowed,19018,52,0.0027342517614891157,fit_inside_training_fold_only,PASS
+diabetes_dx,minimal_fold_imputation_allowed,19018,431,0.022662740561573247,fit_inside_training_fold_only,PASS
+general_health,minimal_fold_imputation_allowed,19018,10,0.0005258176464402145,fit_inside_training_fold_only,PASS
