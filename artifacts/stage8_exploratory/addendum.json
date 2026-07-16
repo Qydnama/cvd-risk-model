@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "stage": "stage8_underpowered_exploratory_continuation_addendum",
+  "status": "EXPLORATORY_CONTINUATION_AUTHORIZED_BEFORE_FITTING",
+  "label": "UNDERPOWERED_EXPLORATORY_DEVELOPMENT_ONLY",
+  "authorized_by_user_on": "2026-07-16",
+  "decision_timing": {
+    "made_after_observing": [
+      "aggregate_feasibility_counts",
+      "aggregate_full_gate_results"
+    ],
+    "made_before_observing": [
+      "any_stage8_model_fit",
+      "any_stage8_oof_prediction",
+      "any_stage8_performance_metric",
+      "any_stage8_predictor_outcome_association"
+    ]
+  },
+  "preserved_primary_export_gate": {
+    "status": "FAIL_INSUFFICIENT_EFFECTIVE_SAMPLE_SIZE",
+    "n_eff_design": 13061.9598240511,
+    "n_pmsampsize": 13732,
+    "primary_export_gate_changed": false,
+    "primary_export_allowed": false
+  },
+  "immutable_gate_evidence": {
+    "commit": "a3efc76cb0565ff4638c30a1c5cb747b95fa73a4",
+    "status_file": {
+      "path": "artifacts/stage8_clinical_gate/status.json",
+      "blob_sha1": "aa84bf5d83ea9acb5f4b7f9386cfb5c2c4e9afa6"
+    },
+    "report": {
+      "path": "reports/stage8_clinical_core_full_gate_report.md",
+      "blob_sha1": "ca02d98b882e55e6ac5d729bb9bb2fae93a1260e"
+    },
+    "gate_table": {
+      "path": "reports/tables/stage8_clinical_core_full_gate.csv",
+      "blob_sha1": "83f52ae31d5abb80aca9a75fd3107999cecd7d1e"
+    }
+  },
+  "fixed_exploratory_cohort": {
+    "source": "data/processed/nhanes_cohort_v2_4.parquet",
+    "split": "external_validation",
+    "cohort_eligible": true,
+    "required_nonmissing_source_fields": [
+      "systolic_bp_mean",
+      "total_cholesterol",
+      "hdl_cholesterol",
+      "hba1c"
+    ],
+    "hba1c_role": "availability_filter_only_not_a_predictor",
+    "n": 18987,
+    "raw_cvd_events": 218,
+    "participant_set_must_be_identical_for_both_models": true
+  },
+  "paired_models": {
+    "minimal_comparator": {
+      "predictors": [
+        "age",
+        "sex",
+        "bmi",
+        "smoking_status",
+        "hypertension_dx",
+        "diabetes_dx",
+        "general_health"
+      ],
+      "predictor_parameters": 15
+    },
+    "clinical_core": {
+      "predictors": [
+        "age",
+        "sex",
+        "bmi",
+        "smoking_status",
+        "hypertension_dx",
+        "diabetes_dx",
+        "general_health",
+        "sbp_mean",
+        "total_cholesterol",
+        "hdl_cholesterol"
+      ],
+      "predictor_parameters": 20
+    },
+    "estimator": "unpenalized_survey_weighted_logistic_regression",
+    "interactions": "none",
+    "continuous_terms": {
+      "age": "restricted_cubic_spline_4_knots_3_parameters",
+      "bmi": "restricted_cubic_spline_4_knots_3_parameters",
+      "sbp_mean": "restricted_cubic_spline_4_knots_3_parameters",
+      "total_cholesterol": "linear_1_parameter",
+      "hdl_cholesterol": "linear_1_parameter"
+    },
+    "rcs_weighted_quantiles": [0.05, 0.35, 0.65, 0.95],
+    "calibration": "nested_grouped_sigmoid",
+    "probability_clip": 0.000001
+  },
+  "cross_validation": {
+    "group": "survey_cycle",
+    "outer_splitter": "StratifiedGroupKFold",
+    "outer_splits": 4,
+    "inner_splits": 4,
+    "shuffle": true,
+    "seed": 20260714,
+    "identical_participants_and_outer_folds": true
+  },
+  "missingness_policy": {
+    "minimal_predictor_imputation": "fit_only_inside_each_training_fold",
+    "clinical_predictor_imputation": "forbidden",
+    "clinical_complete_case_applied_before_cv": true
+  },
+  "survey_policy": {
+    "training_weights": "normalize_to_mean_one_inside_each_training_fold",
+    "evaluation_weights": "unnormalized_analysis_weight",
+    "class_weight_smote_undersampling": "forbidden"
+  },
+  "metrics_and_inference": {
+    "metrics": [
+      "weighted_roc_auc",
+      "weighted_pr_auc",
+      "weighted_brier_score",
+      "weighted_log_loss",
+      "weighted_calibration_intercept",
+      "weighted_calibration_slope",
+      "weighted_observed_expected_ratio"
+    ],
+    "paired_difference_direction": "clinical_core_minus_minimal",
+    "cluster_bootstrap": {
+      "method": "stratified_psu_with_replacement_within_strata_fixed_oof_predictions_no_refit",
+      "repetitions": 2000,
+      "seed": 20260714,
+      "confidence_level": 0.95,
+      "interval": "percentile",
+      "minimum_valid_replicates": 1900,
+      "participant_level_bootstrap": "forbidden"
+    },
+    "decision_curve_thresholds": [0.005, 0.01, 0.02, 0.03, 0.05, 0.075, 0.1]
+  },
+  "prohibitions": {
+    "exportable_model": true,
+    "production_artifact": true,
+    "api_route": true,
+    "web_routing_configuration": true,
+    "independent_external_validation_claim": true,
+    "change_parameter_budget_or_predictors": true,
+    "change_sample_size_calculation": true
+  },
+  "required_final_status": {
+    "PRIMARY_EXPORT_GATE": "FAIL",
+    "EXPLORATORY_FITTING": "COMPLETE",
+    "WEB_ROUTING_ALLOWED": false,
+    "EXTERNAL_VALIDATION": "NOT_PERFORMED"
+  }
+}
+
