@@ -1,0 +1,79 @@
+schema_version: 1
+stage: stage7_secondary_censored_competing_risk
+status_label: SECONDARY_EXPLORATORY
+
+immutable_primary_model:
+  pipeline_path: artifacts/minimal_v1/full_development_pipeline.joblib
+  pipeline_sha256: 758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010
+  lock_path: artifacts/minimal_v1/external_validation_lock.json
+  lock_sha256_normalized_lf: 983461d0eaf53592fc26b2615ad4f00a6e2768482d1adac6366f49526ea1f6a3
+  amendment_path: artifacts/minimal_v1/external_validation_lock_amendment_001.json
+  amendment_sha256_normalized_lf: 84a846207cf221dbe9839ede497503f708b4738f1900c943ffe66e146b0ab450
+  model_refit_forbidden: true
+  calibrator_refit_forbidden: true
+  cutoff_change_forbidden: true
+  secondary_results_must_not_select_primary_model: true
+
+sources:
+  nhis_raw_dir: data/raw/nhis
+  nhis_mapping: configs/feature_mapping.yaml
+  nhanes_raw_dir: data/raw/nhanes
+  nhanes_inventory: configs/stage7_recent_nhanes_files.yaml
+  raw_manifest: artifacts/stage7_recent/raw_data_manifest.yaml
+
+cohorts:
+  nhis_recent:
+    years: [2015, 2016, 2017, 2018]
+    pooled_weight: MORTWTSA/4
+    time_unit: quarter
+    time_source: NHIS_INTERVIEW_AND_DEATH_QUARTER
+    administrative_end_year: 2019
+    administrative_end_quarter: 4
+    horizons: [4, 8, 12]
+    primary_recent_horizon: 4
+    method: discrete_time_competing_risk
+    cause_specific_cox_role: sensitivity
+  nhanes_recent:
+    cycles: [2015-2016, 2017-2018]
+    pooled_weight: WTMEC2YR/2
+    time_unit: month
+    time_source: LMF_PERMTH_INT
+    horizons: [12, 24, 36]
+    primary_recent_horizon: 12
+    method: continuous_time_competing_risk
+    cause_specific_cox_role: secondary_model_based
+
+event_type:
+  censored: 0
+  cvd_death: 1
+  competing_death: 2
+  cvd_ucod_leading: ["001", "005"]
+
+analysis:
+  aalen_johansen: weighted_nonparametric
+  cause_specific_hazards: weighted_breslow
+  cox_ties: breslow
+  cox_predictor: frozen_sigmoid_linear_predictor
+  time_dependent_auc: cumulative_incidence_ipcw
+  brier: cumulative_incidence_ipcw
+  calibration_bins: 5
+  calibration_boundaries: survey_weighted_equal_weight_within_cohort_and_horizon
+  censoring_model: survey_weighted_reverse_kaplan_meier
+  support_rule:
+    minimum_cvd_events: 100
+    minimum_weighted_at_risk_proportion: 0.20
+    applies_to_longer_horizons_only: true
+  probability_clip: 1.0e-8
+
+outputs:
+  cohort_flow: reports/tables/stage7_recent_cohort_flow.csv
+  event_counts: reports/tables/stage7_recent_event_counts.csv
+  aalen_johansen: reports/tables/stage7_aalen_johansen.csv
+  cause_specific_hazards: reports/tables/stage7_cause_specific_hazards.csv
+  time_dependent_metrics: reports/tables/stage7_time_dependent_metrics.csv
+  calibration: reports/tables/stage7_cumulative_incidence_calibration.csv
+  support: reports/tables/stage7_support_rules.csv
+  cif_figure: reports/figures/stage7_competing_risk_cif.png
+  calibration_figure: reports/figures/stage7_cumulative_incidence_calibration.png
+  report: reports/stage7_secondary_competing_risk_report.md
+  manifest: artifacts/stage7_recent/manifest.json

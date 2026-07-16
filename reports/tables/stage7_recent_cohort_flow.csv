@@ -1,0 +1,21 @@
+cohort,step_order,step,n_participants,removed_from_previous
+nhis_recent,0,raw recent records,351921,0
+nhis_recent,1,year in 2015-2018 recent protocol,351921,0
+nhis_recent,2,known age,351921,0
+nhis_recent,3,age 40-79,159519,192402
+nhis_recent,4,mortality linkage eligible,71220,88299
+nhis_recent,5,positive MORTWTSA,71220,0
+nhis_recent,6,exclude prevalent CVD,62428,8792
+nhis_recent,7,baseline CVD known absent,62249,179
+nhis_recent,8,known follow-up time,62249,0
+nhis_recent,9,known competing-event type,62249,0
+nhanes_recent,0,raw recent records,19225,0
+nhanes_recent,1,cycle in 2015-2018 recent protocol,19225,0
+nhanes_recent,2,known age,19225,0
+nhanes_recent,3,age 40-79,6845,12380
+nhanes_recent,4,mortality linkage eligible,6807,38
+nhanes_recent,5,positive WTMEC2YR,6807,0
+nhanes_recent,6,exclude prevalent CVD,5905,902
+nhanes_recent,7,baseline CVD known absent,5865,40
+nhanes_recent,8,known PERMTH_INT,5865,0
+nhanes_recent,9,known competing-event type,5865,0

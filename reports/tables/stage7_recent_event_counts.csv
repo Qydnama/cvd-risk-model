@@ -1,0 +1,3 @@
+cohort,n,censored,cvd_deaths,competing_deaths,weight_sum,followup_min,followup_q25,followup_median,followup_q75,followup_max,followup_time_unit,followup_time_source,role
+nhis_recent,62249,60488,370,1391,125037165.5,1.0,9.0,13.0,17.0,20.0,quarter,NHIS_INTERVIEW_AND_DEATH_QUARTER,secondary_censored_competing_risk_only
+nhanes_recent,5865,5704,25,136,123509560.1079469,2.0,24.0,35.0,48.0,61.0,month,LMF_PERMTH_INT,secondary_censored_competing_risk_only

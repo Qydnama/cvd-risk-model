@@ -1,0 +1,116 @@
+{
+  "calibrator_modified": false,
+  "cohort_counts": {
+    "nhanes_recent": {
+      "censored": 5704,
+      "competing_deaths": 136,
+      "cvd_deaths": 25,
+      "n": 5865
+    },
+    "nhis_recent": {
+      "censored": 60488,
+      "competing_deaths": 1391,
+      "cvd_deaths": 370,
+      "n": 62249
+    }
+  },
+  "completed_at": "2026-07-16T11:54:34.493798+00:00",
+  "config": {
+    "repository_relative_path": "configs/stage7_secondary.yaml",
+    "sha256": "65130f68500ef8a82046cbe970ced7b24da1cb93f00b27d80284fa02cbd1f731"
+  },
+  "cutoff_modified_or_reselected": false,
+  "immutable_bindings": {
+    "amendment": "84a846207cf221dbe9839ede497503f708b4738f1900c943ffe66e146b0ab450",
+    "lock": "983461d0eaf53592fc26b2615ad4f00a6e2768482d1adac6366f49526ea1f6a3",
+    "pipeline": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010"
+  },
+  "implementation": {
+    "module": {
+      "repository_relative_path": "src/cvd_risk/modeling/stage7.py",
+      "sha256": "1973a8afd8835547d8cc83bf2021e5de895fe5563fc94380740325f031afbf59"
+    },
+    "runner": {
+      "repository_relative_path": "scripts/19_stage7_secondary_competing_risk.py",
+      "sha256": "a99c67e3eaf6f2e447260e26addc1d792318a766fd3c0bfabbcefa408321c769"
+    }
+  },
+  "interpretation": "secondary_exploratory",
+  "nhis_sources": {
+    "codebook": {
+      "repository_relative_path": "data/raw/nhis/nhis_00001.xml",
+      "sha256": "03201d7b52ef0fc32166789d0a21223ddfd46089f582d4a3024223400298ae72"
+    },
+    "extract": {
+      "repository_relative_path": "data/raw/nhis/nhis_00001.csv.gz",
+      "sha256": "f6fbee8a4a033e2661f74dc7fc6d2fee0deda0648ca433d54d9a1348505ff36c"
+    }
+  },
+  "outputs": {
+    "aalen_johansen": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/tables/stage7_aalen_johansen.csv",
+      "sha256": "0173faca4092134dabac457e0e1c56e2f856dd1ae46019bcd02eb25bace44917"
+    },
+    "calibration": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/tables/stage7_cumulative_incidence_calibration.csv",
+      "sha256": "d121af6d7e57e60ef070ad4df7f830a8d218817e3245c2979e460750650facda"
+    },
+    "calibration_figure": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/figures/stage7_cumulative_incidence_calibration.png",
+      "sha256": "e2c7b9e39fdf98e11576dec5e7739b0a7464281fbb572a22a2c5b230a3a5b3a6"
+    },
+    "cause_specific_hazards": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/tables/stage7_cause_specific_hazards.csv",
+      "sha256": "858a2d775f9ef18d8b5b8c3f59322a691d92c9c9554a976806451b07440470bc"
+    },
+    "cif_figure": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/figures/stage7_competing_risk_cif.png",
+      "sha256": "f48865221bbddf1ac1ea568db6d7a7beb3dac0021070e74083d14e3ca9651b41"
+    },
+    "cohort_flow": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/tables/stage7_recent_cohort_flow.csv",
+      "sha256": "69c9fce940aa2787a9520a0cce0bdebefb8371b26a24fc987924fda255c0a68e"
+    },
+    "event_counts": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/tables/stage7_recent_event_counts.csv",
+      "sha256": "c049c8be7902396e481d6ee8f479bac9359ac947e02760a42f5a9733e161339f"
+    },
+    "report": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/stage7_secondary_competing_risk_report.md",
+      "sha256": "6fa794773e04dd7af9e46f58913b9bfa8b949c8abf0766cdb2429e8c4549c858"
+    },
+    "support": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/tables/stage7_support_rules.csv",
+      "sha256": "fcea7592be66aae116d90270dcd51552267721a6e7c099a32d8d3b7ef5aa94cd"
+    },
+    "time_dependent_metrics": {
+      "hash_mode": "raw_bytes",
+      "repository_relative_path": "reports/tables/stage7_time_dependent_metrics.csv",
+      "sha256": "a6cb0f856cb99ad188c2f888f13d78151cec2f1ed0ff7b1a40e5808f44e1dbfc"
+    }
+  },
+  "participant_level_output_persisted": false,
+  "preprocessing_modified": false,
+  "primary_model_modified": false,
+  "raw_bootstrap_replicates_persisted": false,
+  "raw_data_manifest": {
+    "repository_relative_path": "artifacts/stage7_recent/raw_data_manifest.yaml",
+    "sha256": "5c75550568666d801e7998a7959668f658d4781a3d5919c71d9c32e0bd4ef787"
+  },
+  "recent_nhanes_inventory": {
+    "repository_relative_path": "configs/stage7_recent_nhanes_files.yaml",
+    "sha256": "ba498b569c05103153596bfb207659cad4cb23ace7ad5800251efea8243d1c37"
+  },
+  "schema_version": 1,
+  "stage": "stage7_secondary_censored_competing_risk",
+  "status": "COMPLETE_SECONDARY_EXPLORATORY"
+}

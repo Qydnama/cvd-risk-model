@@ -1,0 +1,107 @@
+schema_version: 1
+verified_on: "2026-07-16"
+
+# Stage 7 uses a separate inventory so the immutable 1999-2014 external-
+# validation inventory and its model-lock SHA remain unchanged. Only files
+# needed for the frozen minimal route and the linked mortality outcome are
+# included.
+allowed_hosts:
+  - wwwn.cdc.gov
+  - ftp.cdc.gov
+
+official_sources:
+  nhanes_cycle_catalog: https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx
+  linked_mortality_catalog: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/
+
+cycles:
+  "2015-2016":
+    start_year: 2015
+    end_year: 2016
+    suffix: _I
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_I.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_I.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/BMX_I.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_I.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/SMQ_I.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_I.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/BPQ_I.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_I.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DIQ_I.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_I.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HUQ_I.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_I.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/MCQ_I.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2015_2016_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2015_2016_MORT_2019_PUBLIC.dat
+
+  "2017-2018":
+    start_year: 2017
+    end_year: 2018
+    suffix: _J
+    files:
+      - component: DEMO
+        tier: fast
+        format: xpt
+        filename: DEMO_J.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DEMO_J.xpt
+      - component: BMX
+        tier: fast
+        format: xpt
+        filename: BMX_J.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/BMX_J.xpt
+      - component: SMQ
+        tier: fast
+        format: xpt
+        filename: SMQ_J.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SMQ_J.xpt
+      - component: BPQ
+        tier: fast
+        format: xpt
+        filename: BPQ_J.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/BPQ_J.xpt
+      - component: DIQ
+        tier: fast
+        format: xpt
+        filename: DIQ_J.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DIQ_J.xpt
+      - component: HUQ
+        tier: fast
+        format: xpt
+        filename: HUQ_J.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HUQ_J.xpt
+      - component: MCQ
+        tier: fast
+        format: xpt
+        filename: MCQ_J.xpt
+        url: https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/MCQ_J.xpt
+      - component: LMF
+        tier: fast
+        format: fwf
+        filename: NHANES_2017_2018_MORT_2019_PUBLIC.dat
+        url: https://ftp.cdc.gov/pub/health_statistics/NCHS/datalinkage/linked_mortality/NHANES_2017_2018_MORT_2019_PUBLIC.dat

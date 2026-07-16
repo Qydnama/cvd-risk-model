@@ -1,0 +1,7 @@
+cohort,horizon,time_unit,raw_cvd_events_by_horizon,minimum_cvd_events,passes_event_rule,weighted_at_risk_proportion,minimum_weighted_at_risk_proportion,passes_at_risk_rule,longer_horizon_support_rule_applies,model_performance_claim_allowed,status
+nhis_recent,4,quarter,81,100,False,0.9958214703771416,0.2,True,False,False,PRIMARY_RECENT_EXPLORATORY
+nhis_recent,8,quarter,183,100,True,0.800661442137378,0.2,True,True,True,PASS
+nhis_recent,12,quarter,283,100,True,0.5478774628812263,0.2,True,True,True,PASS
+nhanes_recent,12,month,10,100,False,0.9931231446573064,0.2,True,False,False,PRIMARY_RECENT_EXPLORATORY
+nhanes_recent,24,month,16,100,False,0.7534313205622006,0.2,True,True,False,FAIL_INSUFFICIENT_SUPPORT
+nhanes_recent,36,month,20,100,False,0.5062150843922757,0.2,True,True,False,FAIL_INSUFFICIENT_SUPPORT
