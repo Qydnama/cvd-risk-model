@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "stage": "stage9_research_release_authorization",
+  "status": "AUTHORIZED_RESEARCH_ONLY_METADATA_PACKAGING",
+  "documented_on": "2026-07-17",
+  "decision_timing": "AFTER_STAGE8_CLOSURE_AND_MINIMAL_V1_MODEL_CARD_BEFORE_STAGE9_PACKAGING",
+  "authorized_model_id": "minimal_v1",
+  "authorized_scope": [
+    "portable_input_schema",
+    "source_and_evidence_release_manifest",
+    "locked_binary_integrity_validation",
+    "inference_smoke_test",
+    "reproducibility_documentation",
+    "source_commit_tag_after_merge_and_green_ci"
+  ],
+  "research_use_only": true,
+  "existing_locked_pipeline_only": true,
+  "refit_allowed": false,
+  "new_serialized_estimator_allowed": false,
+  "binary_repackaging_allowed": false,
+  "heldout_label_access_allowed": false,
+  "clinical_deployment_allowed": false,
+  "api_route_allowed": false,
+  "web_routing_allowed": false,
+  "routing_manifest_allowed": false,
+  "clinical_core_export_allowed": false,
+  "clinical_hba1c_export_allowed": false,
+  "primary_export_gate": "FAIL",
+  "external_validation_interpretation": "UNDERPOWERED_EXPLORATORY",
+  "external_validation_precision_claim_allowed": false,
+  "locked_identity": {
+    "pipeline_sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010",
+    "calibration": "sigmoid",
+    "cutoff": 0.007469058716065273,
+    "predictor_parameters": 15
+  },
+  "release_boundary": {
+    "github_release_type": "SOURCE_AND_METADATA_RESEARCH_SNAPSHOT",
+    "model_binary_attachment_allowed": false,
+    "production_artifact_allowed": false,
+    "medical_device_claim_allowed": false,
+    "independent_external_validation_claim_allowed": false
+  },
+  "prerequisites_for_source_tag": [
+    "stage9_changes_merged_to_main",
+    "github_actions_green_on_merge_commit",
+    "stage9_validator_pass",
+    "working_tree_clean"
+  ],
+  "preserved_artifacts": [
+    "artifacts/minimal_v1",
+    "artifacts/stage6_validation",
+    "artifacts/stage7_secondary",
+    "artifacts/stage8_closure",
+    "reports/stage6_underpowered_exploratory_validation_final.md",
+    "reports/stage7_secondary_competing_risk_report.md",
+    "reports/stage8_closure_report.md"
+  ]
+}
