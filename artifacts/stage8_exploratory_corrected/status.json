@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "stage": "stage8_corrected_underpowered_exploratory_development_only",
+  "label": "UNDERPOWERED_EXPLORATORY_DEVELOPMENT_ONLY",
+  "historical_analysis_label": "HBA1C_AVAILABLE_PAIRED_COHORT_SENSITIVITY_ANALYSIS",
+  "historical_analysis_commit": "df6d157fd7753f463c0620b42e32fd2343bb4d6b",
+  "correction_addendum_commit": "dfc75d783b29420503d30c3f4eed528111633a7e",
+  "PRIMARY_EXPORT_GATE": "FAIL",
+  "PRIMARY_EXPORT_GATE_REASON": "FAIL_INSUFFICIENT_EFFECTIVE_SAMPLE_SIZE",
+  "n_eff_design": 13061.9598240511,
+  "N_pmsampsize": 13732,
+  "EXPLORATORY_FITTING": "COMPLETE",
+  "WEB_ROUTING_ALLOWED": false,
+  "EXTERNAL_VALIDATION": "NOT_PERFORMED",
+  "generated_at": "2026-07-17T11:04:18.442134+00:00",
+  "cohort_n": 19018,
+  "raw_cvd_events": 218,
+  "hba1c_required": false,
+  "hba1c_loaded": false,
+  "models": [
+    "minimal",
+    "clinical_core"
+  ],
+  "paired_identical_participants_and_folds": true,
+  "valid_bootstrap_replicates": 2000,
+  "full_cohort_deployable_model_fitted": false,
+  "serialized_model_or_pipeline_created": false,
+  "api_route_created": false,
+  "web_routing_configuration_created": false,
+  "input_bindings": {
+    "config": {
+      "repository_relative_path": "configs/stage8_exploratory_corrected.yaml",
+      "size_bytes": 2946,
+      "sha256": "e1d6d987ddaa2c5d3deb92ce3834e17cd79e3ffd5725e75f8b7abc3f0deec57c",
+      "hash_mode": "normalized_text_lf"
+    },
+    "correction_addendum": {
+      "repository_relative_path": "artifacts/stage8_exploratory_correction/addendum.json",
+      "size_bytes": 5845,
+      "sha256": "6b9f480e8d548d363d7046dbbb9a0fa022ab86cde3e1205136b58e717d1df007",
+      "hash_mode": "normalized_text_lf"
+    },
+    "cohort": {
+      "repository_relative_path": "data/processed/nhanes_cohort_v2_4.parquet",
+      "size_bytes": 2009905,
+      "sha256": "ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964",
+      "hash_mode": "raw_bytes"
+    },
+    "source": {
+      "repository_relative_path": "src/cvd_risk/modeling/stage8_exploratory_corrected.py",
+      "size_bytes": 21648,
+      "sha256": "e7f3fd1edf4a41cd8e4293ccf4c915c021805feff01134afd4e3d797f82c7bb6",
+      "hash_mode": "normalized_text_lf"
+    },
+    "shared_prespecified_methodology_source": {
+      "repository_relative_path": "src/cvd_risk/modeling/stage8_exploratory.py",
+      "size_bytes": 42618,
+      "sha256": "00dfd0603fab7a174f10abf58d027491792553cd0ff81912bb38c335d7c6815a",
+      "hash_mode": "normalized_text_lf"
+    }
+  },
+  "outputs": {
+    "oof_predictions": {
+      "repository_relative_path": "artifacts/stage8_exploratory_corrected/oof_predictions.parquet",
+      "size_bytes": 1052763,
+      "sha256": "8704f9d34074cc6582aeac45d59ae0b204ee524ffba38a0b1d4d5fbff7ba2e5b",
+      "hash_mode": "raw_bytes"
+    },
+    "bootstrap_metrics": {
+      "repository_relative_path": "artifacts/stage8_exploratory_corrected/bootstrap_metrics.csv",
+      "size_bytes": 1898768,
+      "sha256": "5afcf1105f8390364943bb9e2cc0b72b7c786423d9d176920b07cc6802604d3d",
+      "hash_mode": "normalized_text_lf"
+    },
+    "report": {
+      "repository_relative_path": "reports/stage8_corrected_underpowered_exploratory_development_report.md",
+      "size_bytes": 12828,
+      "sha256": "a1559d7f13019a4c85df5f025051865d5285695c1251e03993d268d24d5ea81c",
+      "hash_mode": "normalized_text_lf"
+    },
+    "metrics": {
+      "repository_relative_path": "reports/tables/stage8_corrected_exploratory_metrics.csv",
+      "size_bytes": 2020,
+      "sha256": "cf6491317fa0e938c858253f2c82d00a2f463ae98d9ac8ca7f4daae9f4c181e9",
+      "hash_mode": "normalized_text_lf"
+    },
+    "paired_differences": {
+      "repository_relative_path": "reports/tables/stage8_corrected_exploratory_paired_differences.csv",
+      "size_bytes": 1227,
+      "sha256": "b07e13602732e50788c30b7ba2c20c7052f714db04ff7d86f604605edfdf7315",
+      "hash_mode": "normalized_text_lf"
+    },
+    "decision_curve": {
+      "repository_relative_path": "reports/tables/stage8_corrected_exploratory_decision_curve.csv",
+      "size_bytes": 4526,
+      "sha256": "1eafe5d8be2d10fa32bbe7e9d2438f1c245097f694104a565b385f7f0eeb312a",
+      "hash_mode": "normalized_text_lf"
+    },
+    "folds": {
+      "repository_relative_path": "reports/tables/stage8_corrected_exploratory_folds.csv",
+      "size_bytes": 721,
+      "sha256": "dbceeea00779767c9ab56002cd34d624d4ab1958da25e2892272c8cf3da3304b",
+      "hash_mode": "normalized_text_lf"
+    },
+    "coefficients": {
+      "repository_relative_path": "reports/tables/stage8_corrected_exploratory_fold_coefficients.csv",
+      "size_bytes": 13157,
+      "sha256": "2d555f7d80889b96e2fa81176236c0d103acb30ee1c69de1336e94169ede6c9b",
+      "hash_mode": "normalized_text_lf"
+    },
+    "imputation_audit": {
+      "repository_relative_path": "reports/tables/stage8_corrected_exploratory_imputation_audit.csv",
+      "size_bytes": 6630,
+      "sha256": "1e81ea8be3d8d115be407f9ee3d6c6a1540431ea5cfd37d3372cdee39ea52ca8",
+      "hash_mode": "normalized_text_lf"
+    }
+  }
+}

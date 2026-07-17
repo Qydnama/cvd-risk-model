@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "stage": "stage8_clinical_protocol_clarification",
+  "status": "NARROW_CLARIFICATION_RECORDED_BEFORE_FITTING",
+  "approved_by_user_on": "2026-07-16",
+  "external_validation_claim": false,
+  "scope": "nhanes_internal_development_exploratory_clinical_routes_only",
+  "history_confirmation": {
+    "confirmed": true,
+    "preexisting_policy_commit": "a6fac5d365a7369ca8492178fcca0e568ee0c097",
+    "commit_authored_at": "2026-07-14T19:38:14+05:00",
+    "commit_subject": "Initialize CVD risk model pipeline",
+    "predates_stage8_preflight": true,
+    "implementation_plan": {
+      "path": "CODEX_CVD_MODEL_IMPLEMENTATION_PLAN.md",
+      "blob_sha1": "108f27945f4a850ce8ab6346a90243f8a7d1aaee",
+      "required_preexisting_text": [
+        "`minimal` primary analysis: numeric median imputation и заранее утверждённые missing indicators только внутри training fold",
+        "`clinical_core` exportable primary analysis: complete-case по обязательным `sbp_mean`, total cholesterol и HDL",
+        "missing required clinical field исключает record из route, а clinical values не импутируются в primary export model",
+        "`clinical_hba1c` acceptance primary analysis: paired complete-case cohort с доступными core fields и HbA1c"
+      ]
+    },
+    "experiment_config": {
+      "path": "configs/experiment.yaml",
+      "blob_sha1": "2858b795d1ce66483f288f54648315c3d1f6fae7",
+      "required_preexisting_text": [
+        "primary: within_training_fold_imputation",
+        "required_fields: [sbp_mean, total_cholesterol, hdl_cholesterol]",
+        "nhanes_clinical_core_development: 200",
+        "nhanes_clinical_hba1c_paired_development: 200"
+      ]
+    }
+  },
+  "event_floor": {
+    "raw_events_minimum": 200,
+    "changed": false
+  },
+  "section_10_sensitivity_feasibility": {
+    "interpretation_preserved": true,
+    "role": "sensitivity_feasibility_cohort_not_primary_route",
+    "clinical_core": {
+      "n": 18292,
+      "raw_events": 198,
+      "event_gate_status": "FAIL"
+    },
+    "clinical_hba1c_paired": {
+      "n": 18262,
+      "raw_events": 198,
+      "event_gate_status": "FAIL"
+    }
+  },
+  "section_20_primary_policy": {
+    "clinical_core_complete_case_fields": [
+      "sbp_mean",
+      "total_cholesterol",
+      "hdl_cholesterol"
+    ],
+    "clinical_fields_imputed": false,
+    "minimal_predictor_missingness": "imputation_fit_only_within_each_training_fold",
+    "imputation_fit_outside_training_fold_forbidden": true,
+    "preflight_n": 19018,
+    "preflight_raw_events": 218,
+    "event_gate_status_only": "PASS",
+    "event_gate_alone_authorizes_fitting": false
+  },
+  "required_full_gate_before_fitting": {
+    "raw_events_at_least_200": true,
+    "n_eff_design_at_least_n_pmsampsize": true,
+    "design_based_risk_precision": true,
+    "design_df_at_least_8": true,
+    "survey_weight_validation": true,
+    "missingness_validation": true,
+    "all_must_pass": true
+  },
+  "sbp_schema_alias": {
+    "source_column": "systolic_bp_mean",
+    "canonical_pipeline_column": "sbp_mean",
+    "mapping": "identity_alias_inside_stage8_pipeline_only",
+    "source_arrow_dtype": "double",
+    "pipeline_dtype": "float64",
+    "unit": "mmHg",
+    "equality_assertion_required": true,
+    "source_cohort_modified": false,
+    "manifest_mapping_required": true
+  },
+  "fitting_authorization": {
+    "authorized_now": false,
+    "condition": "all_required_full_gate_checks_pass_after_this_clarification_commit",
+    "permitted_model_if_condition_met": "clinical_core",
+    "clinical_hba1c_fitting_authorized": false
+  },
+  "locked_scope": {
+    "minimal_v1_modification_authorized": false,
+    "stage6_artifact_modification_authorized": false,
+    "stage7_artifact_modification_authorized": false,
+    "pipeline_sha_modification_authorized": false,
+    "existing_report_modification_authorized": false
+  }
+}
+

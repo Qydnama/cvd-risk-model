@@ -1,0 +1,78 @@
+schema_version: 1
+stage: stage8_underpowered_exploratory_development_only
+
+label: UNDERPOWERED_EXPLORATORY_DEVELOPMENT_ONLY
+bindings:
+  addendum_commit: 024ad6af132affea3a88a60a56f0550e47cf2239
+  addendum_path: artifacts/stage8_exploratory/addendum.json
+  addendum_blob_sha1: 9a5b906631f12ad312e981344aab8f4455427f8c
+  primary_gate_commit: a3efc76cb0565ff4638c30a1c5cb747b95fa73a4
+  cohort: data/processed/nhanes_cohort_v2_4.parquet
+  cohort_sha256: ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964
+
+fixed_cohort:
+  split: external_validation
+  cohort_eligible: true
+  required_nonmissing_source_fields: [systolic_bp_mean, total_cholesterol, hdl_cholesterol, hba1c]
+  hba1c_role: availability_filter_only_not_a_predictor
+  expected_n: 18987
+  expected_events: 218
+
+models:
+  minimal:
+    predictor_parameters: 15
+  clinical_core:
+    predictor_parameters: 20
+    clinical_predictors: [sbp_mean, total_cholesterol, hdl_cholesterol]
+
+cross_validation:
+  group: survey_cycle
+  outer_splits: 4
+  inner_splits: 4
+  shuffle: true
+  seed: 20260714
+
+restricted_cubic_splines:
+  quantiles: [0.05, 0.35, 0.65, 0.95]
+  features: [age, bmi, sbp_mean]
+
+logistic_regression:
+  penalty: null
+  solver: lbfgs
+  max_iter: 1000
+  tolerance: 1.0e-8
+
+calibration:
+  method: nested_grouped_sigmoid
+  probability_clip: 1.0e-6
+
+cluster_bootstrap:
+  method: stratified_psu_with_replacement_within_strata_fixed_oof_predictions_no_refit
+  repetitions: 2000
+  seed: 20260714
+  confidence_level: 0.95
+  interval: percentile
+  minimum_valid_replicates: 1900
+
+decision_curve:
+  thresholds: [0.005, 0.01, 0.02, 0.03, 0.05, 0.075, 0.10]
+
+prohibitions:
+  save_fitted_estimator_or_pipeline: true
+  export_model: true
+  create_api_or_web_route: true
+  external_validation_claim: true
+
+outputs:
+  artifact_dir: artifacts/stage8_exploratory
+  status: artifacts/stage8_exploratory/status.json
+  oof_predictions: artifacts/stage8_exploratory/oof_predictions.parquet
+  bootstrap_metrics: artifacts/stage8_exploratory/bootstrap_metrics.csv
+  report: reports/stage8_underpowered_exploratory_development_report.md
+  metrics: reports/tables/stage8_exploratory_metrics.csv
+  paired_differences: reports/tables/stage8_exploratory_paired_differences.csv
+  decision_curve: reports/tables/stage8_exploratory_decision_curve.csv
+  folds: reports/tables/stage8_exploratory_folds.csv
+  coefficients: reports/tables/stage8_exploratory_fold_coefficients.csv
+  imputation_audit: reports/tables/stage8_exploratory_imputation_audit.csv
+

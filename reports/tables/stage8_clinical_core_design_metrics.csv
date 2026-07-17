@@ -1,0 +1,2 @@
+cohort,n_nominal,raw_events,p_hat,se,ci_low,ci_high,max_ci_half_width,deff_y,deff_y_gate,n_eff_design,n_eff_kish,design_df,expected_r2_cs,pmsampsize_required_n,required_n_nominal,pass_information,pass_risk_precision,pass_design_df,survey_version,pmsampsize_version
+nhanes_internal_clinical_core,19018,218,0.007748149943546,0.0007671950555002,0.0063681958574512,0.0094242965459983,0.0016761466024522,1.45598365453414,1.45598365453414,13061.9598240511,11147.1025352608,123,0.0130134838054171,13732,19994,False,True,True,4.5,1.1.3

@@ -1,0 +1,2 @@
+source_column,canonical_column,mapping,source_dtype,canonical_dtype,unit,n,n_equal_including_missing,minimum,maximum,equality_assertion,source_cohort_modified
+systolic_bp_mean,sbp_mean,identity_alias_inside_stage8_pipeline_only,Float64,float64,mmHg,19018,19018,64.66666666666667,256.0,True,False

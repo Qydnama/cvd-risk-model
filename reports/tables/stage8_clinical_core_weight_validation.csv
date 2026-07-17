@@ -1,0 +1,8 @@
+check,status,observed
+weight_finite,PASS,0
+weight_positive,PASS,0
+strata_complete,PASS,0
+psu_complete,PASS,0
+weight_source_allowlist,PASS,WTMEC2YR/8;WTMEC4YR/4
+weight_protocol,PASS,amendment_2_4_source_specific_pooling
+weight_estimand,PASS,nhanes_external_validation_1999_2014

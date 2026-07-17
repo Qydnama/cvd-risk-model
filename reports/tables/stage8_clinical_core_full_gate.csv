@@ -1,0 +1,8 @@
+check,observed,required,status
+raw_events,218,200,PASS
+n_eff_design,13061.9598240511,13732.0,FAIL
+risk_ci_half_width,0.0016761466024522,0.0025,PASS
+design_df,123.0,8,PASS
+survey_weight_validation,7,7,PASS
+missingness_validation,10,10,PASS
+sbp_schema_alias,True,True,PASS

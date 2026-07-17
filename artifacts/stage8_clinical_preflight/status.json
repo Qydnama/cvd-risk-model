@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "stage": "stage8_clinical_preflight",
+  "status": "BLOCKED_PROTOCOL_CLARIFICATION_REQUIRED",
+  "generated_at": "2026-07-16T13:59:27.032876+00:00",
+  "interpretation": "nhanes_internal_grouped_validation_preflight_not_external_validation",
+  "nhanes_labels_accessed": true,
+  "stage6_external_validation_repeated": false,
+  "models_fitted": false,
+  "calibrators_fitted": false,
+  "oof_predictions_created": false,
+  "routing_or_export_artifacts_created": false,
+  "strict_section_10_all_event_gates_pass": false,
+  "route_policy_section_20_all_event_gates_pass": true,
+  "blocking_discrepancies": [
+    "complete_case_definition_conflicts_between_protocol_sections_10_and_20",
+    "canonical_sbp_mean_is_materialized_as_systolic_bp_mean"
+  ],
+  "input_bindings": {
+    "config": {
+      "repository_relative_path": "configs/stage8_clinical_preflight.yaml",
+      "size_bytes": 1802,
+      "sha256": "7552bc4e0a776c03349d3ecaf093d96b13525e3ba0bc983a287dcaeb56de416e"
+    },
+    "cohort": {
+      "repository_relative_path": "data/processed/nhanes_cohort_v2_4.parquet",
+      "size_bytes": 2009905,
+      "sha256": "ce66815ecaf77176a8c46db78901fa1b3b73ae9e70d09134ef29b80714dd5964"
+    },
+    "manifest": {
+      "repository_relative_path": "artifacts/stage6_validation/manifest.json",
+      "size_bytes": 3497,
+      "sha256": "7472df7790619def3b7eb91cda7378a9524b51051b6d23791122a43b116e0922"
+    },
+    "receipt": {
+      "repository_relative_path": "artifacts/audit/unseal_access_receipt.json",
+      "size_bytes": 934,
+      "sha256": "b1fbe43ab5686deb1a06920764d38ecbb2591012bb0ee3094fdd90844acde4a0"
+    }
+  },
+  "outputs": {
+    "report": {
+      "repository_relative_path": "reports/stage8_clinical_preflight_feasibility_report.md",
+      "size_bytes": 10449,
+      "sha256": "522df5ea12c11048c42cc19a0bde559b53e19f15a69a4eb70b50611100832058"
+    },
+    "route_gate": {
+      "repository_relative_path": "reports/tables/stage8_clinical_route_gate.csv",
+      "size_bytes": 767,
+      "sha256": "9ff97b696c32a4d829332fb1a726d090d3ff8b6ab63741e14070246933bfa646"
+    },
+    "field_attrition": {
+      "repository_relative_path": "reports/tables/stage8_clinical_field_attrition.csv",
+      "size_bytes": 981,
+      "sha256": "b844a89f8b9b47e44f0b26b9a76c6c1045c7ebe6ca526d86b2ce61c1c93cb1a8"
+    },
+    "cycle_support": {
+      "repository_relative_path": "reports/tables/stage8_clinical_cycle_support.csv",
+      "size_bytes": 2661,
+      "sha256": "9a3a049b363eaddd56c21ef5fc792a3bc59b59d6867a60854f7f662e5fda6d12"
+    }
+  }
+}
