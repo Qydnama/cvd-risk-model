@@ -50,6 +50,7 @@ def test_portable_binding_rejects_absolute_and_parent_paths(tmp_path: Path) -> N
         portable_binding("../artifact.json", root=tmp_path)
 
 
+@pytest.mark.requires_local_research_artifacts
 def test_generated_amendment_verifies_without_absolute_windows_paths() -> None:
     root = Path.cwd().resolve()
     amendment = json.loads((root / AMENDMENT_PATH).read_text(encoding="utf-8"))
