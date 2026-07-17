@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "stage": "stage8_closure",
+  "status": "CLOSED_PRIMARY_GATE_FAILED_EXPLORATORY_ANALYSES_RETAINED",
+  "closed_on": "2026-07-17",
+  "PRIMARY_EXPORT_GATE": "FAIL",
+  "PRIMARY_EXPORT_GATE_REASON": "FAIL_INSUFFICIENT_EFFECTIVE_SAMPLE_SIZE",
+  "n_eff_design": 13061.9598240511,
+  "N_pmsampsize": 13732,
+  "EXPLORATORY_FITTING": "COMPLETE",
+  "CLINICAL_CORE_EXPORT_ALLOWED": false,
+  "CLINICAL_HBA1C_FITTING": "NOT_AUTHORIZED_NOT_PERFORMED",
+  "CLINICAL_HBA1C_EXPORT_ALLOWED": false,
+  "WEB_ROUTING_ALLOWED": false,
+  "EXTERNAL_VALIDATION": "NOT_PERFORMED",
+  "MINIMAL_V1_CHANGED_BY_STAGE8": false,
+  "historical_hba1c_available_analysis": {
+    "label": "HBA1C_AVAILABLE_PAIRED_COHORT_SENSITIVITY_ANALYSIS",
+    "cohort_n": 18987,
+    "raw_cvd_events": 218,
+    "hba1c_role": "availability_filter_only_not_a_predictor"
+  },
+  "corrected_primary_section20_analysis": {
+    "label": "UNDERPOWERED_EXPLORATORY_DEVELOPMENT_ONLY",
+    "cohort_n": 19018,
+    "raw_cvd_events": 218,
+    "hba1c_required": false,
+    "valid_bootstrap_replicates": 2000,
+    "independent_external_validation": false
+  },
+  "posthoc_high_sensitivity_analysis": {
+    "scope": "NHIS_DEVELOPMENT_OOF_ONLY",
+    "external_validation": "NOT_PERFORMED",
+    "locked_cutoff_changed": false,
+    "high_sensitivity_90_label": "POST_HOC_SECONDARY_HIGH_SENSITIVITY_OPERATING_POINT",
+    "high_sensitivity_95_label": "EXPLORATORY_EXTREME_SENSITIVITY_STRESS_TEST"
+  },
+  "evidence": {
+    "primary_gate": {
+      "commit": "a3efc76cb0565ff4638c30a1c5cb747b95fa73a4",
+      "path": "artifacts/stage8_clinical_gate/status.json",
+      "blob_sha1": "aa84bf5d83ea9acb5f4b7f9386cfb5c2c4e9afa6"
+    },
+    "historical_hba1c_available_analysis_status": {
+      "commit": "df6d157fd7753f463c0620b42e32fd2343bb4d6b",
+      "path": "artifacts/stage8_exploratory/status.json",
+      "blob_sha1": "f1b204e54700035c10bacf2559c64760d41e7c8f"
+    },
+    "historical_hba1c_available_analysis_report": {
+      "commit": "df6d157fd7753f463c0620b42e32fd2343bb4d6b",
+      "path": "reports/stage8_underpowered_exploratory_development_report.md",
+      "blob_sha1": "2a151149b1a7f230b6009d639607273a51fbffee"
+    },
+    "correction_addendum": {
+      "commit": "dfc75d783b29420503d30c3f4eed528111633a7e",
+      "path": "artifacts/stage8_exploratory_correction/addendum.json",
+      "blob_sha1": "0c2947f2c592c8d2cc2ec760dc008cc4e07b6996"
+    },
+    "corrected_analysis_status": {
+      "commit": "aa74b6ab7589e8c7a6b93b663fca15e7244c88f3",
+      "path": "artifacts/stage8_exploratory_corrected/status.json",
+      "blob_sha1": "acc307c7e67de8ead55cd783963801f3686314ac"
+    },
+    "corrected_analysis_report": {
+      "commit": "aa74b6ab7589e8c7a6b93b663fca15e7244c88f3",
+      "path": "reports/stage8_corrected_underpowered_exploratory_development_report.md",
+      "blob_sha1": "cb529162d9dba3c19fb0311d21857adadbc5c23d"
+    },
+    "posthoc_high_sensitivity_report": {
+      "commit": "17cf4853ab9fd574aa67e0e9beeab65087b545a2",
+      "path": "reports/posthoc_secondary_high_sensitivity_operating_points.md",
+      "blob_sha1": "c44f089702507af318f61051d7df0ead9fd78d84"
+    },
+    "posthoc_high_sensitivity_table": {
+      "commit": "17cf4853ab9fd574aa67e0e9beeab65087b545a2",
+      "path": "reports/tables/posthoc_high_sensitivity_operating_points.csv",
+      "blob_sha1": "db1c723bfe6cd4c9cfef5e804142e0105d2be6b6"
+    }
+  },
+  "prohibitions": {
+    "create_clinical_deployable_estimator": true,
+    "serialize_clinical_pipeline": true,
+    "create_clinical_api_route": true,
+    "create_clinical_web_routing": true,
+    "claim_independent_external_validation": true,
+    "relabel_posthoc_thresholds_as_validated": true
+  }
+}
