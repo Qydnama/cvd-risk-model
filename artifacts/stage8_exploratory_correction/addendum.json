@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "stage": "stage8_primary_section20_clinical_core_cohort_correction_addendum",
+  "status": "CORRECTION_ADDENDUM_RECORDED_BEFORE_CORRECTED_FITTING",
+  "authorized_by_user_on": "2026-07-17",
+  "correction_timing": {
+    "recorded_before": [
+      "any_corrected_n19018_model_fit",
+      "any_corrected_n19018_oof_prediction",
+      "any_corrected_n19018_performance_metric",
+      "any_corrected_n19018_predictor_outcome_association"
+    ],
+    "historical_analysis_already_observed": true
+  },
+  "historical_analysis_preservation": {
+    "prefitting_addendum_commit": "024ad6af132affea3a88a60a56f0550e47cf2239",
+    "hba1c_available_analysis_commit": "df6d157fd7753f463c0620b42e32fd2343bb4d6b",
+    "commits_must_not_be_rewritten": true,
+    "historical_files_must_not_be_modified": true,
+    "authoritative_relabel": "HBA1C_AVAILABLE_PAIRED_COHORT_SENSITIVITY_ANALYSIS",
+    "relabel_method": "interpretation_overlay_without_rewriting_historical_files",
+    "embedded_historical_label_is_retained_only_to_preserve_file_bytes": true,
+    "cohort": {
+      "n": 18987,
+      "raw_cvd_events": 218,
+      "required_nonmissing_source_fields": [
+        "systolic_bp_mean",
+        "total_cholesterol",
+        "hdl_cholesterol",
+        "hba1c"
+      ],
+      "hba1c_role": "availability_filter_only_not_a_predictor"
+    },
+    "immutable_blobs": {
+      "artifacts/stage8_exploratory/status.json": "f1b204e54700035c10bacf2559c64760d41e7c8f",
+      "artifacts/stage8_exploratory/oof_predictions.parquet": "0e3596938e1e0172f75f36892cb2133b927d9d23",
+      "reports/stage8_underpowered_exploratory_development_report.md": "2a151149b1a7f230b6009d639607273a51fbffee",
+      "reports/tables/stage8_exploratory_folds.csv": "b60a2c303937c119b112ae68c6a011e9b66eb147"
+    }
+  },
+  "correction": {
+    "reason": "The previous paired analysis used the prespecified HbA1c-paired availability cohort. The primary Section 20 clinical_core cohort does not require HbA1c availability.",
+    "label": "UNDERPOWERED_EXPLORATORY_DEVELOPMENT_ONLY",
+    "source": "data/processed/nhanes_cohort_v2_4.parquet",
+    "split": "external_validation",
+    "cohort_eligible": true,
+    "n": 19018,
+    "raw_cvd_events": 218,
+    "required_nonmissing_source_fields": [
+      "systolic_bp_mean",
+      "total_cholesterol",
+      "hdl_cholesterol"
+    ],
+    "hba1c": "not_required_not_a_predictor",
+    "participant_set_must_be_identical_for_both_models": true
+  },
+  "preserved_primary_export_gate": {
+    "commit": "a3efc76cb0565ff4638c30a1c5cb747b95fa73a4",
+    "status": "FAIL_INSUFFICIENT_EFFECTIVE_SAMPLE_SIZE",
+    "n_eff_design": 13061.9598240511,
+    "n_pmsampsize": 13732,
+    "PRIMARY_EXPORT_GATE": "FAIL",
+    "primary_export_gate_changed": false
+  },
+  "paired_models": {
+    "minimal_comparator": {
+      "predictors": [
+        "age",
+        "sex",
+        "bmi",
+        "smoking_status",
+        "hypertension_dx",
+        "diabetes_dx",
+        "general_health"
+      ],
+      "predictor_parameters": 15
+    },
+    "clinical_core": {
+      "predictors": [
+        "age",
+        "sex",
+        "bmi",
+        "smoking_status",
+        "hypertension_dx",
+        "diabetes_dx",
+        "general_health",
+        "sbp_mean",
+        "total_cholesterol",
+        "hdl_cholesterol"
+      ],
+      "predictor_parameters": 20
+    },
+    "estimator": "unpenalized_survey_weighted_logistic_regression",
+    "continuous_terms": {
+      "age": "restricted_cubic_spline_4_knots_3_parameters",
+      "bmi": "restricted_cubic_spline_4_knots_3_parameters",
+      "sbp_mean": "restricted_cubic_spline_4_knots_3_parameters",
+      "total_cholesterol": "linear_1_parameter",
+      "hdl_cholesterol": "linear_1_parameter"
+    },
+    "rcs_weighted_quantiles": [
+      0.05,
+      0.35,
+      0.65,
+      0.95
+    ]
+  },
+  "cross_validation": {
+    "group": "survey_cycle",
+    "outer_splits": 4,
+    "inner_splits": 4,
+    "seed": 20260714,
+    "use_exact_historical_outer_cycle_assignment": true,
+    "outer_validation_cycles": {
+      "1": [
+        "2003-2004",
+        "2009-2010"
+      ],
+      "2": [
+        "2005-2006",
+        "2013-2014"
+      ],
+      "3": [
+        "2001-2002",
+        "2011-2012"
+      ],
+      "4": [
+        "1999-2000",
+        "2007-2008"
+      ]
+    },
+    "identical_participants_and_outer_folds_for_both_models": true
+  },
+  "missingness_and_calibration": {
+    "minimal_predictor_imputation": "fit_only_inside_each_training_fold",
+    "clinical_predictor_imputation": "forbidden",
+    "clinical_complete_case_applied_before_cv": true,
+    "calibration": "nested_grouped_sigmoid",
+    "probability_clip": 0.000001
+  },
+  "metrics_and_inference": {
+    "metrics": [
+      "weighted_roc_auc",
+      "weighted_pr_auc",
+      "weighted_brier_score",
+      "weighted_log_loss",
+      "weighted_calibration_intercept",
+      "weighted_calibration_slope",
+      "weighted_observed_expected_ratio"
+    ],
+    "paired_difference_direction": "clinical_core_minus_minimal",
+    "cluster_bootstrap": {
+      "method": "stratified_psu_with_replacement_within_strata_fixed_oof_predictions_no_refit",
+      "repetitions": 2000,
+      "seed": 20260714,
+      "confidence_level": 0.95,
+      "interval": "percentile",
+      "minimum_valid_replicates": 1900
+    },
+    "decision_curve_thresholds": [
+      0.005,
+      0.01,
+      0.02,
+      0.03,
+      0.05,
+      0.075,
+      0.1
+    ]
+  },
+  "prohibitions": {
+    "deployable_estimator": true,
+    "serialized_pipeline": true,
+    "production_or_export_artifact": true,
+    "api_route": true,
+    "web_routing_artifact": true,
+    "independent_external_validation_claim": true
+  },
+  "required_corrected_final_status": {
+    "PRIMARY_EXPORT_GATE": "FAIL",
+    "EXPLORATORY_FITTING": "COMPLETE",
+    "WEB_ROUTING_ALLOWED": false,
+    "EXTERNAL_VALIDATION": "NOT_PERFORMED"
+  }
+}
