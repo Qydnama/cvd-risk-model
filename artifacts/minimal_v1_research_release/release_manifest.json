@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "stage": "stage9_minimal_v1_research_release",
+  "status": "RESEARCH_ONLY_SOURCE_SNAPSHOT_CANDIDATE",
+  "model_id": "minimal_v1",
+  "protocol_version": "2.4",
+  "release_name": "minimal_v1 research snapshot v1.0.0",
+  "planned_tag": "minimal-v1-research-v1.0.0",
+  "tag_target_policy": "MERGED_MAIN_COMMIT_WITH_SUCCESSFUL_POST_MERGE_CI",
+  "repository_baseline_commit": "e3b6977fe4e8165037e3468270a04245667a2f1d",
+  "model_source_commit": "5cace77785c3e7e3398ead12efc101ae235034ec",
+  "model_card_commit": "abc968a7a48f3dda739c1f22290f6d6366c76916",
+  "authorization": {
+    "commit": "7930f52617c504f17dbbebe6f7fedcafcb416842",
+    "status_path": "artifacts/stage9_research_release_authorization/status.json",
+    "status_git_blob_sha1": "944ff0d02cacbafc4d531aa1c1e2472f173597ec",
+    "status_normalized_lf_sha256": "f1e1a648e1fdc960433dca9d65c00a740d4faa7045024380421b63f195cfde60",
+    "report_path": "reports/stage9_research_release_authorization.md",
+    "report_git_blob_sha1": "8b722d93c4adde3fb5787011c878d308cef8162c",
+    "report_normalized_lf_sha256": "2f71ef31783b6e56af9ddfb5b7006fed376b88d543687c6b4fa26546f6bd639b"
+  },
+  "locked_model": {
+    "route": "minimal",
+    "model": "LogisticRegression",
+    "calibration": "sigmoid",
+    "predictor_parameters": 15,
+    "probability_clip": 0.000001,
+    "locked_cutoff": 0.007469058716065273,
+    "refit_performed": false,
+    "recalibration_performed": false
+  },
+  "portable_contract": {
+    "path": "artifacts/minimal_v1_research_release/input_schema.json",
+    "normalized_lf_sha256": "81ef33867f6f2b1144d65e6f7b20a1feddea27660eb9dc45a7fba1dd2d7aefd1",
+    "git_blob_sha1": "24f1dec9ec223fad4991403c78505c84de46d573"
+  },
+  "locked_binary_files": {
+    "full_development_pipeline": {
+      "path": "artifacts/minimal_v1/full_development_pipeline.joblib",
+      "sha256": "758d635310a43596655bd23a0ebcebc293a0f4bde4ab5d98f3852a84e023a010"
+    },
+    "preprocessing": {
+      "path": "artifacts/minimal_v1/preprocessing.joblib",
+      "sha256": "6509ebab833c6ae449f9ba569c7ceaae53386a962914734597e24aa3a739d857"
+    },
+    "estimator": {
+      "path": "artifacts/minimal_v1/estimator.joblib",
+      "sha256": "b6c1827a9703ef9d4714088109588159fed40ed1526cba2145ddc6956e1495f7"
+    },
+    "calibrator": {
+      "path": "artifacts/minimal_v1/calibrator.joblib",
+      "sha256": "ff2291dc373e7ce934b84b07a069ba9cc02c3bff0f94b81492da40de7f31d525"
+    }
+  },
+  "documentation_bindings": {
+    "serialized_pipeline_manifest": {
+      "path": "artifacts/minimal_v1/serialized_pipeline_manifest.json",
+      "normalized_lf_sha256": "691ed59e738bc4a8ad50d05e5faa2718059eb303f626de77288b98d4e0967a0c"
+    },
+    "model_card_status": {
+      "path": "artifacts/minimal_v1_model_card/status.json",
+      "normalized_lf_sha256": "6693af48fcd8b58ca96f320956381b6aaac331072eaed8c056507bd9540d40a4"
+    },
+    "model_card_report": {
+      "path": "reports/minimal_v1_model_card.md",
+      "normalized_lf_sha256": "16db5b6b87707ef92af6d49e6f78fae56ea0b40de97d8bab7d1b7763e8841510"
+    },
+    "python_lock": {
+      "path": "uv.lock",
+      "normalized_lf_sha256": "8b98259195bfa9e92f1e23679548ab0a2c873c6fb1fd293270bc7a711faed672"
+    }
+  },
+  "runtime_contract": {
+    "python": ">=3.12,<3.13",
+    "joblib": "1.5.3",
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "scikit_learn": "1.9.0",
+    "environment_source": "uv.lock",
+    "smoke_test_input": "SYNTHETIC_COMPLETE_CANONICAL_RECORDS_ONLY",
+    "participant_data_accessed": false,
+    "heldout_labels_accessed": false
+  },
+  "release_asset_policy": {
+    "release_type": "SOURCE_AND_METADATA_RESEARCH_SNAPSHOT",
+    "separate_model_binary_attachment": false,
+    "binary_repackaging": false,
+    "production_bundle": false,
+    "api_or_web_artifact": false,
+    "routing_manifest": false
+  },
+  "governance": {
+    "research_use_only": true,
+    "clinical_deployment_allowed": false,
+    "primary_export_gate": "FAIL",
+    "external_validation_interpretation": "UNDERPOWERED_EXPLORATORY",
+    "independent_external_validation_claim_allowed": false,
+    "validation_for_kazakhstan_claim_allowed": false
+  }
+}

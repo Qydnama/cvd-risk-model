@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "artifact_role": "RESEARCH_ONLY_PORTABLE_INPUT_CONTRACT",
+  "model_id": "minimal_v1",
+  "route": "minimal",
+  "type": "object",
+  "additionalProperties": false,
+  "ordered_features": [
+    "age",
+    "sex",
+    "bmi",
+    "smoking_status",
+    "hypertension_dx",
+    "diabetes_dx",
+    "general_health"
+  ],
+  "required": [
+    "age",
+    "sex",
+    "bmi",
+    "smoking_status",
+    "hypertension_dx",
+    "diabetes_dx",
+    "general_health"
+  ],
+  "properties": {
+    "age": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 79,
+      "unit": "completed_years",
+      "description": "Age at baseline within the locked development population."
+    },
+    "sex": {
+      "type": "string",
+      "enum": [
+        "female",
+        "male"
+      ],
+      "description": "Canonical sex-at-birth category used by the locked cohorts."
+    },
+    "bmi": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 99.8,
+      "unit": "kg/m^2",
+      "description": "Body mass index; an upstream interface may calculate it from validated height and weight."
+    },
+    "smoking_status": {
+      "type": "string",
+      "enum": [
+        "never",
+        "former",
+        "current"
+      ]
+    },
+    "hypertension_dx": {
+      "type": "boolean",
+      "description": "Prior diagnosis of hypertension."
+    },
+    "diabetes_dx": {
+      "type": "boolean",
+      "description": "Prior diagnosis of diabetes."
+    },
+    "general_health": {
+      "type": "string",
+      "enum": [
+        "excellent",
+        "very_good",
+        "good",
+        "fair",
+        "poor"
+      ],
+      "description": "Canonical self-rated general-health category."
+    }
+  },
+  "missingness_policy": {
+    "personal_inference": "ALL_SEVEN_FIELDS_REQUIRED_NO_FALLBACK_ROUTE_AUTHORIZED",
+    "pipeline_contains_training_fitted_imputation": true,
+    "pipeline_imputation_authorized_for_silent_personal_input_substitution": false,
+    "unknown_general_health_route_available": false
+  },
+  "bmi_source_policy": {
+    "height_and_weight_are_model_inputs": false,
+    "simultaneous_user_bmi_and_height_weight_without_consistency_check_allowed": false,
+    "reference_calculation": "weight_kg / (height_cm / 100)^2"
+  },
+  "output": {
+    "name": "five_year_cvd_mortality_risk",
+    "type": "number",
+    "minimum": 0,
+    "maximum": 1,
+    "primary_role": "continuous_research_risk_estimate",
+    "fixed_secondary_screening_cutoff": 0.007469058716065273,
+    "cutoff_is_clinically_validated": false
+  },
+  "governance": {
+    "research_use_only": true,
+    "clinical_deployment_allowed": false,
+    "api_route_allowed": false,
+    "web_routing_allowed": false,
+    "external_validation_interpretation": "UNDERPOWERED_EXPLORATORY"
+  }
+}

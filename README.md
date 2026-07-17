@@ -52,6 +52,7 @@ GNU Make удобен, но не обязателен на Windows. Эквива
 | Final pipeline serialization | `make export-pipeline` | `uv run --extra modeling python scripts/09_export_final_pipeline.py --config configs/model_lock.yaml` |
 | External-validation model lock | `make lock-model` | `uv run --extra modeling python scripts/10_create_model_lock.py --config configs/model_lock.yaml` |
 | Model-lock validation | `make validate-lock` | `uv run --extra modeling python scripts/11_validate_model_lock.py` |
+| Research release validation | `make validate-research-release` | `uv run --frozen python scripts/34_validate_stage9_research_release.py` |
 
 `make train` проверяет неизменность Stage 3 stop-gate и обучает только три
 логистических baseline-кандидата на NHIS development 1997–2009. Imputation,
@@ -86,6 +87,31 @@ preprocessing, estimator и calibrator без повторного fit и без
 
 `make validate-lock` проверяет, что locked source commit является предком текущего
 HEAD, после него изменен только lock JSON и все зафиксированные SHA совпадают.
+
+## Stage 9: research-only snapshot `minimal_v1`
+
+Stage 9 не создаёт новую модель и не разрешает clinical deployment. Он документирует уже
+зафиксированный `minimal_v1` как воспроизводимый исследовательский source snapshot:
+
+- input contract: `artifacts/minimal_v1_research_release/input_schema.json`;
+- release provenance: `artifacts/minimal_v1_research_release/release_manifest.json`;
+- governance: `artifacts/stage9_research_release_authorization/status.json`;
+- model card: `reports/minimal_v1_model_card.md`;
+- Stage 9 report: `reports/stage9_minimal_v1_research_release.md`.
+
+Проверка из locked Python environment:
+
+```powershell
+uv sync --locked --all-extras --dev
+uv run --frozen python scripts/34_validate_stage9_research_release.py
+uv run --frozen pytest -q -m "not requires_local_research_artifacts"
+```
+
+Validator сначала проверяет Git ancestry, evidence blobs и SHA-256 всех четырёх locked
+pipeline components и только затем загружает доверенный repository-owned joblib для
+smoke inference на синтетических complete records. Participant data и held-out labels не
+читаются. `PRIMARY_EXPORT_GATE = FAIL`, validation остаётся
+`UNDERPOWERED_EXPLORATORY`; API, web routing и clinical routes не создаются.
 
 ## Ручной файл IPUMS NHIS
 
