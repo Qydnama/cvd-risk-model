@@ -44,6 +44,7 @@ def test_model_lock_refuses_dirty_worktree(monkeypatch: pytest.MonkeyPatch) -> N
         model_lock._require_clean_synced_commit()
 
 
+@pytest.mark.requires_local_research_artifacts
 def test_serialized_pipeline_is_exact_stage4_copy_with_component_sha() -> None:
     manifest = json.loads(
         Path("artifacts/minimal_v1/serialized_pipeline_manifest.json").read_text(
