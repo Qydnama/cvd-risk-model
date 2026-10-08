@@ -1,38 +1,48 @@
-# Architecture
+# Ассайнмент 2: архитектура системы
+
+**Тема:** многоагентная ИИ-система для интерпретируемой исследовательской оценки пятилетней вероятности смерти от сердечно-сосудистых причин. Основа — уже зафиксированная модель `minimal_v1`; агентная система не обучает её заново.
+
+## Схема
 
 ```mermaid
 flowchart TD
-    U[User] --> O[Orchestrator Agent]
-    O --> I[Input Validation Agent]
-    I --> P[Risk Prediction Agent]
-    P --> E[Evidence Agent]
-    E --> X[Explanation Agent]
-    X --> S[Safety Review Agent]
-    S --> R[Research-only result]
-    I --> IS[Stage 9 input schema]
-    P --> M[Verified minimal_v1 pipeline]
-    E --> MC[Model card and manifests]
+    U[Пользователь] --> O[Оркестратор]
+    O --> I[Агент проверки входа]
+    I -->|ValidationResult: PatientInput| P[Агент прогноза]
+    P -->|PredictionResult| E[Агент доказательств]
+    E --> X[Агент объяснения]
+    X --> S[Агент проверки безопасности]
+    S --> R[Исследовательский ответ]
+    I --> SC[Схема input_schema.json]
+    P --> ML[Зафиксированный minimal_v1]
+    E --> MC[Model card и манифесты]
 ```
 
-| Agent | Role | Input | Output | Domain tools | Completion criterion |
-|---|---|---|---|---|---|
-| `orchestrator_agent` | Coordinates bounded stages | Request, structured state | Status | None | Stage terminal |
-| `input_validation_agent` | Rejects incomplete or out-of-contract input | Seven-field mapping | `ValidationResult` | `validate_patient_input` | Complete valid input or errors |
-| `risk_prediction_agent` | Runs locked model | `PatientInput` | `PredictionResult` | `predict_cvd_mortality_risk` | Verified, calibrated probability |
-| `evidence_agent` | Reads repository evidence | Model ID | `EvidenceBundle` | `get_model_evidence` | Source-grounded facts |
-| `explanation_agent` | Renders research explanation | Patient, prediction, evidence | `ExplanationResult` | None | Short correct interpretation |
-| `safety_review_agent` | Checks output constraints | Draft and verified facts | `SafetyReview` | `check_research_only_constraints` | Pass or bounded failure |
+Сплошной путь показывает целевую архитектуру. **В прототипе реализованы только оркестратор, проверка входа и прогноз.** Передача типизированных данных между двумя специализированными агентами выполняется сейчас. Агент доказательств, объяснения и проверки безопасности запланированы на Ассайнмент 4; стрелки после прогноза пока не выполняются. Функция `build_prototype_graph()` отдельно создаёт конфигурацию Deep Agents для двух реализованных ролей. Основная CLI-демонстрация работает без LLM и использует детерминированные Python-инструменты.
 
-The normal CLI assessment uses six separate typed Python components. The Deep Agents graph in `deep.py` defines the same six named roles with `create_deep_agent`, five specialized subagents, and one coordinator. `assess --agent-mode` optionally runs that graph after deterministic assessment, requires all five task delegations, and returns the deterministic safety-reviewed response. The graph has **not** been validated against a real LLM provider in this environment. Deep Agents also injects its own filesystem and task tools, so the explicit 0–1 counts above describe **domain tools**, not every framework-provided tool. This is a remaining gap against a literal five-tools-total limit.
+## Спецификация ролей
 
-## Why six roles
+| Агент | Статус | Роль | Вход | Выход | Инструменты | Критерий завершения |
+|---|---|---|---|---|---|---|
+| Оркестратор | Реализован | Вызывает роли по порядку, хранит состояние; не выполняет предметных расчётов | Запрос и поля | `PrototypeState` | Нет | Получен результат или ошибка |
+| Проверка входа | Реализован | Проверяет семь полей по release-схеме, не подставляет отсутствующие значения | `dict` | `ValidationResult` с `PatientInput` или ошибками | `load_input_schema`, `validate_patient_input` | Все поля подтверждены или дан отказ |
+| Прогноз | Реализован | Проверяет артефакты и вызывает зафиксированную модель | `PatientInput` | `PredictionResult` | `predict_cvd_mortality_risk` | Получена конечная вероятность |
+| Доказательства | Планируется | Читает подтверждённые метрики, происхождение модели и ограничения | ID модели, вопрос | `EvidenceBundle` | Model card, манифесты | Факты имеют источники |
+| Объяснение | Планируется | Формулирует понятную интерпретацию без причинных утверждений | Вход, прогноз, доказательства | `ExplanationResult` | Нет | Готов исследовательский текст |
+| Проверка безопасности | Планируется | Проверяет исход, численный результат и запрет медицинских рекомендаций | Черновик и проверенные факты | `SafetyReview` | Правила безопасности | Ответ принят или отклонён |
 
-Validation prevents invented inputs. Prediction confines arithmetic to the locked ML pipeline. Evidence prevents model-history hallucinations. Explanation renders technical results. Safety catches unsupported medical statements. Orchestration coordinates without doing domain work. Their failure modes differ, and typed boundaries make each stage auditable.
+У каждой роли не более пяти запланированных предметных инструментов. Deep Agents может добавлять собственные служебные инструменты; их фактический набор нужно проверить при завершении системы.
 
-## Sources and state
+### План распределения вызовов
 
-Two source types are used: code execution against the SHA-verified joblib ML pipeline, and file-based evidence from the model card and manifests. Pydantic models carry stage results; `CVDWorkflowState` records transitions. Logs contain event metadata only. Sanitized state snapshots omit request text, health fields, prediction, and answer. Scenario runs carry a synthetic marker.
+В типовом полном сценарии каждой из шести ролей предполагается один предметный вызов. Проверка входа, прогноз, получение доказательств и проверка безопасности дополнительно вызывают по одному или два инструмента; оркестратор только передаёт задачу. Такой план не отдаёт одному агенту весь процесс. Это **проектная оценка**, а не измеренные проценты: логирование всех вызовов и проверка предела 40% входят в Ассайнмент 4.
 
-At most 12 workflow stage entries and one explanation revision are allowed. `TOTAL_RUN_TIMEOUT_SECONDS=60` is checked between stages. Blocking model and file calls currently lack a hard per-tool interruption, so the 20-second tool target is not fully enforced. A thrown error stops the run; there is no fabricated fallback probability.
+## Почему несколько агентов
 
-Agent load counts one event for each Python agent call plus each explicit domain tool call. The standard complete run records ten calls; maximum share is 20%.
+Ошибки на этапах различаются: проверка входа предотвращает вымышленные измерения, прогноз исключает расчёт риска языковой моделью, доказательства предотвращают выдуманные метрики, объяснение отвечает за форму ответа, а проверка безопасности — за ограничения медицинского контекста. Оркестратор не смешивает эти обязанности. В прототипе видно первое разделение: агент прогноза не получает сырой запрос, только прошедший проверку `PatientInput`.
+
+## Данные и состояние
+
+Два типа источников уже подключены: файл `input_schema.json` и выполнение кода с сериализованной моделью `minimal_v1`. Обмен между ролями задают модели Pydantic. Состояние текущей задачи — явный объект `PrototypeState` в памяти процесса. Постоянное хранение, логи и измерение доли вызовов по ролям относятся к Ассайнменту 4. Пока нельзя утверждать, что ограничение 40% подтверждено логами: такой замер ещё не реализован.
+
+Модель выдаёт вероятность **пятилетней сердечно-сосудистой смертности**, а не диагноз. Исследовательские ограничения и отсутствие валидации для Казахстана сохраняются.

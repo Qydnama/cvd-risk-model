@@ -1,4 +1,4 @@
-"""Typed boundaries between the six workflow components."""
+"""Structured messages for the Assignment 2 prototype."""
 
 from __future__ import annotations
 
@@ -31,40 +31,12 @@ class PredictionResult(BaseModel):
     probability: float = Field(ge=0, le=1)
     probability_percent: float = Field(ge=0, le=100)
     research_only: Literal[True] = True
-    verified_pipeline_sha256: str
 
 
-class EvidenceBundle(BaseModel):
-    model_name: str
-    model_id: str
-    development_source: str
-    predictor_count: int
-    metrics: dict[str, float]
-    limitations: list[str]
-    kazakhstan_validated: Literal[False] = False
-    clinical_deployment_allowed: Literal[False] = False
-    sources: list[str]
+class PrototypeState(BaseModel):
+    """Explicit in-memory task state; persistence is planned for Assignment 4."""
 
-
-class ExplanationResult(BaseModel):
-    text: str
-
-
-class SafetyReview(BaseModel):
-    passed: bool
-    violations: list[str]
-    final_response: str | None = None
-
-
-class CVDWorkflowState(BaseModel):
-    run_id: str
-    user_request: str
-    raw_input: dict[str, Any] | None = None
+    status: Literal["started", "invalid_input", "completed", "error"] = "started"
     validation: ValidationResult | None = None
     prediction: PredictionResult | None = None
-    evidence: EvidenceBundle | None = None
-    explanation: ExplanationResult | None = None
-    safety_review: SafetyReview | None = None
-    status: str = "started"
-    errors: list[str] = Field(default_factory=list)
-    revision_count: int = 0
+    error: str | None = None
