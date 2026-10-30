@@ -1,15 +1,22 @@
 param(
     [Parameter(Mandatory=$true)][string]$Image,
+    [Parameter(Mandatory=$true)][string]$Archive,
+    [Parameter(Mandatory=$true)][ValidatePattern('^[a-f0-9]{64}$')][string]$ArchiveSha256,
     [Parameter(Mandatory=$true)][ValidatePattern('^[a-f0-9]{40}$')][string]$SourceRevision,
     [string]$Destination = (Join-Path $env:LOCALAPPDATA 'CvdResearchDemo')
 )
 $ErrorActionPreference = 'Stop'
-if ($Image -notmatch '^ghcr\.io/qydnama/cvd-risk-model-research@sha256:[a-f0-9]{64}$') {
-    throw 'Deployment requires the expected research image pinned to its registry digest.'
+if ($Image -notmatch '^sha256:[a-f0-9]{64}$') {
+    throw 'Deployment requires an immutable Docker image ID.'
 }
 $Destination = [IO.Path]::GetFullPath($Destination)
-& docker pull $Image
-if ($LASTEXITCODE -ne 0) { throw 'Image download failed; the current deployment is unchanged.' }
+if ((Get-FileHash -LiteralPath $Archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $ArchiveSha256) {
+    throw 'Archive checksum mismatch; the current deployment is unchanged.'
+}
+& docker load --input $Archive
+if ($LASTEXITCODE -ne 0) { throw 'Image import failed; the current deployment is unchanged.' }
+& docker image inspect $Image | Out-Null
+if ($LASTEXITCODE -ne 0) { throw 'The expected image ID is missing from the archive.' }
 $demoOutput = & docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs '/tmp:rw,noexec,nosuid,size=16m' $Image
 if ($LASTEXITCODE -ne 0) { throw 'Container verification failed; the current deployment is unchanged.' }
 $result = ($demoOutput -join "`n") | ConvertFrom-Json
@@ -25,6 +32,7 @@ $result | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $release
 $manifest = [ordered]@{
     status = 'DEPLOYED'; application = 'CVD research batch demo'; model_id = 'minimal_v1'
     image_reference = $Image; source_revision = $SourceRevision
+    archive_sha256 = $ArchiveSha256
     deployed_utc = [DateTime]::UtcNow.ToString('o'); research_use_only = $true
     verification = (Join-Path $releaseDir 'verification.json')
 }

@@ -46,11 +46,9 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    permissions:
-      contents: read
-      packages: write
     outputs:
-      reference: ${{ steps.publish.outputs.reference }}
+      image_id: ${{ steps.bundle.outputs.image_id }}
+      archive_sha256: ${{ steps.bundle.outputs.archive_sha256 }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
@@ -63,21 +61,25 @@ jobs:
         run: |
           docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m cvd-research:ci | tee synthetic-result.json
           python -c "import json; r=json.load(open('synthetic-result.json')); assert r['status']=='PASS' and len(r['predictions'])==3 and not r['refit_performed']"
-      - name: Publish the verified image to GHCR
-        id: publish
+      - name: Package the verified image for deployment
+        id: bundle
         if: github.event_name == 'push'
-        env:
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REGISTRY_USER: ${{ github.actor }}
-          REVISION: ${{ github.sha }}
         run: |
-          echo "$GHCR_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
-          image="ghcr.io/qydnama/cvd-risk-model-research:sha-$REVISION"
-          docker tag cvd-research:ci "$image"
-          docker push "$image"
-          reference=$(docker inspect --format='{{index .RepoDigests 0}}' "$image")
-          echo "reference=$reference" >> "$GITHUB_OUTPUT"
-          echo "Published: $reference" >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p deployment-bundle
+          docker save cvd-research:ci | gzip > deployment-bundle/cvd-research-image.tar.gz
+          image_id=$(docker inspect --format='{{.Id}}' cvd-research:ci)
+          archive_sha256=$(sha256sum deployment-bundle/cvd-research-image.tar.gz | cut -d' ' -f1)
+          echo "image_id=$image_id" >> "$GITHUB_OUTPUT"
+          echo "archive_sha256=$archive_sha256" >> "$GITHUB_OUTPUT"
+          echo "Verified image: $image_id" >> "$GITHUB_STEP_SUMMARY"
+      - name: Transfer the immutable deployment bundle
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: assignment5-container
+          path: deployment-bundle/cvd-research-image.tar.gz
+          compression-level: 0
+          retention-days: 7
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: assignment5-synthetic-result
@@ -92,7 +94,6 @@ jobs:
     environment: assignment5-local
     permissions:
       contents: read
-      packages: read
     defaults:
       run:
         shell: powershell
@@ -100,24 +101,18 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           persist-credentials: false
-      - name: Authenticate and install the exact verified image
+      - name: Download the image built by this workflow
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: assignment5-container
+          path: deployment-bundle
+      - name: Verify and install the exact tested image
         env:
-          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REGISTRY_USER: ${{ github.actor }}
-          IMAGE_REFERENCE: ${{ needs.image.outputs.reference }}
+          IMAGE_ID: ${{ needs.image.outputs.image_id }}
+          ARCHIVE_SHA256: ${{ needs.image.outputs.archive_sha256 }}
           SOURCE_REVISION: ${{ github.sha }}
         run: |
-          $env:DOCKER_CONFIG = Join-Path $env:RUNNER_TEMP 'assignment5-docker-auth'
-          $env:DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
-          $env:GHCR_TOKEN | docker login ghcr.io -u $env:REGISTRY_USER --password-stdin
-          if ($LASTEXITCODE -ne 0) { throw 'GHCR authentication failed' }
-          try {
-            & ./devops/Deploy-ResearchDemo.ps1 -Image $env:IMAGE_REFERENCE -SourceRevision $env:SOURCE_REVISION
-          } finally {
-            docker logout ghcr.io | Out-Null
-            $authFile = Join-Path $env:DOCKER_CONFIG 'config.json'
-            if (Test-Path -LiteralPath $authFile) { Remove-Item -LiteralPath $authFile -Force }
-          }
+          & ./devops/Deploy-ResearchDemo.ps1 -Image $env:IMAGE_ID -Archive ./deployment-bundle/cvd-research-image.tar.gz -ArchiveSha256 $env:ARCHIVE_SHA256 -SourceRevision $env:SOURCE_REVISION
       - name: Verify the installed launcher after deployment
         run: |
           & (Join-Path $env:LOCALAPPDATA 'CvdResearchDemo/Run-CvdDemo.ps1')

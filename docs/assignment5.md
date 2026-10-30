@@ -15,8 +15,8 @@ discussed in the report but is not required for this local batch deployment.
   calibrated inference on complete synthetic records.
 - `devops/synthetic_inputs.json`: three fictional demonstration records.
 - `.github/workflows/assignment5.yml`: tests, image build, verification,
-  publication to GHCR, and local deployment.
-- `devops/Deploy-ResearchDemo.ps1`: installs the exact image digest, verifies it
+  transfer through Actions Artifacts, and local deployment.
+- `devops/Deploy-ResearchDemo.ps1`: installs the exact image ID, verifies it
   before promotion, and keeps the previous deployment manifest.
 
 ## Local checks
@@ -50,10 +50,11 @@ three jobs. Pull requests run cloud-hosted tests and container verification;
 they do not publish or deploy. A failed test blocks the image job, and an
 unsuccessful image check blocks deployment.
 
-The image is published as
-`ghcr.io/qydnama/cvd-risk-model-research:sha-<full-commit>` using the job's
-temporary `GITHUB_TOKEN`. CD downloads the immutable `@sha256:...` reference
-returned by that build; no personal registry password is stored in the repo.
+The tested image is exported as a compressed Docker archive and transferred
+through Actions Artifacts. CD verifies its SHA-256, imports it, and invokes the
+exact immutable Docker image ID produced by CI. No registry password or PAT is
+required. The archive is retained for seven days; the installed image remains
+available locally after that period. A new push builds a new archive.
 
 ## Local CD target
 
@@ -86,7 +87,7 @@ pull requests. Restart the setup script for a subsequent demonstration.
 No Windows service or scheduled task is installed.
 
 The deployment script checks the candidate before replacing `current.json`.
-A failed pull, inference check, revision check or artifact verification leaves
+A failed archive import, inference check, revision check or artifact verification leaves
 the active deployment unchanged. The old image is retained for recovery.
 
 ## Submission evidence
