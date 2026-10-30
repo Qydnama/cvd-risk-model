@@ -1,0 +1,5 @@
+[
+  {"age": 40.0, "sex": "female", "bmi": 21.5, "smoking_status": "never", "hypertension_dx": false, "diabetes_dx": false, "general_health": "excellent"},
+  {"age": 60.0, "sex": "male", "bmi": 27.4, "smoking_status": "former", "hypertension_dx": true, "diabetes_dx": false, "general_health": "good"},
+  {"age": 79.0, "sex": "female", "bmi": 35.2, "smoking_status": "current", "hypertension_dx": true, "diabetes_dx": true, "general_health": "poor"}
+]

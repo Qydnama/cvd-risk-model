@@ -1,0 +1,124 @@
+name: Assignment 5 CI and CD
+
+on:
+  push:
+    branches: [main, codex/assignment-5-devops]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: assignment5-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  tests:
+    name: Code checks and unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: '0.11.3'
+          enable-cache: true
+      - name: Install the locked Python 3.12 environment
+        run: |
+          uv python install 3.12
+          uv sync --locked --all-extras --dev
+      - name: Ruff
+        run: uv run --frozen ruff check src scripts tests
+      - name: Unit tests and JUnit report
+        run: uv run --frozen pytest -q -m "not requires_local_research_artifacts" --junitxml=assignment5-tests.xml
+      - name: Preserve the test report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: assignment5-test-results
+          path: assignment5-tests.xml
+
+  image:
+    name: Docker build and synthetic model check
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      reference: ${{ steps.publish.outputs.reference }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+      - name: Build a versioned Docker image
+        env:
+          REVISION: ${{ github.sha }}
+        run: docker build --build-arg GIT_COMMIT="$REVISION" -t cvd-research:ci .
+      - name: Run the unchanged model on synthetic inputs
+        run: |
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m cvd-research:ci | tee synthetic-result.json
+          python -c "import json; r=json.load(open('synthetic-result.json')); assert r['status']=='PASS' and len(r['predictions'])==3 and not r['refit_performed']"
+      - name: Publish the verified image to GHCR
+        id: publish
+        if: github.event_name == 'push'
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_USER: ${{ github.actor }}
+          REVISION: ${{ github.sha }}
+        run: |
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "$REGISTRY_USER" --password-stdin
+          image="ghcr.io/qydnama/cvd-risk-model-research:sha-$REVISION"
+          docker tag cvd-research:ci "$image"
+          docker push "$image"
+          reference=$(docker inspect --format='{{index .RepoDigests 0}}' "$image")
+          echo "reference=$reference" >> "$GITHUB_OUTPUT"
+          echo "Published: $reference" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: assignment5-synthetic-result
+          path: synthetic-result.json
+
+  deploy:
+    name: Deploy to local research test environment
+    needs: image
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/codex/assignment-5-devops' || github.ref == 'refs/heads/main')
+    runs-on: [self-hosted, Windows, X64, cvd-assignment5]
+    timeout-minutes: 15
+    environment: assignment5-local
+    permissions:
+      contents: read
+      packages: read
+    defaults:
+      run:
+        shell: powershell
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+      - name: Authenticate and install the exact verified image
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REGISTRY_USER: ${{ github.actor }}
+          IMAGE_REFERENCE: ${{ needs.image.outputs.reference }}
+          SOURCE_REVISION: ${{ github.sha }}
+        run: |
+          $env:DOCKER_CONFIG = Join-Path $env:RUNNER_TEMP 'assignment5-docker-auth'
+          $env:DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
+          $env:GHCR_TOKEN | docker login ghcr.io -u $env:REGISTRY_USER --password-stdin
+          if ($LASTEXITCODE -ne 0) { throw 'GHCR authentication failed' }
+          try {
+            & ./devops/Deploy-ResearchDemo.ps1 -Image $env:IMAGE_REFERENCE -SourceRevision $env:SOURCE_REVISION
+          } finally {
+            docker logout ghcr.io | Out-Null
+            $authFile = Join-Path $env:DOCKER_CONFIG 'config.json'
+            if (Test-Path -LiteralPath $authFile) { Remove-Item -LiteralPath $authFile -Force }
+          }
+      - name: Verify the installed launcher after deployment
+        run: |
+          & (Join-Path $env:LOCALAPPDATA 'CvdResearchDemo/Run-CvdDemo.ps1')
+          'Installed research batch tool verified.' | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append -Encoding utf8

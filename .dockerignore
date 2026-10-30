@@ -1,0 +1,15 @@
+# Default deny: participant data, Git metadata, credentials and local environments stay out.
+**
+!pyproject.toml
+!uv.lock
+!README.md
+!src/
+!src/**
+!artifacts/
+!artifacts/minimal_v1/
+!artifacts/minimal_v1/*.joblib
+!artifacts/minimal_v1_research_release/
+!artifacts/minimal_v1_research_release/input_schema.json
+!artifacts/minimal_v1_research_release/release_manifest.json
+!devops/
+!devops/synthetic_inputs.json
