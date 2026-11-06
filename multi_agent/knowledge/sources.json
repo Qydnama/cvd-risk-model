@@ -1,0 +1,12 @@
+{
+  "note": "Registry of evidence sources. Paths are relative to the repository root. Model documents are read-only; the agent layer never modifies them.",
+  "sources": [
+    {"source_id": "model_card", "kind": "model", "format": "markdown", "path": "reports/minimal_v1_model_card.md", "title": "Model card minimal_v1"},
+    {"source_id": "model_card_status", "kind": "model", "format": "json", "path": "artifacts/minimal_v1_model_card/status.json", "title": "Machine-readable model card"},
+    {"source_id": "release_manifest", "kind": "model", "format": "json", "path": "artifacts/minimal_v1_research_release/release_manifest.json", "title": "Stage 9 research release manifest"},
+    {"source_id": "pipeline_manifest", "kind": "model", "format": "json", "path": "artifacts/minimal_v1/serialized_pipeline_manifest.json", "title": "Serialized pipeline manifest"},
+    {"source_id": "stage6_validation", "kind": "model", "format": "markdown", "path": "reports/stage6_underpowered_exploratory_validation_final.md", "title": "Stage 6 validation final report"},
+    {"source_id": "stage8_closure", "kind": "model", "format": "markdown", "path": "reports/stage8_closure_report.md", "title": "Stage 8 closure report"},
+    {"source_id": "who_cvd_fact_sheet", "kind": "medical", "format": "excerpts", "path": "multi_agent/knowledge/medical/who_cvd_fact_sheet.json", "title": "WHO fact sheet: Cardiovascular diseases (CVDs)"}
+  ]
+}

@@ -1,0 +1,53 @@
+{"ts": 1793915926.74, "session_id": "typical_session", "turn": 1, "agent": "orchestrator_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 913.7, "tokens": {"input_tokens": 397, "output_tokens": 20}}
+{"ts": 1793915926.742, "session_id": "typical_session", "turn": 1, "agent": "orchestrator_agent", "kind": "agent", "name": "route", "status": "ok", "duration_ms": 917.0}
+{"ts": 1793915927.573, "session_id": "typical_session", "turn": 1, "agent": "evidence_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 826.9, "tokens": {"input_tokens": 366, "output_tokens": 16}}
+{"ts": 1793915927.582, "session_id": "typical_session", "turn": 1, "agent": "evidence_agent", "kind": "tool", "name": "get_model_card_fact", "status": "ok", "duration_ms": 6.6}
+{"ts": 1793915928.593, "session_id": "typical_session", "turn": 1, "agent": "evidence_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1009.0, "tokens": {"input_tokens": 516, "output_tokens": 58}}
+{"ts": 1793915928.594, "session_id": "typical_session", "turn": 1, "agent": "evidence_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 1850.4}
+{"ts": 1793915929.819, "session_id": "typical_session", "turn": 1, "agent": "explanation_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1223.4, "tokens": {"input_tokens": 409, "output_tokens": 64}}
+{"ts": 1793915929.82, "session_id": "typical_session", "turn": 1, "agent": "explanation_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 1225.1}
+{"ts": 1793915929.822, "session_id": "typical_session", "turn": 1, "agent": "safety_review_agent", "kind": "tool", "name": "check_draft_rules", "status": "ok", "duration_ms": 1.3}
+{"ts": 1793915930.758, "session_id": "typical_session", "turn": 1, "agent": "safety_review_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 934.5, "tokens": {"input_tokens": 457, "output_tokens": 39}}
+{"ts": 1793915930.759, "session_id": "typical_session", "turn": 1, "agent": "safety_review_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 938.5}
+{"ts": 1793915932.274, "session_id": "typical_session", "turn": 1, "agent": "explanation_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1513.1, "tokens": {"input_tokens": 448, "output_tokens": 107}}
+{"ts": 1793915932.275, "session_id": "typical_session", "turn": 1, "agent": "explanation_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 1515.0}
+{"ts": 1793915932.277, "session_id": "typical_session", "turn": 1, "agent": "safety_review_agent", "kind": "tool", "name": "check_draft_rules", "status": "ok", "duration_ms": 0.7}
+{"ts": 1793915933.107, "session_id": "typical_session", "turn": 1, "agent": "safety_review_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 829.5, "tokens": {"input_tokens": 500, "output_tokens": 8}}
+{"ts": 1793915933.108, "session_id": "typical_session", "turn": 1, "agent": "safety_review_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 832.4}
+{"ts": 1793915933.109, "session_id": "typical_session", "turn": 1, "agent": "session", "kind": "turn", "name": "question_model", "status": "answered", "duration_ms": 7287.7, "steps": 6}
+{"ts": 1793915933.931, "session_id": "typical_session", "turn": 2, "agent": "orchestrator_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 810.2, "tokens": {"input_tokens": 550, "output_tokens": 17}}
+{"ts": 1793915933.932, "session_id": "typical_session", "turn": 2, "agent": "orchestrator_agent", "kind": "agent", "name": "route", "status": "ok", "duration_ms": 812.1}
+{"ts": 1793915935.76, "session_id": "typical_session", "turn": 2, "agent": "input_validation_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1826.8, "tokens": {"input_tokens": 389, "output_tokens": 125}}
+{"ts": 1793915935.763, "session_id": "typical_session", "turn": 2, "agent": "input_validation_agent", "kind": "tool", "name": "validate_partial_features", "status": "ok", "duration_ms": 1.5}
+{"ts": 1793915935.764, "session_id": "typical_session", "turn": 2, "agent": "input_validation_agent", "kind": "tool", "name": "list_missing_fields", "status": "ok", "duration_ms": 0.4}
+{"ts": 1793915935.766, "session_id": "typical_session", "turn": 2, "agent": "input_validation_agent", "kind": "tool", "name": "validate_complete_input", "status": "ok", "duration_ms": 0.5}
+{"ts": 1793915935.766, "session_id": "typical_session", "turn": 2, "agent": "input_validation_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 1833.4}
+{"ts": 1793915935.767, "session_id": "typical_session", "turn": 2, "agent": "session", "kind": "turn", "name": "calculate", "status": "awaiting_confirmation", "duration_ms": 2648.7, "steps": 2}
+{"ts": 1793915935.769, "session_id": "typical_session", "turn": 3, "agent": "orchestrator_agent", "kind": "agent", "name": "route", "status": "ok", "duration_ms": 0.0}
+{"ts": 1793915937.677, "session_id": "typical_session", "turn": 3, "agent": "risk_prediction_agent", "kind": "tool", "name": "verify_locked_release", "status": "ok", "duration_ms": 1907.4}
+{"ts": 1793915937.686, "session_id": "typical_session", "turn": 3, "agent": "risk_prediction_agent", "kind": "tool", "name": "predict_cvd_mortality_risk", "status": "ok", "duration_ms": 7.8}
+{"ts": 1793915937.686, "session_id": "typical_session", "turn": 3, "agent": "risk_prediction_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 1916.9}
+{"ts": 1793915939.225, "session_id": "typical_session", "turn": 3, "agent": "evidence_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1536.4, "tokens": {"input_tokens": 366, "output_tokens": 17}}
+{"ts": 1793915939.228, "session_id": "typical_session", "turn": 3, "agent": "evidence_agent", "kind": "tool", "name": "get_model_card_fact", "status": "ok", "duration_ms": 0.5}
+{"ts": 1793915940.167, "session_id": "typical_session", "turn": 3, "agent": "evidence_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 937.0, "tokens": {"input_tokens": 435, "output_tokens": 50}}
+{"ts": 1793915940.168, "session_id": "typical_session", "turn": 3, "agent": "evidence_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 2479.4}
+{"ts": 1793915941.641, "session_id": "typical_session", "turn": 3, "agent": "explanation_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1471.9, "tokens": {"input_tokens": 395, "output_tokens": 111}}
+{"ts": 1793915941.642, "session_id": "typical_session", "turn": 3, "agent": "explanation_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 1473.7}
+{"ts": 1793915941.644, "session_id": "typical_session", "turn": 3, "agent": "safety_review_agent", "kind": "tool", "name": "check_draft_rules", "status": "ok", "duration_ms": 1.0}
+{"ts": 1793915942.416, "session_id": "typical_session", "turn": 3, "agent": "safety_review_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 771.0, "tokens": {"input_tokens": 458, "output_tokens": 8}}
+{"ts": 1793915942.417, "session_id": "typical_session", "turn": 3, "agent": "safety_review_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 774.4}
+{"ts": 1793915942.419, "session_id": "typical_session", "turn": 3, "agent": "session", "kind": "turn", "name": "confirm", "status": "answered", "duration_ms": 6650.0, "steps": 5}
+{"ts": 1793915943.4, "session_id": "typical_session", "turn": 4, "agent": "orchestrator_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 978.5, "tokens": {"input_tokens": 777, "output_tokens": 19}}
+{"ts": 1793915943.401, "session_id": "typical_session", "turn": 4, "agent": "orchestrator_agent", "kind": "agent", "name": "route", "status": "ok", "duration_ms": 980.5}
+{"ts": 1793915944.272, "session_id": "typical_session", "turn": 4, "agent": "evidence_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 868.6, "tokens": {"input_tokens": 364, "output_tokens": 17}}
+{"ts": 1793915944.274, "session_id": "typical_session", "turn": 4, "agent": "evidence_agent", "kind": "tool", "name": "get_model_card_fact", "status": "ok", "duration_ms": 0.4}
+{"ts": 1793915945.095, "session_id": "typical_session", "turn": 4, "agent": "evidence_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 820.3, "tokens": {"input_tokens": 433, "output_tokens": 18}}
+{"ts": 1793915945.098, "session_id": "typical_session", "turn": 4, "agent": "evidence_agent", "kind": "tool", "name": "get_model_card_fact", "status": "ok", "duration_ms": 0.5}
+{"ts": 1793915946.39, "session_id": "typical_session", "turn": 4, "agent": "evidence_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1290.6, "tokens": {"input_tokens": 584, "output_tokens": 97}}
+{"ts": 1793915946.391, "session_id": "typical_session", "turn": 4, "agent": "evidence_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 2988.8}
+{"ts": 1793915948.339, "session_id": "typical_session", "turn": 4, "agent": "explanation_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 1946.1, "tokens": {"input_tokens": 527, "output_tokens": 168}}
+{"ts": 1793915948.339, "session_id": "typical_session", "turn": 4, "agent": "explanation_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 1947.8}
+{"ts": 1793915948.342, "session_id": "typical_session", "turn": 4, "agent": "safety_review_agent", "kind": "tool", "name": "check_draft_rules", "status": "ok", "duration_ms": 0.7}
+{"ts": 1793915949.177, "session_id": "typical_session", "turn": 4, "agent": "safety_review_agent", "kind": "llm", "name": "gpt-4.1-mini", "status": "ok", "duration_ms": 835.3, "tokens": {"input_tokens": 605, "output_tokens": 8}}
+{"ts": 1793915949.178, "session_id": "typical_session", "turn": 4, "agent": "safety_review_agent", "kind": "agent", "name": "run", "status": "ok", "duration_ms": 838.2}
+{"ts": 1793915949.179, "session_id": "typical_session", "turn": 4, "agent": "session", "kind": "turn", "name": "question_result", "status": "answered", "duration_ms": 6759.8, "steps": 4}

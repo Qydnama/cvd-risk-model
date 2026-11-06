@@ -1,10 +1,11 @@
-"""Two deterministic sources: the Stage 9 schema and locked ML pipeline."""
+"""Deterministic domain functions: the Stage 9 schema and the locked ML pipeline."""
 
 from __future__ import annotations
 
 import json
 import math
 import warnings
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -58,11 +59,77 @@ def validate_patient_input(raw: dict[str, Any]) -> ValidationResult:
     return ValidationResult(valid=True, errors=[], normalized_input=patient)
 
 
-def predict_cvd_mortality_risk(patient: PatientInput) -> PredictionResult:
-    """Use the root project's canonical verified calibrated inference path."""
+_TRUE = {"true", "yes", "да", "есть", "1"}
+_FALSE = {"false", "no", "нет", "0"}
+
+
+def normalize_and_check_field(name: str, raw_value: Any) -> tuple[Any, str | None]:
+    """Convert one user-stated value to the schema type and check it. Never fills gaps."""
+    spec = load_input_schema()["properties"].get(name)
+    if spec is None:
+        return None, f"Unknown field: {name}"
+    text = str(raw_value).strip().lower()
+    if spec["type"] == "number":
+        try:
+            value = float(text.replace(",", "."))
+        except ValueError:
+            return None, f"{name} must be a number"
+        if not math.isfinite(value) or not spec["minimum"] <= value <= spec["maximum"]:
+            return None, f"{name} must be between {spec['minimum']} and {spec['maximum']}"
+        return value, None
+    if spec["type"] == "boolean":
+        if text in _TRUE:
+            return True, None
+        if text in _FALSE:
+            return False, None
+        return None, f"{name} must be yes or no"
+    value = text.replace(" ", "_")
+    if "enum" in spec and value not in spec["enum"]:
+        return None, f"{name} must be one of: {', '.join(spec['enum'])}"
+    return value, None
+
+
+def validate_partial_features(raw: dict[str, Any]) -> dict[str, Any]:
+    """Validate any subset of the seven fields; returns accepted values and per-field errors."""
+    accepted: dict[str, Any] = {}
+    errors: dict[str, str] = {}
+    for name, raw_value in raw.items():
+        value, error = normalize_and_check_field(name, raw_value)
+        if error:
+            errors[name] = error
+        else:
+            accepted[name] = value
+    return {"accepted": accepted, "errors": errors}
+
+
+def list_missing_fields(known: list[str]) -> dict[str, Any]:
+    """Return required fields that are still missing, with their allowed values."""
+    schema = load_input_schema()
+    missing = [name for name in schema["ordered_features"] if name not in known]
+    hints = {}
+    for name in missing:
+        spec = schema["properties"][name]
+        if spec["type"] == "number":
+            hints[name] = f"number {spec['minimum']}-{spec['maximum']}"
+        elif spec["type"] == "boolean":
+            hints[name] = "yes/no"
+        else:
+            hints[name] = "/".join(spec.get("enum", []))
+    return {"missing": missing, "allowed": hints}
+
+
+@lru_cache(maxsize=1)
+def verify_locked_release() -> dict[str, Any]:
+    """Run the Stage 9 release verifier once per process; failures are not cached."""
     release = validate_stage9_research_release(root=REPO_ROOT)
     if release["validation_status"] != "PASS":
         raise ValueError("Locked release verification failed")
+    return {"validation_status": "PASS", "model_id": "minimal_v1"}
+
+
+def predict_cvd_mortality_risk(patient: PatientInput) -> PredictionResult:
+    """Use the root project's canonical verified calibrated inference path."""
+    verify_locked_release()
     schema = load_input_schema()
     ordered = schema["ordered_features"]
     frame = pd.DataFrame([[getattr(patient, key) for key in ordered]], columns=ordered)

@@ -1,0 +1,27 @@
+{
+  "source_id": "who_cvd_fact_sheet",
+  "title": "WHO fact sheet: Cardiovascular diseases (CVDs)",
+  "publisher": "World Health Organization",
+  "url": "https://www.who.int/news-room/fact-sheets/detail/cardiovascular-diseases-(cvds)",
+  "published": "2025-07-31",
+  "accessed": "2026-11-06",
+  "language": "en",
+  "review_status": "verbatim_excerpt_pending_author_review",
+  "note": "Texts are verbatim excerpts extracted from the downloaded HTML page. 'keywords_ru' are retrieval aids written for search only; they are not quotations. Medication and surgery lists were deliberately excluded because the system must not give treatment advice.",
+  "excerpts": [
+    {"id": "who-1", "section": "Key facts", "text": "Cardiovascular diseases (CVDs) are the leading cause of death globally.", "keywords_ru": "ссз сердечно-сосудистые заболевания причина смерти мир ведущая"},
+    {"id": "who-2", "section": "Key facts", "text": "An estimated 19.8 million people died from CVDs in 2022, representing approximately 32% of all global deaths. Of these deaths, 85% were due to heart attack and stroke.", "keywords_ru": "смертность статистика сколько умирает инфаркт инсульт"},
+    {"id": "who-3", "section": "Key facts", "text": "Over three quarters of CVD deaths take place in low- and middle-income countries.", "keywords_ru": "страны доход смертность"},
+    {"id": "who-4", "section": "Key facts", "text": "Most cardiovascular diseases can be prevented by addressing behavioural and environmental risk factors such as tobacco use, unhealthy diet (including excess salt, sugar, and fats) and obesity, physical inactivity, harmful use of alcohol and air pollution.", "keywords_ru": "профилактика предотвратить факторы риска курение питание ожирение алкоголь активность"},
+    {"id": "who-5", "section": "Key facts", "text": "It is important to detect cardiovascular disease as early as possible so that management with counselling and medicines can begin.", "keywords_ru": "раннее выявление обнаружение"},
+    {"id": "who-6", "section": "Overview", "text": "Cardiovascular diseases (CVDs) are a group of disorders of the heart and blood vessels.", "keywords_ru": "что такое ссз определение сердечно-сосудистые заболевания сердце сосуды"},
+    {"id": "who-7", "section": "Overview", "text": "Heart attacks and strokes are usually acute events and are mainly caused by a blockage that prevents blood from flowing to the heart or brain. The most common reason for this is a build-up of fatty deposits on the inner walls of the blood vessels that supply the heart or brain. Strokes can be caused by bleeding from a blood vessel in the brain or from blood clots.", "keywords_ru": "инфаркт инсульт причина закупорка атеросклероз"},
+    {"id": "who-8", "section": "Risk factors for cardiovascular disease", "text": "The most important behavioural risk factors of heart disease and stroke are unhealthy diet, physical inactivity, tobacco use and harmful use of alcohol. Amongst environmental risk factors, air pollution is an important factor. The effects of behavioural risk factors may show up in individuals as raised blood pressure, raised blood glucose, raised blood lipids, and overweight and obesity.", "keywords_ru": "факторы риска курение давление гипертония сахар диабет ожирение вес питание"},
+    {"id": "who-9", "section": "Risk factors for cardiovascular disease", "text": "Cessation of tobacco use, reduction of salt in the diet, eating more fruit and vegetables, regular physical activity and avoiding harmful use of alcohol have been shown to reduce the risk of cardiovascular disease.", "keywords_ru": "снизить риск отказ от курения соль физическая активность профилактика"},
+    {"id": "who-10", "section": "Risk factors for cardiovascular disease", "text": "Other determinants of CVDs include poverty, stress and hereditary factors.", "keywords_ru": "наследственность стресс бедность факторы"},
+    {"id": "who-11", "section": "Common symptoms of cardiovascular diseases", "text": "Often, there are no symptoms of the underlying disease of the blood vessels. A heart attack or stroke may be the first sign of underlying disease.", "keywords_ru": "симптомы признаки бессимптомно"},
+    {"id": "who-12", "section": "Common symptoms of cardiovascular diseases", "text": "Symptoms of a heart attack include: pain or discomfort in the centre of the chest; and/or pain or discomfort in the arms, the left shoulder, elbows, jaw, or back.", "keywords_ru": "симптомы инфаркта боль в груди"},
+    {"id": "who-13", "section": "Common symptoms of cardiovascular diseases", "text": "The most common symptom of a stroke is sudden weakness of the face, arm, or leg, most often on one side of the body.", "keywords_ru": "симптомы инсульта слабость"},
+    {"id": "who-14", "section": "Common symptoms of cardiovascular diseases", "text": "People experiencing these symptoms should seek medical care immediately.", "keywords_ru": "симптомы срочно врач скорая помощь"}
+  ]
+}

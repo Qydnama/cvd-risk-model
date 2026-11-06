@@ -6,3 +6,9 @@
 - The portable input schema requires exactly age, sex, bmi, smoking_status, hypertension_dx, diabetes_dx, general_health with no missing personal fields. Age is 40–79, BMI is 10–99.8. The root `validate_minimal_v1_research_input` checks the locked dataframe contract.
 - The release is research only. Its primary export gate failed; external validation is underpowered and exploratory; clinical, API and web routing are disallowed. No Kazakhstan validation is claimed.
 - `artifacts/minimal_v1/**` and `artifacts/minimal_v1_research_release/**` must remain byte unchanged.
+
+# Assignment 4 agent-layer audit (2026-11-06)
+
+- `deepagents` 0.7.21 `create_deep_agent` gave every agent 9 tools (`task`, `ls`, `read_file`, `write_file`, `edit_file`, `delete`, `glob`, `grep`, `execute`) and an implicit `general-purpose` subagent. It was replaced by an explicit LangGraph `StateGraph` plus LangChain `create_agent` with declared tools only; the compiled tool set is asserted by tests.
+- `verify_locked_release` now runs the unchanged Stage 9 verifier once per process (failures are not cached). The inference path itself is unchanged.
+- No file under `artifacts/`, `reports/`, `src/cvd_risk/` or the root `uv.lock` was modified.

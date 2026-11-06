@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-from cvd_agents.deep_prototype import build_prototype_graph
 from cvd_agents.prototype import OrchestratorAgent
 from cvd_agents.tools import validate_patient_input
-from langchain_core.language_models.fake_chat_models import FakeListChatModel
 
 
 VALID = {
@@ -38,8 +36,3 @@ def test_missing_field_is_not_fabricated():
     result = validate_patient_input(data)
     assert result.valid is False
     assert result.normalized_input is None
-
-
-def test_deep_agents_prototype_configuration_builds_without_api_call():
-    graph = build_prototype_graph(FakeListChatModel(responses=["research only"]))
-    assert graph.name == "orchestrator_agent"
