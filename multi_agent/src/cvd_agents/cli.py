@@ -21,6 +21,8 @@ def _utf8() -> None:
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8")
+    if not sys.stdin.isatty() and hasattr(sys.stdin, "reconfigure"):  # piped input, e.g. a scripted demo
+        sys.stdin.reconfigure(encoding="utf-8", errors="replace")
 
 
 def cmd_assess(args: argparse.Namespace) -> int:

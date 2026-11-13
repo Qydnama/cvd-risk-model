@@ -7,6 +7,7 @@ explanation always passes the safety review before it reaches the user.
 
 from __future__ import annotations
 
+import re
 import time
 import uuid
 from pathlib import Path
@@ -38,6 +39,40 @@ from .llm import ConfigurationError, LLMUnavailableError, StepLimitError, TurnTi
 from .telemetry import RunRecorder, TelemetryCallback, calculate_agent_load
 
 DISCLAIMER = "Только для исследований и обучения. Не диагноз и не рекомендация лечения; модель не валидирована для Казахстана."
+
+SOURCE_LABELS = {
+    "minimal_v1_inference": "расчёт модели minimal_v1",
+    "model_card": "model card minimal_v1",
+    "model_card_status": "машиночитаемый model card",
+    "release_manifest": "манифест research release (Stage 9)",
+    "pipeline_manifest": "манифест pipeline",
+    "stage6_validation": "отчёт о проверке модели (Stage 6)",
+    "stage8_closure": "итоговый отчёт Stage 8",
+    "who_cvd_fact_sheet": "ВОЗ: Cardiovascular diseases (fact sheet, 2025)",
+}
+_CITATION = re.compile(r"\s*\[[^\[\]]*#[^\[\]]*\]")
+
+
+def result_headline(probability_percent: float) -> str:
+    """First line of a result answer: the model's number, stated plainly, before any caveats."""
+    per_thousand = round(probability_percent * 10)
+    share = (f"примерно {per_thousand} из 1000 человек" if per_thousand >= 1 else "менее 1 из 1000 человек")
+    return (f"Результат: оценка вероятности смерти от сердечно-сосудистых причин в течение 5 лет — "
+            f"{probability_percent:.2f}% ({share} с такими же значениями признаков).")
+
+
+def present(text: str, bundle: EvidenceBundle, used_fact_ids: list[str]) -> str:
+    """Replace inline fact ids with a readable source list; the ids were already checked by the safety review."""
+    body = _CITATION.sub("", text).strip()
+    by_id = {f.fact_id: f for f in bundle.facts}
+    labels: list[str] = []
+    for fact_id in used_fact_ids:
+        fact = by_id.get(fact_id)
+        if fact is not None:
+            label = SOURCE_LABELS.get(fact.source_id, fact.source_path)
+            if label not in labels:
+                labels.append(label)
+    return body + (f"\n\nИсточники: {'; '.join(labels)}." if labels else "")
 QUESTION_KIND = {"question_model": "model", "question_cvd_general": "medical", "question_result": "result"}
 
 
@@ -188,7 +223,9 @@ class CVDAssistant:
             return {}
         review = state.get("review")
         if review is not None and review.verdict == "approved":
-            text = state["draft"].text
+            text = present(state["draft"].text, state["bundle"], state["draft"].used_fact_ids)
+            if state.get("question_kind") == "result" and self.session.prediction is not None:
+                text = f"{result_headline(self.session.prediction.probability_percent)}\n\n{text}"
             if state.get("question_kind") in ("result", "medical"):
                 text = f"{text}\n\n{DISCLAIMER}"
             return {"status": "answered", "reply": text}

@@ -47,7 +47,8 @@ CVDAssistant.handle("да")
      explain  : ExplanationAgent.run — LLM пишет текст с заполнителем {probability_percent}; число подставляет код
      review   : SafetyReviewAgent.review — tool check_draft_rules; если правила пройдены — LLM SafetyJudgement
                   approved → finalize; revise → explain (не более 1 раза); повторный отказ → безопасный шаблон
-     finalize : текст + дисклеймер
+     finalize : для результата первой строкой число модели («… — 0.84% (примерно 8 из 1000 …)»),
+                затем текст; ссылки [fact#id] заменяются строкой «Источники: …»; в конце дисклеймер
   → TurnResult; журнал events.jsonl, state.json (без значений признаков), load_report.json
 ```
 

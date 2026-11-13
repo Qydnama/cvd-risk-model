@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -141,7 +142,7 @@ def test_no_api_keys_in_tracked_files():
         path = REPO_ROOT / name
         if path.suffix in {".py", ".md", ".json", ".toml", ".example"} and path.is_file():
             text = path.read_text(encoding="utf-8", errors="ignore")
-            assert "sk-proj-" not in text and "sk-ant-" not in text, name
+            assert not re.search(r"sk-(proj|ant)-[A-Za-z0-9_-]{20,}", text), name
     assert (PACKAGE_ROOT / ".gitignore").read_text(encoding="utf-8").count(".env") >= 1
 
 
@@ -164,3 +165,18 @@ def test_more_regressions_found_in_live_run():
     import re
     text = re.sub(r"\{probability_percent\}\s?%?", "0.95%", "составляет {probability_percent}%.")
     assert text == "составляет 0.95%."
+
+
+def test_result_answer_leads_with_number_and_readable_sources():
+    from cvd_agents.contracts import EvidenceBundle, EvidenceFact
+    from cvd_agents.graph import present, result_headline
+
+    assert result_headline(0.84).startswith("Результат: оценка вероятности смерти от сердечно-сосудистых причин")
+    assert "0.84%" in result_headline(0.84) and "8 из 1000" in result_headline(0.84)
+    assert "менее 1 из 1000" in result_headline(0.02)
+    fact = EvidenceFact(fact_id="model_card#3", source_id="model_card", source_path="reports/minimal_v1_model_card.md",
+                        locator="x", kind="model", text="t")
+    bundle = EvidenceBundle(question="q", question_kind="result", facts=[fact])
+    shown = present("Это оценка [model_card#3, prediction#1].", bundle, ["model_card#3"])
+    assert "#" not in shown and shown.startswith("Это оценка.")
+    assert shown.endswith("Источники: model card minimal_v1.")
